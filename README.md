@@ -34,6 +34,27 @@ python find_region_scenes.py extract --csv ../../data/scans/scenes.csv \
     --out ../../data/raw
 ```
 
+### Faster alternative: pre-mirrored Kaggle datasets (recommended)
+
+The TUM server is slow and rate-limited regardless of client, so on Kaggle, attach
+these four community mirrors as Inputs instead of streaming from TUM — together
+they're the complete SEN12MS-CR dataset (~169 scenes, all 4 seasons):
+
+- Spring: [rajaryan1726/sen12mscr-spring-triplets](https://www.kaggle.com/datasets/rajaryan1726/sen12mscr-spring-triplets)
+- Summer: [shinrapb/sen12ms-cr-summer](https://www.kaggle.com/datasets/shinrapb/sen12ms-cr-summer)
+- Fall: [shinrapb/sen12ms-cr-fall](https://www.kaggle.com/datasets/shinrapb/sen12ms-cr-fall)
+- Winter: [bigoone/sen12ms-cr-winter](https://www.kaggle.com/datasets/bigoone/sen12ms-cr-winter)
+
+Then run the local variants, which read the already-attached files directly —
+no network involved:
+
+```bash
+cd src/data
+python find_region_scenes.py scan-local --out ../../data/scans/scenes.csv --continent Asia
+python find_region_scenes.py extract-local --csv ../../data/scans/scenes.csv \
+    --continent Asia --max-scenes 18 --out ../../data/raw
+```
+
 See `docs/project_plan.md` §2 for the full data pipeline, §3–6 for models and
 experiments, and §7 for the week-by-week schedule.
 
