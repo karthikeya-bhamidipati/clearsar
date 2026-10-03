@@ -1,0 +1,176 @@
+season,scene,n_patches,lon,lat,country,continent,state,nearest_place
+ROIs1158_spring,1,784,37.9246,-17.2157,MZ,Africa,Zambezia,Quelimane
+ROIs1158_spring,6,700,-12.4442,10.9881,GN,Africa,Mamou,Pita
+ROIs1158_spring,8,784,170.8518,-42.8404,NZ,Oceania,West Coast,Hokitika
+ROIs1158_spring,9,525,19.8634,3.7519,CD,Africa,Equateur,Bosobolo
+ROIs1158_spring,15,763,151.0428,-24.6887,AU,Oceania,Queensland,Biloela
+ROIs1158_spring,17,756,-59.7893,-14.3672,BR,South America,Mato Grosso,Pontes e Lacerda
+ROIs1158_spring,21,703,-118.9965,63.7738,CA,North America,Northwest Territories,Hay River
+ROIs1158_spring,26,720,-104.8934,60.7624,CA,North America,Saskatchewan,La Ronge
+ROIs1158_spring,31,784,-60.3969,-16.7979,BO,South America,Santa Cruz,Concepcion
+ROIs1158_spring,39,818,21.0816,-4.4519,CD,Africa,Kasai-Occidental,Ilebo
+ROIs1158_spring,40,563,-41.2005,-20.129,BR,South America,Espirito Santo,Afonso Claudio
+ROIs1158_spring,44,784,-62.5094,-29.1604,AR,South America,Santiago del Estero,Villa General Mitre
+ROIs1158_spring,45,694,39.9498,-11.3583,MZ,Africa,Cabo Delgado,Mocimboa
+ROIs1158_spring,58,669,21.0445,8.2651,CF,Africa,Bamingui-Bangoran,Ndele
+ROIs1158_spring,63,784,-94.4718,36.351,US,North America,Arkansas,Decatur
+ROIs1158_spring,66,757,-15.7377,16.1281,SN,Africa,Saint-Louis,Rosso
+ROIs1158_spring,75,766,18.4666,-10.7086,AO,Africa,Bie,Camacupa
+ROIs1158_spring,77,715,40.8871,7.0609,ET,Africa,Oromiya,Ginir
+ROIs1158_spring,97,297,23.7745,-16.6938,ZM,Africa,Western,Senanga
+ROIs1158_spring,100,764,117.4198,31.7756,CN,Asia,Anhui Sheng,Dianbu
+ROIs1158_spring,101,765,130.8095,32.6549,JP,Asia,Kumamoto,Matsubase
+ROIs1158_spring,106,784,-118.4839,34.5627,US,North America,California,Green Valley
+ROIs1158_spring,109,316,-95.0567,29.9955,US,North America,Texas,Crosby
+ROIs1158_spring,110,731,-88.5562,30.3507,US,North America,Mississippi,Pascagoula
+ROIs1158_spring,113,738,-82.3043,27.8802,US,North America,Florida,Riverview
+ROIs1158_spring,115,781,126.3646,33.4315,KR,Asia,Jeju-do,Gaigeturi
+ROIs1158_spring,117,841,113.585,38.0246,CN,Asia,Shanxi Sheng,Yinying
+ROIs1158_spring,119,736,109.1606,34.2222,CN,Asia,Shaanxi,Huaxu
+ROIs1158_spring,120,784,8.4644,48.8879,DE,Europe,Baden-Wuerttemberg,Ettlingen
+ROIs1158_spring,121,638,26.224,44.4921,RO,Europe,Ilfov,Stefanestii de Jos
+ROIs1158_spring,123,781,10.9366,45.5615,IT,Europe,Veneto,Marano di Valpolicella
+ROIs1158_spring,124,695,109.073,35.0465,CN,Asia,Shaanxi,Tongchuan
+ROIs1158_spring,126,728,38.0949,51.2128,RU,Europe,Belgorod,Staryy Oskol
+ROIs1158_spring,128,782,-1.6647,54.9913,GB,Europe,England,Benwell
+ROIs1158_spring,132,784,139.602,36.3456,JP,Asia,Tochigi,Tanuma
+ROIs1158_spring,134,722,32.6789,46.6945,UA,Europe,Kherson,Kherson
+ROIs1158_spring,140,850,11.3424,48.361,DE,Europe,Bavaria,Markt Indersdorf
+ROIs1158_spring,141,722,138.6972,35.7431,JP,Asia,Yamanashi,Enzan
+ROIs1158_spring,142,632,-74.344,39.857,US,North America,New Jersey,Crestwood Village
+ROIs1158_spring,145,742,1.7044,48.8185,FR,Europe,Ile-de-France,Orgerus
+ROIs1158_spring,147,435,8.9897,45.5533,IT,Europe,Lombardy,Nerviano
+ROIs1868_summer,4,740,55.6728,68.1106,RU,Europe,Nenetskiy Avtonomnyy Okrug,Iskateley
+ROIs1868_summer,7,805,-150.332,61.5319,US,North America,Alaska,Willow
+ROIs1868_summer,11,533,16.9822,5.9812,CF,Africa,Ouham-Pende,Bozoum
+ROIs1868_summer,15,663,-57.7402,-26.6846,PY,South America,Neembucu,Pilar
+ROIs1868_summer,17,784,3.9275,49.8037,FR,Europe,Picardie,Vervins
+ROIs1868_summer,19,599,5.0297,11.5938,NG,Africa,Kebbi,Mahuta
+ROIs1868_summer,25,804,76.676,70.4209,RU,Europe,Yamalo-Nenetskiy Avtonomnyy Okrug,Tazovskiy
+ROIs1868_summer,27,823,42.5763,46.0515,RU,Europe,Stavropol'skiy,Kevsala
+ROIs1868_summer,31,775,122.2931,40.1351,CN,Asia,Liaoning,Shuangtai
+ROIs1868_summer,36,757,-105.2828,29.2778,MX,North America,Chihuahua,Ojinaga
+ROIs1868_summer,40,846,-84.8837,52.9451,CA,North America,Ontario,Hearst
+ROIs1868_summer,42,738,74.1784,26.6844,IN,Asia,Rajasthan,Merta
+ROIs1868_summer,43,819,-125.775,66.8642,CA,North America,Northwest Territories,Norman Wells
+ROIs1868_summer,47,647,20.5765,12.0582,TD,Africa,Sila,Goz Beida
+ROIs1868_summer,55,630,134.55,-30.8027,AU,Oceania,South Australia,Ceduna
+ROIs1868_summer,56,653,15.5509,51.1266,PL,Europe,Lower Silesian Voivodeship,Lwowek Slaski
+ROIs1868_summer,72,769,135.1859,-29.9879,AU,Oceania,South Australia,Coober Pedy
+ROIs1868_summer,73,783,144.4918,-18.6308,AU,Oceania,Queensland,Ravenshoe
+ROIs1868_summer,76,784,-100.1595,52.8424,CA,North America,Manitoba,Swan River
+ROIs1868_summer,80,713,149.2921,-34.2454,AU,Oceania,New South Wales,Crookwell
+ROIs1868_summer,86,710,-56.7249,-8.9372,BR,South America,Mato Grosso,Alta Floresta
+ROIs1868_summer,87,784,-123.4276,44.9904,US,North America,Oregon,Willamina
+ROIs1868_summer,89,371,59.6908,46.6761,KZ,Asia,Aqtoebe,Shalqar
+ROIs1868_summer,90,631,-94.491,46.7922,US,North America,Minnesota,Pequot Lakes
+ROIs1868_summer,93,194,47.8745,38.2335,IR,Asia,Ardabil,Nir
+ROIs1868_summer,95,703,60.5931,61.5749,RU,Europe,Sverdlovsk,Polunochnoye
+ROIs1868_summer,100,725,29.1101,40.4266,TR,Asia,Bursa,Gemlik
+ROIs1868_summer,101,648,-87.5104,41.602,US,North America,Indiana,Hammond
+ROIs1868_summer,102,508,13.7965,41.3953,IT,Europe,Latium,Vallemaio
+ROIs1868_summer,113,734,129.9135,32.9891,JP,Asia,Nagasaki,Omura
+ROIs1868_summer,114,657,87.5614,44.0465,CN,Asia,Xinjiang Uygur Zizhiqu,Changshanzi
+ROIs1868_summer,115,849,-6.0037,37.5047,ES,Europe,Andalusia,Acala del Rio
+ROIs1868_summer,119,782,117.4849,39.0984,CN,Asia,Tianjin Shi,Yonghe
+ROIs1868_summer,120,530,-48.5723,-1.4472,BR,South America,Para,Belem
+ROIs1868_summer,121,784,3.7802,50.9078,BE,Europe,Flanders,Oosterzele
+ROIs1868_summer,123,721,-122.4841,37.9504,US,North America,California,Corte Madera
+ROIs1868_summer,124,611,23.7666,38.0917,GR,Europe,Attica,Metamorfosi
+ROIs1868_summer,125,741,134.8839,34.7994,JP,Asia,Hyogo,Kakogawacho-honmachi
+ROIs1868_summer,126,723,141.3759,43.0967,JP,Asia,Hokkaido,Sapporo
+ROIs1868_summer,127,772,49.1883,32.0117,IR,Asia,Khuzestan,Masjed Soleyman
+ROIs1868_summer,132,784,-76.9017,40.1722,US,North America,Pennsylvania,Lower Allen
+ROIs1868_summer,133,784,118.3666,31.2937,CN,Asia,Anhui Sheng,Yijiang
+ROIs1868_summer,135,703,-71.6685,-33.0507,CL,South America,Valparaiso,Valparaiso
+ROIs1868_summer,137,651,8.8345,45.9962,IT,Europe,Lombardy,Cremenaga
+ROIs1868_summer,139,533,18.17,40.0096,IT,Europe,Apulia,Casarano
+ROIs1868_summer,140,782,49.3568,58.7074,RU,Europe,Kirov,Murygino
+ROIs1868_summer,143,700,79.1159,21.1639,IN,Asia,Maharashtra,Nagpur
+ROIs1868_summer,146,453,-57.6285,-37.9012,AR,South America,Buenos Aires,Mar del Plata
+ROIs1868_summer,147,594,4.3896,51.5434,NL,Europe,North Brabant,Kruisland
+ROIs1970_fall,1,849,-114.4405,42.1149,US,North America,Nevada,Jackpot
+ROIs1970_fall,3,796,0.7797,41.3461,ES,Europe,Catalonia,Juncosa
+ROIs1970_fall,4,199,-14.6473,19.8132,MR,Africa,Inchiri,Akjoujt
+ROIs1970_fall,6,764,17.9661,47.7349,HU,Europe,Komarom-Esztergom,Acs
+ROIs1970_fall,11,545,47.9516,-14.2742,MG,Africa,Sofia,Antsohihy
+ROIs1970_fall,14,782,-58.4057,47.9336,CA,North America,Newfoundland and Labrador,Stephenville Crossing
+ROIs1970_fall,19,639,16.4751,-11.1822,AO,Africa,Bie,Catabola
+ROIs1970_fall,22,716,-80.2097,32.8909,US,North America,South Carolina,Centerville
+ROIs1970_fall,26,575,44.6198,14.3132,YE,Asia,Muhafazat al Bayda',Zakhim
+ROIs1970_fall,27,848,-120.9059,52.2649,CA,North America,British Columbia,Williams Lake
+ROIs1970_fall,28,752,21.8321,-14.7006,ZM,Africa,Western,Kalabo
+ROIs1970_fall,30,359,135.0266,58.9108,RU,Europe,Sakha,Ust-Maya
+ROIs1970_fall,31,666,11.0247,10.4004,NG,Africa,Gombe,Kafarati
+ROIs1970_fall,33,690,-91.9297,32.8762,US,North America,Louisiana,Bastrop
+ROIs1970_fall,35,690,23.3909,5.9826,CF,Africa,,Rafai
+ROIs1970_fall,37,714,27.8597,7.6674,SS,Africa,Western Bahr al Ghazal,Wau
+ROIs1970_fall,39,772,-61.8247,-12.0157,BR,South America,Rondonia,Cacoal
+ROIs1970_fall,40,784,32.3748,-20.3235,ZW,Africa,Manicaland,Chipinge
+ROIs1970_fall,41,718,-128.7594,52.4302,CA,North America,British Columbia,Kitimat
+ROIs1970_fall,42,684,-42.6606,-5.6448,BR,South America,Piaui,Monsenhor Gil
+ROIs1970_fall,57,784,38.8505,24.9899,SA,Asia,Al Madinah al Munawwarah,Sultanah
+ROIs1970_fall,64,784,29.1544,-24.6806,ZA,Africa,Mpumalanga,Marble Hall
+ROIs1970_fall,65,781,-110.2657,33.3594,US,North America,Arizona,San Carlos
+ROIs1970_fall,71,683,-2.7267,42.9283,ES,Europe,Basque Country,Gasteiz / Vitoria
+ROIs1970_fall,77,793,54.4609,39.0502,TM,Asia,Balkan,Gumdag
+ROIs1970_fall,81,779,19.9664,6.3201,CF,Africa,Ouaka,Bambari
+ROIs1970_fall,82,711,-115.6897,42.8527,US,North America,Idaho,Mountain Home Air Force Base
+ROIs1970_fall,83,784,43.3109,36.3762,IQ,Asia,Ninawa,Al-Hamdaniya
+ROIs1970_fall,85,611,-70.3349,4.7642,CO,South America,Vichada,La Primavera
+ROIs1970_fall,88,783,138.6936,-34.8315,AU,Oceania,South Australia,Hope Valley
+ROIs1970_fall,91,696,19.2467,47.6832,HU,Europe,Pest,Orbottyan
+ROIs1970_fall,93,626,135.5781,44.4263,RU,Europe,Primorskiy,Dal'negorsk
+ROIs1970_fall,100,757,96.0331,17.0064,MM,Asia,Yangon,Yangon
+ROIs1970_fall,104,766,4.6573,50.9953,BE,Europe,Flanders,Keerbergen
+ROIs1970_fall,105,784,-79.9457,32.9404,US,North America,South Carolina,Hanahan
+ROIs1970_fall,107,784,2.8036,50.4514,FR,Europe,Nord-Pas-de-Calais,Loos-en-Gohelle
+ROIs1970_fall,109,682,120.9908,24.6657,TW,Asia,Taiwan,Hsinchu
+ROIs1970_fall,110,713,-80.5213,40.8934,US,North America,Ohio,East Palestine
+ROIs1970_fall,112,784,35.6795,33.6123,LB,Asia,Beqaa,Joubb Jannine
+ROIs1970_fall,114,828,-84.137,35.6741,US,North America,Tennessee,Greenback
+ROIs1970_fall,116,733,139.2768,36.2337,JP,Asia,Saitama,Fukayacho
+ROIs1970_fall,119,776,6.9992,43.5599,FR,Europe,Provence-Alpes-Cote d'Azur,Cannes
+ROIs1970_fall,120,747,-74.0484,40.7036,US,North America,New Jersey,Jersey City
+ROIs1970_fall,122,712,151.1305,-33.7952,AU,Oceania,New South Wales,North Ryde
+ROIs1970_fall,125,666,-80.8902,35.0823,US,North America,North Carolina,Pineville
+ROIs1970_fall,128,783,-3.7557,40.3217,ES,Europe,Madrid,Leganes
+ROIs1970_fall,131,346,-84.2986,33.8275,US,North America,Georgia,North Druid Hills
+ROIs1970_fall,133,767,18.8917,50.0136,PL,Europe,Silesian Voivodeship,Radostowice
+ROIs1970_fall,134,684,140.9098,36.9923,JP,Asia,Fukushima,Iwaki
+ROIs1970_fall,135,751,138.33,35.8693,JP,Asia,Yamanashi,Nirasaki
+ROIs1970_fall,136,708,52.2715,54.9404,RU,Europe,Tatarstan,Al'met'yevsk
+ROIs1970_fall,139,784,118.8447,33.5979,CN,Asia,Jiangsu Sheng,Huai'an
+ROIs1970_fall,141,744,5.868,52.2157,NL,Europe,Gelderland,Uddel
+ROIs1970_fall,142,779,-93.0037,44.8094,US,North America,Minnesota,Saint Paul Park
+ROIs1970_fall,144,559,-8.1351,41.2683,PT,Europe,Porto,Figueiro
+ROIs1970_fall,147,591,74.5865,32.6127,PK,Asia,Punjab,Hadali
+ROIs1970_fall,148,676,-73.3386,41.0758,US,North America,Connecticut,East Norwalk
+ROIs1970_fall,149,680,2.2878,43.8908,FR,Europe,Midi-Pyrenees,Frejairolles
+ROIs2017_winter,8,784,0.8822,17.5407,ML,Africa,Kidal,Kidal
+ROIs2017_winter,21,557,32.2842,-6.8426,TZ,Africa,Katavi,Inyonga
+ROIs2017_winter,22,610,30.8492,7.0141,SS,Africa,Jonglei,Bor
+ROIs2017_winter,25,716,130.037,-20.5648,AU,Oceania,Western Australia,Halls Creek
+ROIs2017_winter,42,784,110.1037,19.3745,CN,Asia,Hainan,Tuncheng
+ROIs2017_winter,47,672,20.2576,-30.232,ZA,Africa,Northern Cape,Williston
+ROIs2017_winter,49,734,-37.6082,-8.0283,BR,South America,Pernambuco,Custodia
+ROIs2017_winter,55,342,-70.3919,-37.0774,AR,South America,Neuquen,Andacollo
+ROIs2017_winter,59,710,-94.9376,30.8141,US,North America,Texas,Livingston
+ROIs2017_winter,61,556,-3.1706,34.7034,MA,Africa,Oriental,Tiztoutine
+ROIs2017_winter,62,623,17.5125,-9.4759,AO,Africa,Malanje,Malanje
+ROIs2017_winter,63,784,2.4623,43.7034,FR,Europe,Midi-Pyrenees,Brassac
+ROIs2017_winter,64,784,-63.7537,-37.3553,AR,South America,La Pampa,Alpachiri
+ROIs2017_winter,68,743,-113.9455,29.3627,MX,North America,Baja California,San Luis
+ROIs2017_winter,75,700,1.8105,28.3382,DZ,Africa,Tamanghasset,I-n-Salah
+ROIs2017_winter,81,609,28.9307,-24.9957,ZA,Africa,Mpumalanga,Siyabuswa
+ROIs2017_winter,84,606,15.9147,37.9322,IT,Europe,Calabria,Bova Marina
+ROIs2017_winter,94,757,-80.0326,35.9174,US,North America,North Carolina,High Point
+ROIs2017_winter,102,719,0.3531,52.4136,GB,Europe,England,Littleport
+ROIs2017_winter,104,508,-90.1321,38.9109,US,North America,Illinois,Upper Alton
+ROIs2017_winter,107,775,110.9889,37.5186,CN,Asia,Shanxi Sheng,Liulin
+ROIs2017_winter,108,783,29.1631,41.0318,TR,Asia,Istanbul,Umraniye
+ROIs2017_winter,112,829,5.8307,50.8575,NL,Europe,Limburg,Valkenburg
+ROIs2017_winter,116,777,-76.9987,40.2628,US,North America,Pennsylvania,Mechanicsburg
+ROIs2017_winter,130,780,48.606,31.2557,IR,Asia,Khuzestan,Jongiyeh
+ROIs2017_winter,135,479,-104.7505,38.9886,US,North America,Colorado,Black Forest
+ROIs2017_winter,146,612,13.0182,41.7814,IT,Europe,Latium,Colleferro
