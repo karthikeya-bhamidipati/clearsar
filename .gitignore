@@ -1,0 +1,28 @@
+# --- data (large, never commit) ---
+data/raw/*
+!data/raw/.gitkeep
+*.tif
+*.tiff
+*.tar.gz
+
+# --- model weights / checkpoints (large, never commit) ---
+experiments/checkpoints/*
+!experiments/checkpoints/.gitkeep
+
+# --- python ---
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+*.egg-info/
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+
+# --- secrets ---
+*.env
+kaggle.json
+
+# --- local scratch ---
+install_log.txt
