@@ -5,16 +5,27 @@ import torch
 from torch.utils.data import Dataset
 import numpy as np
 import rasterio
+from scipy.ndimage import uniform_filter
+
+def lee_filter(img, size=3):
+    """Applies Lee Speckle Filter to 2D SAR numpy array."""
+    img_mean = uniform_filter(img, (size, size))
+    img_sqr_mean = uniform_filter(img**2, (size, size))
+    img_var = img_sqr_mean - img_mean**2
+    overall_var = np.var(img)
+    weights = img_var / (img_var + overall_var + 1e-5)
+    return img_mean + weights * (img - img_mean)
 
 class TargetedSEN12MSCR(Dataset):
-    def __init__(self, input_roots, csv_path, target_countries=['CN', 'JP', 'IN'], max_patches=2000):
+    def __init__(self, input_roots, csv_path, target_countries=['CN', 'JP', 'IN'], max_patches=2000, apply_speckle=True):
         self.samples = []
+        self.apply_speckle = apply_speckle
         
         if not os.path.exists(csv_path):
             raise FileNotFoundError(f"Missing CSV at {csv_path}. Run scan-local first.")
             
         df = pd.read_csv(csv_path)
-        df_filtered = df[df['country'].isin(target_countries)]
+        df_filtered = df[df['country'].isin(target_countries)] if target_countries else df
         allowed_scenes = set(str(s) for s in df_filtered['scene'].tolist())
 
         expanded_roots = []
@@ -53,13 +64,19 @@ class TargetedSEN12MSCR(Dataset):
                                         stop_indexing = True
                                         break
         
-        print(f"[Dataset] Successfully indexed {len(self.samples)} patch triplets.")
+        print(f"[Dataset] Indexed {len(self.samples)} patch triplets (Countries: {target_countries}).")
 
     def __len__(self): 
         return len(self.samples)
 
     def _norm_s1(self, img):
         img = np.nan_to_num(img, nan=0.0)
+        if self.apply_speckle:
+            filtered = np.zeros_like(img)
+            for c in range(img.shape[0]):
+                filtered[c] = lee_filter(img[c], size=3)
+            img = filtered
+            
         db = 10.0 * np.log10(np.clip(img, 1e-5, None))
         clipped = np.clip(db, -30.0, 0.0)
         return (clipped - (-15.0)) / 15.0

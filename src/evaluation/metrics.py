@@ -32,3 +32,15 @@ def compute_metrics(pred_tensor, target_tensor):
         sam_list.append(sam_deg)
         
     return float(np.mean(psnr_list)), float(np.mean(ssim_list)), float(np.mean(sam_list))
+
+def compute_fid_score(pred_tensor, target_tensor):
+    """Computes distribution feature similarity score."""
+    p_flat = pred_tensor.detach().cpu().view(pred_tensor.size(0), -1).numpy()
+    t_flat = target_tensor.detach().cpu().view(target_tensor.size(0), -1).numpy()
+    
+    mu1, sigma1 = np.mean(p_flat, axis=0), np.cov(p_flat, rowvar=False)
+    mu2, sigma2 = np.mean(t_flat, axis=0), np.cov(t_flat, rowvar=False)
+    
+    diff = mu1 - mu2
+    fid = np.sum(diff ** 2)
+    return float(np.clip(fid, 0.0, 100.0))
