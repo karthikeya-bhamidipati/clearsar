@@ -1,0 +1,294 @@
+# ClearSAR Advisor - knowledge base
+# ---------------------------------------------------------------------------------------
+# A rule-based expert system that sits on top of the deep-learning cloud-removal models.
+# It does NOT reconstruct images itself; it decides how far a reconstruction can be trusted,
+# which model to use, whether it suits the user's purpose and what to do next - and explains
+# every decision.
+#
+#   facts       measured from the patch, from the models' predictions (incl. uncertainty and
+#               attribution) and from the experiment results (src/expert/facts.py)
+#   thresholds  turn numeric facts into symbolic levels ("fuzzification"); a value within
+#               `borderline` of a boundary gets certainty 0.7 instead of 1.0
+#   rules       IF premises THEN conclusion WITH certainty factor (MYCIN-style). A rule fires
+#               if every premise holds with CF >= min_premise_cf; its conclusion receives
+#               CF = rule.cf * min(premise CFs); several rules for the same conclusion combine
+#               as cf1 + cf2 * (1 - cf1).
+#   groups      rules run group by group (stratified forward chaining). After each group the
+#               single-valued attributes it concluded are resolved to the value with the
+#               highest CF, so later groups reason about one clear verdict.
+# Edit this file to change the system's behaviour - no code changes needed.
+# ---------------------------------------------------------------------------------------
+
+meta:
+  name: ClearSAR Advisor
+  version: 1.0
+  min_premise_cf: 0.2
+  borderline: 0.1          # relative distance to a threshold that counts as "borderline"
+
+# Conflict resolution: the highest CF wins; an exact tie goes to the more cautious value
+# (listed first). More specific rules (more premises) are given slightly higher CFs.
+tie_break:
+  trust: [low, medium, high]
+  suitability: [unsuitable, caution, suitable]
+  action: [reacquire, sar_only, accept_with_mask, accept]
+
+groups: [observations, trust, model, suitability, action]
+single_valued: [trust, recommended_model, suitability, action]
+
+thresholds:
+  cloud_cover:            {low: [0.0, 0.2], moderate: [0.2, 0.6], heavy: [0.6, 1.01]}
+  thick_cloud:            {"no": [0.0, 0.3], "yes": [0.3, 1.01]}
+  model_disagreement:     {low: [0.0, 0.02], moderate: [0.02, 0.04], high: [0.04, 10.0]}
+  clear_pixel_error:      {good: [0.0, 0.03], fair: [0.03, 0.06], poor: [0.06, 10.0]}
+  sar_reliance:           {low: [0.0, 0.3], balanced: [0.3, 0.6], high: [0.6, 1.01]}
+  uncertainty:            {low: [0.0, 0.02], moderate: [0.02, 0.05], high: [0.05, 100.0]}
+  sar_gaps:               {"no": [0.0, 0.1], "yes": [0.1, 1.01]}
+  water_fraction:         {none: [0.0, 0.05], some: [0.05, 0.3], large: [0.3, 1.01]}
+  cirrus_fraction:        {"no": [0.0, 0.2], "yes": [0.2, 1.01]}
+
+# Human-readable meaning of every conclusion value (shown in the frontend)
+labels:
+  trust:
+    high:   {title: High trust, text: The reconstruction is well supported by what the satellite actually saw.}
+    medium: {title: Medium trust, text: Usable, but parts of the image are inferred and should be treated with care.}
+    low:    {title: Low trust, text: Large parts of the image are educated guesses; do not use for measurement.}
+  suitability:
+    suitable:   {title: Suitable, text: The reconstruction is fit for the chosen purpose.}
+    caution:    {title: Use with caution, text: Fit for the purpose only after masking the uncertain areas.}
+    unsuitable: {title: Not suitable, text: The reconstruction should not be used for this purpose.}
+  action:
+    accept:           {title: Accept the reconstruction, text: Use it as a cloud-free image.}
+    accept_with_mask: {title: Accept with an uncertainty mask, text: Use it, but exclude the pixels flagged as uncertain or cloudy.}
+    sar_only:         {title: Use radar-only products, text: Derive the information directly from Sentinel-1 (e.g. a water mask) instead of from the reconstruction.}
+    reacquire:        {title: Wait for a clearer acquisition, text: The scene is too cloudy for a reliable reconstruction; use the next cloud-free Sentinel-2 pass.}
+  use_case:
+    visual_inspection:     Visual inspection / mapping background
+    vegetation_monitoring: Vegetation monitoring (NDVI)
+    land_cover:            Land-cover classification
+    change_detection:      Change detection between dates
+    flood_mapping:         Flood / water mapping
+
+rules:
+  # ------------------------------------------------------------------ observations
+  - id: W1
+    group: observations
+    if: [{fact: region, is: out_of_region}]
+    then: {fact: warning_domain_shift, is: "yes"}
+    cf: 0.9
+    because: >-
+      The patch lies outside the training region (Asia). In the experiments the recommended model
+      lost {ood_drop:.1f} dB PSNR on the out-of-continent test scenes.
+  - id: W2
+    group: observations
+    if: [{fact: sar_gaps, is: "yes"}]
+    then: {fact: warning_sar_gaps, is: "yes"}
+    cf: 0.9
+    because: "{sar_gaps_pct:.0f}% of the radar image has no valid signal, so those areas cannot be reconstructed from SAR."
+  - id: W3
+    group: observations
+    if: [{fact: cirrus_fraction, is: "yes"}]
+    then: {fact: warning_cirrus, is: "yes"}
+    cf: 0.7
+    because: "The cirrus band (B10) is high over {cirrus_pct:.0f}% of the patch: thin, semi-transparent cloud may be present that the brightness test misses."
+  - id: W4
+    group: observations
+    if: [{fact: water_fraction, in: [some, large]}]
+    then: {fact: warning_water, is: "yes"}
+    cf: 0.6
+    because: "About {water_pct:.0f}% of the patch looks like open water in the radar (very low backscatter). Water colour in optical images is hard to infer from radar."
+
+  # ------------------------------------------------------------------ trust
+  - id: T1
+    group: trust
+    if: [{fact: cloud_cover, is: low}, {fact: model_disagreement, is: low}]
+    then: {fact: trust, is: high}
+    cf: 0.8
+    because: "Only {cloud_pct:.0f}% of the patch is cloudy and the three architectures agree closely (mean difference {disagreement:.3f})."
+  - id: T2
+    group: trust
+    if: [{fact: cloud_cover, is: moderate}, {fact: model_disagreement, is: low}, {fact: clear_pixel_error, is: good}]
+    then: {fact: trust, is: high}
+    cf: 0.7
+    because: "Clouds cover {cloud_pct:.0f}%, but the models agree and they reproduce the visible (cloud-free) pixels accurately (error {clear_err:.3f})."
+  - id: T3
+    group: trust
+    if: [{fact: cloud_cover, is: moderate}, {fact: model_disagreement, in: [low, moderate]}]
+    then: {fact: trust, is: medium}
+    cf: 0.6
+    because: "Moderate cloud cover ({cloud_pct:.0f}%): the hidden part has to be inferred, and the models agree reasonably well."
+  - id: T4
+    group: trust
+    if: [{fact: cloud_cover, is: heavy}, {fact: sar_reliance, is: high}, {fact: model_disagreement, in: [low, moderate]}]
+    then: {fact: trust, is: medium}
+    cf: 0.5
+    because: "Heavy cloud ({cloud_pct:.0f}%), but the model draws most of its information from the radar ({sar_rel_pct:.0f}% reliance) and the architectures largely agree."
+  - id: T5
+    group: trust
+    if: [{fact: cloud_cover, is: heavy}]
+    then: {fact: trust, is: low}
+    cf: 0.5
+    because: "{cloud_pct:.0f}% of the scene is hidden by cloud, so most of the optical image must be invented from radar alone."
+  - id: T6
+    group: trust
+    if: [{fact: model_disagreement, is: high}]
+    then: {fact: trust, is: low}
+    cf: 0.7
+    because: "The three architectures disagree strongly (mean difference {disagreement:.3f}): when equally trained models give different answers, none of them can be relied on."
+  - id: T7
+    group: trust
+    if: [{fact: clear_pixel_error, is: poor}]
+    then: {fact: trust, is: low}
+    cf: 0.8
+    because: "Even where the ground is visible the model's output differs from the satellite image (error {clear_err:.3f}); it is unlikely to be better under the clouds."
+  - id: T8
+    group: trust
+    if: [{fact: uncertainty, is: high}]
+    then: {fact: trust, is: low}
+    cf: 0.6
+    because: "The uncertainty model predicts a large error under the clouds (typical error scale {unc:.3f})."
+  - id: T9
+    group: trust
+    if: [{fact: uncertainty, is: low}, {fact: cloud_cover, in: [low, moderate]}]
+    then: {fact: trust, is: high}
+    cf: 0.4
+    because: "The uncertainty model is confident (typical error scale {unc:.3f}) and the cloud cover is limited."
+  - id: T10
+    group: trust
+    if: [{fact: region, is: out_of_region}]
+    then: {fact: trust, is: low}
+    cf: 0.4
+    because: "The models were trained only on Asian scenes; unfamiliar landscapes reduce accuracy (domain shift)."
+  - id: T11
+    group: trust
+    if: [{fact: sar_gaps, is: "yes"}, {fact: cloud_cover, in: [moderate, heavy]}]
+    then: {fact: trust, is: low}
+    cf: 0.7
+    because: "Clouds hide the optical image and the radar has gaps: some areas have no usable information at all."
+  - id: T12
+    group: trust
+    if: [{fact: cloud_cover, is: heavy}, {fact: sar_reliance, is: low}]
+    then: {fact: trust, is: low}
+    cf: 0.6
+    because: "Under thick cloud the model should lean on the radar, but here it relies on it for only {sar_rel_pct:.0f}% of its output - it is extrapolating from the little optical signal left."
+
+  # ------------------------------------------------------------------ model choice
+  - id: M1
+    group: model
+    if: [{fact: cloud_cover, in: [low, moderate, heavy]}]
+    then: {fact: recommended_model, value_from: best_model_for_cloud_level}
+    cf: 0.8
+    because: >-
+      In the experiments, {best_model_label} had the highest PSNR ({best_model_psnr:.1f} dB) on the
+      in-domain test patches with {cloud_bin} cloud cover.
+  - id: M2
+    group: model
+    if: [{fact: use_case, is: visual_inspection}, {fact: gan_available, is: "yes"}, {fact: trust, in: [high, medium]}]
+    then: {fact: recommended_model, is: A_gan}
+    cf: 0.5
+    because: "For purely visual use, the GAN model produces sharper, more natural-looking texture (lower FID), even though its pixel values are less exact."
+  - id: M3
+    group: model
+    if: [{fact: use_case, in: [vegetation_monitoring, land_cover, change_detection]}]
+    then: {fact: warning_avoid_gan, is: "yes"}
+    cf: 0.9
+    because: "Quantitative uses need faithful pixel values; GAN outputs can contain plausible-looking but invented detail."
+
+  # ------------------------------------------------------------------ suitability for the user's purpose
+  - id: U1
+    group: suitability
+    if: [{fact: use_case, is: flood_mapping}]
+    then: {fact: suitability, is: caution}
+    cf: 0.7
+    because: "Open water is detected directly and reliably by radar (it reflects almost no signal back); the optical reconstruction adds little."
+  - id: U2
+    group: suitability
+    if: [{fact: use_case, is: visual_inspection}, {fact: trust, in: [high, medium]}]
+    then: {fact: suitability, is: suitable}
+    cf: 0.8
+    because: "Visual inspection tolerates small radiometric errors as long as the overall picture is right."
+  - id: U3
+    group: suitability
+    if: [{fact: use_case, is: vegetation_monitoring}, {fact: trust, is: high}, {fact: cloud_cover, in: [low, moderate]}]
+    then: {fact: suitability, is: suitable}
+    cf: 0.7
+    because: "Most red and near-infrared values are observed directly, so NDVI is largely based on real measurements."
+  - id: U4
+    group: suitability
+    if: [{fact: use_case, is: vegetation_monitoring}, {fact: cloud_cover, is: heavy}]
+    then: {fact: suitability, is: unsuitable}
+    cf: 0.7
+    because: "Under thick cloud the red and near-infrared bands that NDVI depends on must be invented, so vegetation trends would reflect the model, not the crops."
+  - id: U5
+    group: suitability
+    if: [{fact: use_case, is: land_cover}, {fact: trust, in: [high, medium]}]
+    then: {fact: suitability, is: suitable}
+    cf: 0.6
+    because: "Land-cover classes are broad; moderate reconstruction errors rarely change the class."
+  - id: U6
+    group: suitability
+    if: [{fact: use_case, is: change_detection}, {fact: trust, in: [medium, low]}]
+    then: {fact: suitability, is: unsuitable}
+    cf: 0.7
+    because: "In change detection, reconstruction errors look exactly like real change between dates."
+  - id: U7
+    group: suitability
+    if: [{fact: trust, is: low}]
+    then: {fact: suitability, is: unsuitable}
+    cf: 0.6
+    because: "Low trust in the reconstruction rules out most uses."
+  - id: U8
+    group: suitability
+    if: [{fact: trust, is: medium}]
+    then: {fact: suitability, is: caution}
+    cf: 0.6
+    because: "Medium trust: the result can be used once the uncertain areas are masked."
+  - id: U9
+    group: suitability
+    if: [{fact: trust, is: high}]
+    then: {fact: suitability, is: suitable}
+    cf: 0.5
+    because: "High trust in the reconstruction."
+
+  # ------------------------------------------------------------------ recommended action
+  - id: A1
+    group: action
+    if: [{fact: trust, is: high}, {fact: suitability, is: suitable}]
+    then: {fact: action, is: accept}
+    cf: 0.8
+    because: "Trusted reconstruction that fits the purpose."
+  - id: A2
+    group: action
+    if: [{fact: suitability, is: caution}]
+    then: {fact: action, is: accept_with_mask}
+    cf: 0.7
+    because: "Usable once the uncertain or cloud-covered pixels are excluded."
+  - id: A3
+    group: action
+    if: [{fact: trust, is: low}, {fact: cloud_cover, is: heavy}]
+    then: {fact: action, is: reacquire}
+    cf: 0.7
+    because: "With {cloud_pct:.0f}% cloud cover a new cloud-free acquisition is the reliable option."
+  - id: A4
+    group: action
+    if: [{fact: use_case, is: flood_mapping}]
+    then: {fact: action, is: sar_only}
+    cf: 0.8
+    because: "Map water directly from Sentinel-1: low VV backscatter marks open water regardless of clouds."
+  - id: A5
+    group: action
+    if: [{fact: suitability, is: unsuitable}, {fact: sar_reliance, is: high}]
+    then: {fact: action, is: sar_only}
+    cf: 0.5
+    because: "The information in this patch comes mostly from the radar anyway; analyse the radar directly."
+  - id: A6
+    group: action
+    if: [{fact: suitability, is: unsuitable}]
+    then: {fact: action, is: reacquire}
+    cf: 0.5
+    because: "The reconstruction is not fit for purpose; wait for a clearer image."
+  - id: A7
+    group: action
+    if: [{fact: trust, is: medium}, {fact: suitability, is: suitable}]
+    then: {fact: action, is: accept_with_mask}
+    cf: 0.6
+    because: "Suitable, but medium trust: mask the uncertain areas to be safe."

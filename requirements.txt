@@ -20,6 +20,7 @@ streamlit>=1.40
 streamlit-folium>=0.20
 folium>=0.17
 altair>=5.0
+pyyaml>=6.0          # expert-system knowledge base
 
 # --- tests ---
 pytest>=7.0

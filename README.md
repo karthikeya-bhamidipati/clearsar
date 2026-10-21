@@ -114,13 +114,30 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Tabs: **Overview** (headline numbers, map of scenes per split), **Results** (in-domain vs
-out-of-continent with seed error bars, cloud-cover bins, per-country incl. India),
-**Experiments** (every E1–E7 ablation vs its reference with the plan's prediction, learning
-curves, leakage check, receptive fields, uncertainty methods, seed variance),
-**Training** (validation curves, parameter counts, GPU time), **Gallery** (every model on
-the same test patches) and **Live inference** (run any checkpoint on CPU on a gallery patch
-or your own S1 + S2 GeoTIFFs, download the georeferenced prediction).
+| Section | Page | What it shows |
+|---|---|---|
+| Deep learning | **Home** | drag-to-compare cloudy input vs reconstruction, headline numbers, the three architectures, data map |
+| | **Model comparison** | one chart (PSNR / SSIM / SAM / FID, with seed error bars), leaderboard, cloud-cover and country breakdowns |
+| | **Experiments** | one card per experiment: question, prediction, measured change, automatic verdict (Supported / Contradicted / Within noise), and a write-up scaffold |
+| | **Explore patches** | every model on held-out patches, against the cloudy input or the truth, with error and uncertainty maps |
+| Expert system | **Advisor** | decision (trust · model · fit for purpose · action) with certainty factors, visual explanation, how / why-not reasoning, facts, downloadable report |
+| | **Knowledge base** | architecture diagram, what-if simulator, all rules and thresholds |
+| About | **How it works** | the pipeline and its limitations |
+
+## Expert system (ClearSAR Advisor)
+
+A rule-based, explainable decision-support system on top of the networks — see
+[`docs/expert_system.md`](docs/expert_system.md). Facts come from the input patch, the models' outputs
+(disagreement, uncertainty, radar reliance via occlusion, band saliency) and the experiment results; a
+YAML knowledge base of 35 IF-THEN rules with certainty factors is chained by a forward-chaining MYCIN-style
+engine (`src/expert/`). Every decision comes with the rules that produced it, the alternatives considered and
+why other rules did not fire.
+
+```python
+from src.expert.advisor import Advisor
+advice = Advisor("outputs/checkpoints", "outputs/results").advise(x, use_case="vegetation_monitoring", region="in_region")
+advice.verdict("trust"), advice.verdict("action"), advice.result.fired
+```
 
 ## Tests
 
@@ -134,7 +151,7 @@ python tests/make_synthetic_data.py --out /tmp/synth   # fake SEN12MS-CR for an 
 ```
 clearsar/
 ├── README.md                  <- you are here
-├── app.py                     <- Streamlit frontend (reads outputs/)
+├── app.py                     <- Streamlit frontend entry point (pages in frontend/)
 ├── requirements.txt
 ├── .gitignore
 ├── docs/
@@ -147,7 +164,8 @@ clearsar/
 │   ├── data/                  <- scene finder, preprocessing, dataset/dataloader
 │   ├── models/                <- U-Net, Swin-U-Net, ViT, PatchGAN, uncertainty heads
 │   ├── training/               <- training loop, AMP, checkpointing, LR range test
-│   └── evaluation/             <- PSNR/SSIM/SAM/UCE/AUSE, plotting
+│   ├── evaluation/             <- metrics, tiled evaluation, plots, receptive fields
+│   └── expert/                 <- ClearSAR Advisor: knowledge base, inference engine, XAI
 ├── notebooks/kaggle_pipeline.py <- the Kaggle training/evaluation script (logic lives in src/)
 ├── tests/                      <- unit tests + synthetic-data generator
 ├── outputs/                    <- extracted Kaggle output (NOT tracked)

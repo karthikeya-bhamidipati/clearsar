@@ -210,3 +210,25 @@ an **Experiments** tab.
 
 Not run: E5c (attention maps) — first in the plan's cut order. Cloud bins still use the
 reflectance-difference proxy rather than s2cloudless.
+
+---
+
+## 2026-10-21 (evening) — Full Kaggle run started; new frontend; expert system
+
+**Kaggle.** Quick tests found two problems, both fixed before the full run:
+1. Reloaded checkpoints stayed on the CPU, so evaluation crashed (device mismatch). Training was unaffected.
+2. U-Net and Swin models spent most of a short run moving their output from 0.5 to the real reflectance
+   level (~0.1), staying below the cloudy-input baseline while the ViT and tiny CNN did not. Every model's
+   output bias is now initialised to the mean band reflectance (Karpathy's "init well"). Effect in the 300-step
+   check: U-Net 18.0 → 26.8 dB on the Asian test set.
+The full run then started: the GPU benchmark (U-Net 12.6 it/s, Swin 11.0, ViT 34.7 on a T4) allowed the full
+**15,000 steps for all 26 runs**, predicted at 5.6 h on two T4s.
+
+**Frontend.** Rebuilt as a multipage app (`frontend/`): Home with a drag-to-compare slider, Model comparison,
+Experiments with automatic verdicts against the plan's predictions (noise floor = max(0.3 dB, 2 × seed std)),
+Explore patches, Advisor, Knowledge base, How it works.
+
+**Expert system (AI-course project).** `src/expert/`: YAML knowledge base (35 rules, 5 groups, thresholds,
+conflict resolution), MYCIN-style forward-chaining engine with explanation trace, fact extraction from the
+patch / model outputs / experiment results, XAI (occlusion radar-reliance, input×gradient saliency). Design
+and evaluation ideas in `docs/expert_system.md`; 8 scenario and consistency tests in `tests/test_expert.py`.
