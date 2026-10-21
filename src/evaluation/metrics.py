@@ -1,46 +1,47 @@
 import torch
+import torch.nn.functional as F
 import numpy as np
+import scipy.linalg
 from skimage.metrics import structural_similarity as ssim_fn
 
 def compute_metrics(pred_tensor, target_tensor):
     pred = ((pred_tensor + 1.0) / 2.0).clamp(0, 1).cpu().numpy()
     target = ((target_tensor + 1.0) / 2.0).clamp(0, 1).cpu().numpy()
-    
     psnr_list, ssim_list, sam_list = [], [], []
     
     for i in range(pred.shape[0]):
-        p_img = pred[i].transpose(1, 2, 0)
-        t_img = target[i].transpose(1, 2, 0)
+        p_img, t_img = pred[i].transpose(1, 2, 0), target[i].transpose(1, 2, 0)
         
-        # PSNR
         mse = np.mean((p_img - t_img) ** 2)
-        psnr = 20 * np.log10(1.0 / np.sqrt(mse)) if mse > 0 else 100.0
-        psnr_list.append(psnr)
+        psnr_list.append(20 * np.log10(1.0 / np.sqrt(mse)) if mse > 0 else 100.0)
+        ssim_list.append(ssim_fn(p_img, t_img, channel_axis=2, data_range=1.0))
         
-        # SSIM
-        ssim_val = ssim_fn(p_img, t_img, channel_axis=2, data_range=1.0)
-        ssim_list.append(ssim_val)
-        
-        # Spectral Angle Mapper (SAM)
         dot_product = np.sum(p_img * t_img, axis=2)
-        p_norm = np.linalg.norm(p_img, axis=2)
-        t_norm = np.linalg.norm(t_img, axis=2)
-        denom = p_norm * t_norm
+        denom = np.linalg.norm(p_img, axis=2) * np.linalg.norm(t_img, axis=2)
         denom[denom == 0] = 1e-5
-        cos_sam = np.clip(dot_product / denom, -1.0, 1.0)
-        sam_deg = np.mean(np.arccos(cos_sam) * (180.0 / np.pi))
-        sam_list.append(sam_deg)
+        sam_list.append(np.mean(np.arccos(np.clip(dot_product / denom, -1.0, 1.0)) * (180.0 / np.pi)))
         
     return float(np.mean(psnr_list)), float(np.mean(ssim_list)), float(np.mean(sam_list))
 
 def compute_fid_score(pred_tensor, target_tensor):
-    """Computes distribution feature similarity score."""
-    p_flat = pred_tensor.detach().cpu().view(pred_tensor.size(0), -1).numpy()
-    t_flat = target_tensor.detach().cpu().view(target_tensor.size(0), -1).numpy()
+    """
+    Spatially downsamples features using adaptive pooling to 8x8 (192 features)
+    to calculate FID distribution distance without exceeding system RAM.
+    """
+    p_pooled = F.adaptive_avg_pool2d(pred_tensor.detach().cpu(), (8, 8))
+    t_pooled = F.adaptive_avg_pool2d(target_tensor.detach().cpu(), (8, 8))
+    
+    p_flat = p_pooled.view(p_pooled.size(0), -1).numpy()
+    t_flat = t_pooled.view(t_pooled.size(0), -1).numpy()
     
     mu1, sigma1 = np.mean(p_flat, axis=0), np.cov(p_flat, rowvar=False)
     mu2, sigma2 = np.mean(t_flat, axis=0), np.cov(t_flat, rowvar=False)
     
     diff = mu1 - mu2
-    fid = np.sum(diff ** 2)
-    return float(np.clip(fid, 0.0, 100.0))
+    eps = np.eye(sigma1.shape[0]) * 1e-6
+    covmean = scipy.linalg.sqrtm((sigma1 + eps).dot(sigma2 + eps))
+    if np.iscomplexobj(covmean):
+        covmean = covmean.real
+        
+    fid = diff.dot(diff) + np.trace(sigma1 + sigma2 - 2.0 * covmean)
+    return float(np.clip(fid, 0.0, 1000.0))
