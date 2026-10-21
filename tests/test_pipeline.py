@@ -169,3 +169,18 @@ def test_ensemble_mc_dropout_and_erf():
     erf = effective_receptive_field(build_model("tiny_cnn"), x[:2])
     st = erf_stats(erf)
     assert abs(erf.sum() - 1) < 1e-4 and st["radius50"] <= st["radius90"] <= 4.5   # 3 convs -> radius 3
+
+
+@pytest.mark.parametrize("arch", ["unet", "swin_unet", "vit", "tiny_cnn"])
+def test_output_bias_init_predicts_band_means(arch):
+    from src.models.architectures import set_output_bias
+    m = build_model(arch).eval()
+    means = torch.linspace(0.05, 0.4, OUT_CHANNELS)
+    set_output_bias(m, means)
+    # zero the last layer's weights -> output = sigmoid(bias) = the band means
+    last ={"unet": m.final if hasattr(m, "final") else None, "swin_unet": getattr(m, "final", None),
+            "vit": getattr(m, "unpatch", None), "tiny_cnn": m.net[-1] if hasattr(m, "net") else None}[arch]
+    with torch.no_grad():
+        last.weight.zero_()
+        out = m(torch.rand(1, IN_CHANNELS, 128, 128))
+    torch.testing.assert_close(out[0].mean(dim=(1, 2)), means, atol=1e-4, rtol=0)

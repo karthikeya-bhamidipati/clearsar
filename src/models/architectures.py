@@ -330,6 +330,25 @@ def build_model(arch, in_channels=15, out_channels=13, uncertainty=False, **kwar
                                uncertainty=uncertainty, **kwargs)
 
 
+@torch.no_grad()
+def set_output_bias(model, band_means):
+    """Initialise the output layer's bias so that, before any training, every model
+    predicts the average reflectance of each band (sigmoid(bias) = mean) instead of 0.5.
+    ("Init well", Karpathy's training recipe.) band_means: [out_channels] in (0, 1)."""
+    m = torch.as_tensor(band_means, dtype=torch.float32).clamp(1e-3, 1 - 1e-3)
+    logit = torch.log(m / (1 - m))
+    C = model.out_channels
+    if isinstance(model, ModelA_UNet):            # also covers ModelB_SwinUNet
+        model.final.bias[:C] = logit.to(model.final.bias.device)
+    elif isinstance(model, TinyCNN):
+        model.net[-1].bias[:C] = logit.to(model.net[-1].bias.device)
+    elif isinstance(model, ModelC_PureViT):        # unpatch bias is laid out as [n_out, p * p]
+        b = model.unpatch.bias.view(model.n_out, model.p * model.p)
+        b[:C] = logit.to(b.device)[:, None]
+    else:
+        raise TypeError(f"Unknown model type {type(model).__name__}")
+
+
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 

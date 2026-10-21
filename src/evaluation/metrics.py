@@ -142,6 +142,7 @@ def uncertainty_summary(errors, sigmas, kind="laplace"):
     return dict(
         coverage95=float((errors <= z * sigmas).mean()),
         mean_sigma=float(sigmas.mean()),
+        median_sigma=float(np.median(sigmas)),
         mean_abs_error=float(errors.mean()),
         spearman_err_sigma=float(rho),
         ause=sp["ause"],

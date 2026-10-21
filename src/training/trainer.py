@@ -18,7 +18,7 @@ import torch
 import torch.nn as nn
 
 from src.evaluation.evaluate import evaluate
-from src.models.architectures import build_model, count_parameters
+from src.models.architectures import build_model, count_parameters, set_output_bias
 from src.models.discriminator import PatchGANDiscriminator
 from src.training.loss import UncertaintyL1Loss
 
@@ -108,6 +108,18 @@ def train_run(cfg, train_loader, val_loader, device, ckpt_dir, log_dir, in_ch=15
             scalerD.load_state_dict(state["scalerD"])
         step, best, history, elapsed = state["step"], state["best"], state["history"], state["elapsed"]
         log(f"[{cfg.name}] resumed at step {step}")
+    else:
+        # Start every model predicting the mean reflectance of each band (same for all runs).
+        sums, n = torch.zeros(out_ch), 0
+        for i, (_, yb, _) in enumerate(train_loader):
+            sums += yb.float().mean(dim=(2, 3)).sum(0)
+            n += yb.shape[0]
+            if i >= 9:
+                break
+        band_means = sums / max(1, n)
+        set_output_bias(G, band_means)
+        log(f"[{cfg.name}] output bias initialised to mean band reflectance "
+            f"(range {band_means.min():.3f}-{band_means.max():.3f})")
 
     log(f"[{cfg.name}] {cfg.label or cfg.arch}: {n_params / 1e6:.2f}M params, {cfg.steps} steps, "
         f"lr {cfg.lr}, gan={cfg.use_gan}, uncertainty={cfg.uncertainty}")

@@ -328,7 +328,7 @@ with tab_exp:
         if "method" not in u:
             u["method"] = "Variance head (aleatoric)"
         u["split"] = u.split.map(SPLIT_NAMES)
-        cols = [c for c in ["method", "split", "coverage95", "mean_sigma", "mean_abs_error", "spearman_err_sigma",
+        cols = [c for c in ["method", "split", "coverage95", "median_sigma", "mean_sigma", "mean_abs_error", "spearman_err_sigma",
                             "ause"] if c in u]
         st.dataframe(u[cols].set_index(cols[:2]).style.format("{:.4f}"))
         if sparsif is not None:

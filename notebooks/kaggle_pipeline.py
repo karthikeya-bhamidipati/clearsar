@@ -269,7 +269,7 @@ def evaluate_and_save(name, model, eval_sets, device, state, log, info=None, ide
         for split_u, s in result["unc"].items():
             if split_u == split:
                 log(f"[unc]  {spec['label']:34s} {split:11s} coverage95 {s['coverage95']:.3f} | "
-                    f"mean sigma {s['mean_sigma']:.4f} | spearman {s['spearman_err_sigma']:.3f} | AUSE {s['ause']:.4f}")
+                    f"median sigma {s['median_sigma']:.4f} | spearman {s['spearman_err_sigma']:.3f} | AUSE {s['ause']:.4f}")
     pd.concat(rows).to_csv(os.path.join(jd, "per_patch.csv"), index=False)
     if samples:
         np.savez_compressed(os.path.join(jd, "samples.npz"), **samples)
