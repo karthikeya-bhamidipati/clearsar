@@ -522,7 +522,11 @@ def main():
         steps = cfg["steps"]
         log(f"[plan] fixed budget: {steps} steps per run")
     elif device.type == "cuda":
-        sps.update(benchmark(sorted({bench_key(r) for r in runs}), cfg["batch_size"], cfg["crop"], log))
+        try:
+            sps.update(benchmark(sorted({bench_key(r) for r in runs}), cfg["batch_size"], cfg["crop"], log))
+        except Exception as e:  # never let planning kill the run: fall back to conservative defaults
+            log(f"[bench] failed ({type(e).__name__}: {e}) - using default speed estimates")
+            torch.cuda.empty_cache()
         todo = [r for r in runs if not job_done(r["name"])]
         steps = choose_steps(todo, sps, slots, deadline - time.time() - final_margin_s, cfg["step_options"], log)
     else:
