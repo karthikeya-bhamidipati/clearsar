@@ -22,9 +22,13 @@ def comparison_grid(samples, run_labels, path, dpi=150):
         panels = [(s["x"][0], "SAR VV", "gray"), (to_rgb(s["x"][N_S1:]), "Cloudy input", None),
                   (to_rgb(s["y"]), "Target (clear)", None)]
         for run in runs:
-            p = s["preds"].get(run)
-            panels.append((to_rgb(p) if p is not None else np.zeros_like(panels[1][0]),
-                           f"{run_labels[run]}\n{s.get('scores', {}).get(run, '')}", None))
+            if "preds_rgb" in s:                       # uint8 [H, W, 3] previews
+                p = s["preds_rgb"].get(run)
+                img = p / 255.0 if p is not None else np.zeros_like(panels[1][0])
+            else:                                      # 13-band predictions
+                p = s["preds"].get(run)
+                img = to_rgb(p) if p is not None else np.zeros_like(panels[1][0])
+            panels.append((img, f"{run_labels[run]}\n{s.get('scores', {}).get(run, '')}", None))
         if has_sigma:
             panels.append((s.get("sigma") if s.get("sigma") is not None else np.zeros(s["y"].shape[1:]),
                            "Uncertainty (b)", "magma"))
@@ -102,6 +106,59 @@ def sparsification_plot(curves, path):
     ax.set_title("Sparsification curve (Model A + variance head)")
     ax.grid(alpha=0.3)
     ax.legend(fontsize=8)
+    plt.tight_layout()
+    plt.savefig(path, dpi=150)
+    plt.close(fig)
+
+
+def learning_curve_plot(lc, path, metric="psnr"):
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4), sharey=True)
+    for ax, split in zip(axes, ["test_id", "ood"]):
+        sub = lc[lc.split == split]
+        for lab, g in sub.groupby("model", sort=False):
+            g = g.sort_values("fraction")
+            ax.plot(g.fraction * 100, g[metric], marker="o", label=lab)
+        ax.set_title(f"E1 learning curve - {SPLIT_LABELS[split]}")
+        ax.set_xlabel("% of training patches")
+        ax.set_ylabel(metric.upper())
+        ax.set_xticks([25, 50, 100])
+        ax.grid(alpha=0.3)
+    axes[0].legend(fontsize=8)
+    plt.tight_layout()
+    plt.savefig(path, dpi=150)
+    plt.close(fig)
+
+
+def erf_grid(erfs, labels, stats, path):
+    fig, axes = plt.subplots(1, len(erfs), figsize=(3.2 * len(erfs), 3.4), squeeze=False)
+    for ax, (run, erf) in zip(axes[0], erfs.items()):
+        ax.imshow(np.log10(erf + 1e-9), cmap="inferno")
+        ax.set_title(f"{labels.get(run, run)}\nr50={stats[run]['radius50']:.0f}px  "
+                     f"r90={stats[run]['radius90']:.0f}px", fontsize=8)
+        ax.axis("off")
+    fig.suptitle("E3c effective receptive field (log scale, centre output pixel)", fontsize=10)
+    plt.tight_layout()
+    plt.savefig(path, dpi=150)
+    plt.close(fig)
+
+
+def uncertainty_methods_plot(curves, path):
+    """curves: {(method_label, split): sparsification dict}"""
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4), sharey=True)
+    for ax, split in zip(axes, ["test_id", "ood"]):
+        oracle_drawn = False
+        for (method, s), sp in curves.items():
+            if s != split:
+                continue
+            ax.plot(sp["fractions"], sp["model"], label=f"{method} (AUSE {sp['ause']:.4f})")
+            if not oracle_drawn:
+                ax.plot(sp["fractions"], sp["oracle"], "k--", label="oracle", alpha=0.6)
+                oracle_drawn = True
+        ax.set_title(f"E7 sparsification - {SPLIT_LABELS[split]}")
+        ax.set_xlabel("fraction of most-uncertain pixels removed")
+        ax.grid(alpha=0.3)
+        ax.legend(fontsize=7)
+    axes[0].set_ylabel("MAE of remaining pixels")
     plt.tight_layout()
     plt.savefig(path, dpi=150)
     plt.close(fig)

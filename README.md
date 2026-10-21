@@ -58,36 +58,54 @@ python find_region_scenes.py extract-local --csv ../../data/scans/scenes.csv \
 See `docs/project_plan.md` §2 for the full data pipeline, §3–6 for models and
 experiments, and §7 for the week-by-week schedule.
 
-## Training on Kaggle (the whole comparison in one run)
+## Training on Kaggle (the complete project in one 12-hour session)
 
-[`notebooks/kaggle_pipeline.py`](notebooks/kaggle_pipeline.py) does everything: index the
-attached SEN12MS-CR files, split **by scene** (Asia → train/val/test, one scene per other
-continent → out-of-continent test), cache the patches once, train all five runs under the
-same protocol, evaluate, and export tables, figures, checkpoints and frontend samples.
+[`notebooks/kaggle_pipeline.py`](notebooks/kaggle_pipeline.py) runs **every experiment in
+`docs/project_plan.md`** in one session: index the attached SEN12MS-CR files, split **by scene**
+(Asia → train/val/test, one scene per other continent → out-of-continent test), cache the
+patches once, benchmark the GPU, pick **one step budget for all runs** so everything fits, train
+the jobs below (one per GPU in parallel on T4 ×2), then ensemble + receptive-field analysis and
+export everything.
 
-| Run | What it is |
+Jobs, in priority order (if time runs short, the last ones are skipped — never the core):
+
+| Experiment | Runs |
 |---|---|
-| `A_unet` | Model A — U-Net, L1 |
-| `B_swin` | Model B — U-Net with a shifted-window Swin bottleneck, L1 |
-| `C_vit` | Model C — pure ViT (patch 8, learned positional embeddings), L1 |
-| `A_gan` | Model A + PatchGAN, L1 × 100 + adversarial (E4) |
-| `A_unc` | Model A + Laplace variance head (E7) |
-| `identity` | baseline: output = cloudy input (every model must beat it) |
+| core | `A_unet` U-Net · `B_swin` Swin-bottleneck U-Net · `C_vit` pure ViT (all L1) |
+| baselines | `identity` (output = cloudy input) · `tiny_cnn` (3 conv layers) |
+| E1 learning curves | `A/B/C_f25`, `A/B/C_f50` (25 % and 50 % of the training patches) |
+| leakage check | `A_random` (random patch split instead of scene split) |
+| E2 domain shift | every model is evaluated on the out-of-continent test set |
+| E3 U-Net probes | `A_noskip` · `A_l2` · effective receptive field (post-hoc) |
+| E4 GAN | `A_gan` (λ = 100) · `A_gan10` (λ = 10); λ = ∞ is `A_unet` |
+| E5 Swin probes | `B_noshift` · `B_win8` · `B_win16` (= global attention) |
+| E6 ViT probes | `C_nopos` · `C_p16` |
+| E7 uncertainty | `A_unc` variance head · `A_mcd` MC dropout (20 passes) · `A_ens` 3-seed ensemble |
+| seeds | `A_unet_s43`, `A_unet_s44`, `B_swin_s43`, `C_vit_s43` |
 
-1. Kaggle notebook → **Accelerator: GPU T4**, **Internet: on**, add the four datasets above.
-2. One cell:
+**On Kaggle**
+
+1. New notebook → Settings: **Accelerator: GPU T4 ×2**, **Internet: on**. Add the four
+   datasets above as inputs.
+2. Smoke test (≈30 min, same code path with a tiny budget) — one cell, run interactively:
    ```python
+   !git clone -q https://github.com/karthikeya-bhamidipati/clearsar.git /kaggle/working/clearsar
+   !CLEARSAR_QUICK=1 python /kaggle/working/clearsar/notebooks/kaggle_pipeline.py
+   ```
+   It must end with `DONE - download ...` and a RUN STATUS list with every job `done`.
+3. Full run — replace the cell with
+   ```python
+   !rm -rf /kaggle/working/*
    !git clone -q https://github.com/karthikeya-bhamidipati/clearsar.git /kaggle/working/clearsar
    !python /kaggle/working/clearsar/notebooks/kaggle_pipeline.py
    ```
-   (or paste the whole script into a cell). **Save Version → Save & Run All.**
-   Default budget: 15,000 steps per run (plan §4); set `CLEARSAR_QUICK=1` for a ~15 min smoke run:
-   `!CLEARSAR_QUICK=1 python /kaggle/working/clearsar/notebooks/kaggle_pipeline.py`
-3. Download `/kaggle/working/clearsar_output.zip` from the notebook's Output tab and
-   extract it into `outputs/` in this folder (ignored by git).
+   then **Save Version → Save & Run All (Commit)**. It stops itself after ~11 h (before Kaggle's
+   12 h limit; change with `CLEARSAR_HOURS=…`).
+4. When the version finishes: Output tab → download `clearsar_output.zip` → extract into
+   `outputs/` in this folder (ignored by git) → `streamlit run app.py`.
 
-Every setting (patch caps, steps, runs, paths) can be overridden with a `CLEARSAR_*`
-environment variable — see the `CONFIG` block at the top of the script.
+Every setting can be overridden with a `CLEARSAR_*` environment variable — see `CONFIG` at the
+top of the script.
 
 ## Frontend
 
@@ -97,7 +115,9 @@ streamlit run app.py
 ```
 
 Tabs: **Overview** (headline numbers, map of scenes per split), **Results** (in-domain vs
-out-of-continent, cloud-cover bins, per-country incl. India, uncertainty calibration),
+out-of-continent with seed error bars, cloud-cover bins, per-country incl. India),
+**Experiments** (every E1–E7 ablation vs its reference with the plan's prediction, learning
+curves, leakage check, receptive fields, uncertainty methods, seed variance),
 **Training** (validation curves, parameter counts, GPU time), **Gallery** (every model on
 the same test patches) and **Live inference** (run any checkpoint on CPU on a gallery patch
 or your own S1 + S2 GeoTIFFs, download the georeferenced prediction).

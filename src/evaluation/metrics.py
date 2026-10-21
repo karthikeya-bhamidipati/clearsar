@@ -128,13 +128,19 @@ def sparsification(errors, sigmas, fractions=np.linspace(0, 0.95, 20)):
     return dict(fractions=np.asarray(fractions), model=model, oracle=oracle, ause=ause)
 
 
-def uncertainty_summary(errors, sigmas):
+GAUSS_Z95 = 1.959964           # P(|e| <= 1.96 sigma) = 0.95 for a Gaussian
+
+
+def uncertainty_summary(errors, sigmas, kind="laplace"):
+    """kind='laplace' for the variance head (sigma = Laplace scale b),
+    'gaussian' for MC dropout / ensembles (sigma = standard deviation)."""
     errors, sigmas = np.asarray(errors), np.asarray(sigmas)
+    z = LAPLACE_Z95 if kind == "laplace" else GAUSS_Z95
     from scipy.stats import spearmanr
     rho = spearmanr(errors, sigmas).correlation if len(errors) > 2 else float("nan")
     sp = sparsification(errors, sigmas)
     return dict(
-        coverage95=float((errors <= LAPLACE_Z95 * sigmas).mean()),
+        coverage95=float((errors <= z * sigmas).mean()),
         mean_sigma=float(sigmas.mean()),
         mean_abs_error=float(errors.mean()),
         spearman_err_sigma=float(rho),

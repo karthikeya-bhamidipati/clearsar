@@ -180,3 +180,33 @@ reject non-positive / boolean channel counts (`tests/test_pipeline.py::test_posi
 - Not yet implemented from the plan: LR range test, second seeds, E1 data fractions, E3c/E5c
   visualisations, MC dropout / ensemble (E7b/c). The run configs and model flags
   (`use_skips`, `shift`, `window_size`, `use_pos_emb`, `patch_size`) are in place for them.
+
+---
+
+## 2026-10-21 (later) — Complete experiment suite in one Kaggle session
+
+`notebooks/kaggle_pipeline.py` now runs **every experiment in the plan** in one 12-hour session:
+core A/B/C, tiny-CNN + identity baselines, E1 (25/50/100%), the leakage check (random patch
+split), E2 (out-of-continent), E3a/b/c (no skips, L2, effective receptive field), E4 (λ=100, 10),
+E5a/b (no shift, window 8/16), E6a/b (no positional embedding, patch 16), E7a/b/c (variance head,
+MC dropout, 3-seed ensemble) and second seeds for A/B/C.
+
+How it fits in 12 h:
+- **One step budget for every run.** A short GPU benchmark measures each architecture's speed and
+  the planner picks the largest budget (15k, 12k, 10k, ... steps) at which all 26 jobs fit, so
+  every comparison is still at an identical budget.
+- **Both T4s in parallel.** Each job runs in its own process on one GPU.
+- **Priority order + deadline guard.** Jobs run in the plan's priority order ("never cut" first,
+  the plan's cut order last). A job is never started if it can't finish before the deadline, and a
+  running job stops early, keeping its best checkpoint, if it overruns. The session therefore ends
+  before Kaggle's limit and the output is always saved.
+- **Crash-safe.** Each job writes its results to `jobs/<run>/` as soon as it finishes; a failed job
+  is logged and skipped, not fatal.
+
+New outputs: `metrics_main.csv` (mean ± std over seeds), `experiments.csv` (every ablation vs its
+reference, with the plan's prediction), `learning_curves.csv`, `leakage_check.csv`,
+`erf_stats.csv`, `uncertainty_summary.csv` for all three uncertainty methods. The frontend gained
+an **Experiments** tab.
+
+Not run: E5c (attention maps) — first in the plan's cut order. Cloud bins still use the
+reflectance-difference proxy rather than s2cloudless.

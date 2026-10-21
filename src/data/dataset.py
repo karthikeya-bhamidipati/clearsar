@@ -21,6 +21,7 @@ import hashlib
 import json
 import os
 import re
+import zlib
 from collections import defaultdict
 
 import numpy as np
@@ -324,17 +325,47 @@ def build_cache(split_df, cache_dir, name, apply_lee=False, num_workers=4, log=p
     return info, df
 
 
+def fraction_indices(split_df, fraction, seed=42):
+    """Cache indices of a NESTED training subset (E1 learning curves): within every scene the
+    patches are put in one fixed random order and the first `fraction` of them are kept, so
+    the 25% subset is contained in the 50% subset, which is contained in 100%."""
+    d = split_df[split_df.valid]
+    if fraction >= 1.0:
+        return np.sort(d.cache_idx.values)
+    keep = []
+    for (season, scene), g in d.groupby(["season", "scene"]):
+        rng = np.random.default_rng([seed, int(scene), zlib.crc32(season.encode())])
+        order = g.cache_idx.values[rng.permutation(len(g))]
+        keep.extend(order[: max(1, int(round(fraction * len(g))))])
+    return np.sort(np.asarray(keep, dtype=np.int64))
+
+
+def random_patch_split(pools, sizes, seed=42):
+    """Leakage check (plan §2.3): ignore scenes and split the pooled patches at random.
+    pools: {cache_name: valid cache indices}; sizes: {split: n}. Returns {split: [(cache_name, idx)]}."""
+    items = [(name, int(i)) for name, idx in pools.items() for i in idx]
+    order = np.random.default_rng(seed).permutation(len(items))
+    out, start = {}, 0
+    for split, n in sizes.items():
+        out[split] = [items[k] for k in order[start:start + n]]
+        start += n
+    return out
+
+
 class CachedPatchDataset(Dataset):
     """Reads from build_cache() memmaps. Opened lazily so it is safe with DataLoader workers.
 
-    crop    : int -> random crop of that size (training); None -> full 256x256 patch
-    augment : random horizontal/vertical flips and 90-degree rotations (training only)
-    Returns (x [15, h, w], y [13, h, w], cache_idx)."""
+    crop       : int -> random crop of that size (training); None -> full 256x256 patch
+    augment    : random horizontal/vertical flips and 90-degree rotations (training only)
+    key_offset : added to the returned index, so datasets built on different caches can be
+                 concatenated and still be told apart
+    Returns (x [15, h, w], y [13, h, w], cache_idx + key_offset)."""
 
-    def __init__(self, cache_info, indices, crop=None, augment=False):
+    def __init__(self, cache_info, indices, crop=None, augment=False, key_offset=0):
         self.xp, self.yp = cache_info["x"], cache_info["y"]
         self.indices = np.asarray(indices, dtype=np.int64)
         self.crop, self.augment = crop, augment
+        self.key_offset = int(key_offset)
         self._X = self._Y = None
 
     def __len__(self):
@@ -366,4 +397,4 @@ class CachedPatchDataset(Dataset):
             k90 = int(torch.randint(0, 4, (1,)))
             if k90:
                 x, y = torch.rot90(x, k90, (-2, -1)), torch.rot90(y, k90, (-2, -1))
-        return x.contiguous(), y.contiguous(), i
+        return x.contiguous(), y.contiguous(), i + self.key_offset

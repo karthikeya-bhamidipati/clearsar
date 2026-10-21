@@ -40,6 +40,8 @@ class RunConfig:
     log_every: int = 200
     grad_clip: float = 1.0
     seed: int = 42
+    loss: str = "l1"                # "l1" | "l2" (E3b)
+    deadline: float = 0.0           # unix time; training stops early (keeping the best checkpoint) after it
 
 
 def _lr_lambda(warmup, total):
@@ -86,7 +88,7 @@ def train_run(cfg, train_loader, val_loader, device, ckpt_dir, log_dir, in_ch=15
         optD = torch.optim.AdamW(D.parameters(), lr=cfg.lr, betas=betas, weight_decay=cfg.weight_decay)
         schedD = torch.optim.lr_scheduler.LambdaLR(optD, _lr_lambda(cfg.warmup, cfg.steps))
         scalerD = torch.amp.GradScaler("cuda", enabled=amp)
-    recon = UncertaintyL1Loss(out_ch) if cfg.uncertainty else nn.L1Loss()
+    recon = UncertaintyL1Loss(out_ch) if cfg.uncertainty else (nn.MSELoss() if cfg.loss == "l2" else nn.L1Loss())
     bce = nn.BCEWithLogitsLoss()
 
     step, best, history, elapsed = 0, dict(val_l1=float("inf")), [], 0.0
@@ -119,7 +121,11 @@ def train_run(cfg, train_loader, val_loader, device, ckpt_dir, log_dir, in_ch=15
     run = dict(loss=0.0, adv=0.0, d=0.0, gnorm=0.0, n=0)
     t0 = time.time()
     t_log = time.time()
+    stopped_early = False
     while step < cfg.steps:
+        if cfg.deadline and time.time() > cfg.deadline and step > 0:
+            stopped_early = True
+            log(f"[{cfg.name}] time budget reached at step {step} - stopping early")
         x, y, _ = next(it)
         x, y = x.to(device, non_blocking=True), y.to(device, non_blocking=True)
 
@@ -171,7 +177,7 @@ def train_run(cfg, train_loader, val_loader, device, ckpt_dir, log_dir, in_ch=15
             log(msg)
             t_log = time.time()
 
-        if step % cfg.val_every == 0 or step == cfg.steps:
+        if step % cfg.val_every == 0 or step == cfg.steps or stopped_early:
             n = max(1, run["n"])
             res, _ = evaluate(G, val_loader, device, out_channels=out_ch, uncertainty=cfg.uncertainty)
             G.train()
@@ -197,10 +203,13 @@ def train_run(cfg, train_loader, val_loader, device, ckpt_dir, log_dir, in_ch=15
                 state.update(D=D.state_dict(), optD=optD.state_dict(), schedD=schedD.state_dict(),
                              scalerD=scalerD.state_dict())
             torch.save(state, last_path)
+            if stopped_early:
+                break
 
     info = dict(name=cfg.name, label=cfg.label, arch=cfg.arch, params=n_params, steps=cfg.steps,
                 best_step=best.get("step"), best_val_l1=best["val_l1"], best_val_psnr=best.get("val_psnr"),
-                best_val_ssim=best.get("val_ssim"), train_minutes=(elapsed + time.time() - t0) / 60,
+                best_val_ssim=best.get("val_ssim"), steps_done=step, stopped_early=stopped_early,
+                train_minutes=(elapsed + time.time() - t0) / 60,
                 peak_gpu_gb=(torch.cuda.max_memory_allocated(device) / 1e9) if amp else 0.0)
     # Replace the large resume state with a small "finished" marker.
     torch.save(dict(finished=True, info=info), last_path)

@@ -60,15 +60,18 @@ class ModelA_UNet(nn.Module):
 
     use_skips=False replaces each skip tensor with zeros (E3a ablation) so the parameter
     count stays identical and only the information flow changes.
+    dropout>0 adds Dropout2d after the bottleneck and the two deepest decoder blocks
+    (used for MC-dropout uncertainty, E7b).
     """
 
-    def __init__(self, in_channels=15, out_channels=13, uncertainty=False, use_skips=True):
+    def __init__(self, in_channels=15, out_channels=13, uncertainty=False, use_skips=True, dropout=0.0):
         super().__init__()
         _check_channels(in_channels, out_channels)
         self.out_channels = out_channels
         self.uncertainty = uncertainty
         self.use_skips = use_skips
         n_out = out_channels * (2 if uncertainty else 1)
+        self.drop = nn.Dropout2d(dropout) if dropout > 0 else nn.Identity()
 
         self.enc1 = UNetBlock(in_channels, 64)
         self.enc2 = UNetBlock(64, 128)
@@ -93,11 +96,11 @@ class ModelA_UNet(nn.Module):
         return e1, e2, e3
 
     def middle(self, e3):
-        return self.bottleneck(self.pool(e3))
+        return self.drop(self.bottleneck(self.pool(e3)))
 
     def decode(self, b, e1, e2, e3):
-        d3 = self.dec3(torch.cat([self.up3(b), self._skip(e3)], dim=1))
-        d2 = self.dec2(torch.cat([self.up2(d3), self._skip(e2)], dim=1))
+        d3 = self.drop(self.dec3(torch.cat([self.up3(b), self._skip(e3)], dim=1)))
+        d2 = self.drop(self.dec2(torch.cat([self.up2(d3), self._skip(e2)], dim=1)))
         d1 = self.dec1(torch.cat([self.up1(d2), self._skip(e1)], dim=1))
         return self.final(d1)
 
@@ -206,8 +209,8 @@ class ModelB_SwinUNet(ModelA_UNet):
     """
 
     def __init__(self, in_channels=15, out_channels=13, uncertainty=False, use_skips=True,
-                 depth=4, num_heads=8, window_size=4, shift=True):
-        super().__init__(in_channels, out_channels, uncertainty, use_skips)
+                 depth=4, num_heads=8, window_size=4, shift=True, dropout=0.0):
+        super().__init__(in_channels, out_channels, uncertainty, use_skips, dropout)
         del self.bottleneck
         dim = 256
         self.swin = nn.ModuleList([
@@ -293,10 +296,30 @@ class ModelC_PureViT(nn.Module):
 
 
 # --------------------------------------------------------------------------------------
+# Baseline - tiny CNN (plan §2.4): if a big model can't clearly beat this, something is wrong
+# --------------------------------------------------------------------------------------
+class TinyCNN(nn.Module):
+    def __init__(self, in_channels=15, out_channels=13, uncertainty=False, width=64):
+        super().__init__()
+        _check_channels(in_channels, out_channels)
+        self.out_channels, self.uncertainty = out_channels, uncertainty
+        n_out = out_channels * (2 if uncertainty else 1)
+        self.net = nn.Sequential(
+            nn.Conv2d(in_channels, width, 3, padding=1), nn.ReLU(inplace=True),
+            nn.Conv2d(width, width, 3, padding=1), nn.ReLU(inplace=True),
+            nn.Conv2d(width, n_out, 3, padding=1),
+        )
+
+    def forward(self, x):
+        return _split_output(self.net(x), self.out_channels, self.uncertainty)
+
+
+# --------------------------------------------------------------------------------------
 ARCHITECTURES = {
     "unet": ModelA_UNet,
     "swin_unet": ModelB_SwinUNet,
     "vit": ModelC_PureViT,
+    "tiny_cnn": TinyCNN,
 }
 
 
