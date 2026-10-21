@@ -340,5 +340,6 @@ def load_model_from_checkpoint(path, map_location="cpu"):
     model = build_model(ckpt["arch"], ckpt["in_channels"], ckpt["out_channels"],
                         ckpt["uncertainty"], **ckpt.get("model_kwargs", {}))
     model.load_state_dict(ckpt["model"])
+    model.to(map_location)     # map_location only moves the stored tensors, not the new model
     model.eval()
     return model, ckpt
