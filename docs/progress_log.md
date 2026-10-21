@@ -126,3 +126,57 @@ Final `scan-local --continent Asia` result (supersedes the plan's rough
   scene*, so the whole quota is roughly **10–11 scenes**, not 18. Extract in
   smaller batches and persist each one (download, or save as a Kaggle
   Dataset) before starting the next batch.
+
+---
+
+## 2026-10-21 — Pipeline audit after the Kaggle crash; full rewrite of the training path
+
+### The crash
+`RuntimeError: weight of size [64, 0, 3, 3], expected input[16, 6, 256, 256] to have 0 channels`.
+The notebook called `ModelA_UNet(False)`; the first positional parameter is `in_channels`, so the
+U-Net was built with **0** input channels. Models now must be built with keyword arguments and
+reject non-positive / boolean channel counts (`tests/test_pipeline.py::test_positional_bool_bug_is_caught`).
+
+### Silent problems found while auditing (each would have invalidated results without crashing)
+1. **SAR input was erased.** SEN12MS-CR S1 is already in dB (mostly negative). The code applied
+   `10*log10(clip(x, 1e-5))` again, so every negative value became -50 dB → clipped → the constant
+   −1. The models were effectively trained without radar. Fixed per plan §2.2 (clip VV [−25, 0],
+   VH [−32.5, 0], rescale to [0, 1]); the Lee filter now runs in the linear domain and is off by
+   default (ablation only, as the plan says).
+2. **Wrong bands.** `read()[:3]` / `[:4]` took B1 (coastal aerosol), B2, B3 — not RGB. Now all 13
+   bands in and out (15 → 13 channels, plan §3); RGB for display is B4/B3/B2.
+3. **Triplets were mis-paired.** The dictionary keys never matched (`parts[-3]` is `s1`/`s2`/`cloudy`),
+   so the "global list-sorting fallback" zipped three independently sorted lists of 122k files —
+   any difference between mirrors shifts every pair. Pairing is now by the exact
+   `(season, scene, patch)` parsed with the same regex as the scene finder.
+4. **Spatial leakage.** Patches were shuffled and split randomly, so near-duplicate neighbouring
+   patches sat in train and test; the "OOD" set was just another random 5%. Splits are now by scene
+   (Asia: ~60/20/20 of scenes, one Indian scene forced into test), and the out-of-continent set is one
+   scene each from Europe, Africa, North and South America.
+5. **"FID" was not FID.** It was a Fréchet distance on 8×8-pooled pixels over 16-image batches
+   (rank-deficient covariance). Replaced by real Inception FID (torchmetrics) over the whole test set;
+   if it can't be loaded the column is NaN rather than a misleading number.
+6. **Protocol differed from the plan.** Every model was trained as a GAN; Model C had no positional
+   embedding (attention ignores token order); Model B was a global transformer, not Swin. Now: A/B/C
+   with L1, the GAN as a separate A ablation, a real shifted-window Swin bottleneck with relative
+   position bias, a conv-free ViT (patch 8, dim 192, learned positions), AdamW + warmup/cosine, one
+   GradScaler per network, best checkpoint by validation L1.
+7. **`find_region_scenes.py` had been replaced** by a stub that assigned countries from a hash of the
+   scene id (`CN/JP/IN/FR` by `sum(ord(c)) % 4`). Restored the real reverse-geocoding version and
+   `continents.py` from `1b5d4ea`. `data/scans/scenes.csv` was always from the real scan.
+
+### New structure
+- `src/data/dataset.py` — index, scene split, preprocessing, one-off float16 memmap cache, crop dataset
+- `src/training/trainer.py` — one training loop for every run (resumable)
+- `src/evaluation/{metrics,evaluate,plots}.py` — GPU metrics (checked against scikit-image), tiled
+  inference, FID, uncertainty calibration (coverage, sparsification/AUSE), figures
+- `notebooks/kaggle_pipeline.py` — the Kaggle script; `app.py` — Streamlit frontend
+- `tests/` — unit tests and a synthetic SEN12MS-CR generator; the full pipeline was run end-to-end on
+  synthetic data on CPU, and a 16-sample overfit test drives U-Net L1 from 0.22 to 0.002.
+
+### Still open
+- Real Kaggle run (≈2 h on a T4 for all five runs at 15k steps).
+- Cloud bins use a reflectance-difference proxy, not s2cloudless.
+- Not yet implemented from the plan: LR range test, second seeds, E1 data fractions, E3c/E5c
+  visualisations, MC dropout / ensemble (E7b/c). The run configs and model flags
+  (`use_skips`, `shift`, `window_size`, `use_pos_emb`, `patch_size`) are in place for them.

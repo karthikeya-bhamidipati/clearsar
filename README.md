@@ -58,11 +58,63 @@ python find_region_scenes.py extract-local --csv ../../data/scans/scenes.csv \
 See `docs/project_plan.md` §2 for the full data pipeline, §3–6 for models and
 experiments, and §7 for the week-by-week schedule.
 
+## Training on Kaggle (the whole comparison in one run)
+
+[`notebooks/kaggle_pipeline.py`](notebooks/kaggle_pipeline.py) does everything: index the
+attached SEN12MS-CR files, split **by scene** (Asia → train/val/test, one scene per other
+continent → out-of-continent test), cache the patches once, train all five runs under the
+same protocol, evaluate, and export tables, figures, checkpoints and frontend samples.
+
+| Run | What it is |
+|---|---|
+| `A_unet` | Model A — U-Net, L1 |
+| `B_swin` | Model B — U-Net with a shifted-window Swin bottleneck, L1 |
+| `C_vit` | Model C — pure ViT (patch 8, learned positional embeddings), L1 |
+| `A_gan` | Model A + PatchGAN, L1 × 100 + adversarial (E4) |
+| `A_unc` | Model A + Laplace variance head (E7) |
+| `identity` | baseline: output = cloudy input (every model must beat it) |
+
+1. Kaggle notebook → **Accelerator: GPU T4**, **Internet: on**, add the four datasets above.
+2. One cell:
+   ```python
+   !git clone -q https://github.com/karthikeya-bhamidipati/clearsar.git /kaggle/working/clearsar
+   !python /kaggle/working/clearsar/notebooks/kaggle_pipeline.py
+   ```
+   (or paste the whole script into a cell). **Save Version → Save & Run All.**
+   Default budget: 15,000 steps per run (plan §4); set `CLEARSAR_QUICK=1` for a ~15 min smoke run:
+   `!CLEARSAR_QUICK=1 python /kaggle/working/clearsar/notebooks/kaggle_pipeline.py`
+3. Download `/kaggle/working/clearsar_output.zip` from the notebook's Output tab and
+   extract it into `outputs/` in this folder (ignored by git).
+
+Every setting (patch caps, steps, runs, paths) can be overridden with a `CLEARSAR_*`
+environment variable — see the `CONFIG` block at the top of the script.
+
+## Frontend
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Tabs: **Overview** (headline numbers, map of scenes per split), **Results** (in-domain vs
+out-of-continent, cloud-cover bins, per-country incl. India, uncertainty calibration),
+**Training** (validation curves, parameter counts, GPU time), **Gallery** (every model on
+the same test patches) and **Live inference** (run any checkpoint on CPU on a gallery patch
+or your own S1 + S2 GeoTIFFs, download the georeferenced prediction).
+
+## Tests
+
+```bash
+python -m pytest tests -q                       # models, preprocessing, metrics vs scikit-image, splits
+python tests/make_synthetic_data.py --out /tmp/synth   # fake SEN12MS-CR for an end-to-end smoke run
+```
+
 ## Project layout
 
 ```
 clearsar/
 ├── README.md                  <- you are here
+├── app.py                     <- Streamlit frontend (reads outputs/)
 ├── requirements.txt
 ├── .gitignore
 ├── docs/
@@ -76,7 +128,9 @@ clearsar/
 │   ├── models/                <- U-Net, Swin-U-Net, ViT, PatchGAN, uncertainty heads
 │   ├── training/               <- training loop, AMP, checkpointing, LR range test
 │   └── evaluation/             <- PSNR/SSIM/SAM/UCE/AUSE, plotting
-├── notebooks/                  <- Kaggle/exploratory notebooks (keep thin — logic lives in src/)
+├── notebooks/kaggle_pipeline.py <- the Kaggle training/evaluation script (logic lives in src/)
+├── tests/                      <- unit tests + synthetic-data generator
+├── outputs/                    <- extracted Kaggle output (NOT tracked)
 └── experiments/
     ├── checkpoints/            <- model weights (NOT tracked)
     ├── logs/                   <- training logs, metrics CSVs (tracked)

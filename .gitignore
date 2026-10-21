@@ -9,6 +9,17 @@ data/raw/*
 experiments/checkpoints/*
 !experiments/checkpoints/.gitkeep
 
+# --- Kaggle run outputs (extract clearsar_output.zip here; copy small CSVs/PNGs
+#     you want to keep into experiments/results/) ---
+outputs/
+*.pt
+*.pth
+*.npz
+*.zip
+
+# --- local tool config ---
+.claude/
+
 # --- python ---
 __pycache__/
 *.pyc
