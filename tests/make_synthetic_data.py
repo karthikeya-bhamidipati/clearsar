@@ -25,14 +25,18 @@ from scipy.ndimage import gaussian_filter
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def pick_scenes(csv):
+def pick_scenes(csv, n_extra=0):
     df = pd.read_csv(csv)
     asia = df[df.continent == "Asia"]
     chosen = [asia[asia.country == "IN"].iloc[0]]
     chosen += [r for _, r in asia[asia.country != "IN"].head(7).iterrows()]
     for cont in ("Europe", "Africa", "North America", "South America"):
         chosen.append(df[df.continent == cont].iloc[0])
-    return [(r.season, int(r.scene)) for r in chosen]
+    keys = [(r.season, int(r.scene)) for r in chosen]
+    rest = df[[(r.season, int(r.scene)) not in set(keys) for r in df.itertuples()]]
+    for _, r in rest.groupby("continent", group_keys=False).head(max(1, n_extra // 4)).head(n_extra).iterrows():
+        keys.append((r.season, int(r.scene)))           # extra scenes, spread over continents (plan v4 tests)
+    return keys
 
 
 def write(path, arr, dtype):
@@ -63,10 +67,11 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--out", required=True)
     p.add_argument("--patches", type=int, default=6)
+    p.add_argument("--extra-scenes", type=int, default=0, help="add more scenes across continents")
     p.add_argument("--csv", default=os.path.join(HERE, "..", "data", "scans", "scenes.csv"))
     a = p.parse_args()
     rng = np.random.default_rng(0)
-    scenes = pick_scenes(a.csv)
+    scenes = pick_scenes(a.csv, a.extra_scenes)
     n = 0
     for season, scene in scenes:
         for patch in range(1, a.patches + 1):

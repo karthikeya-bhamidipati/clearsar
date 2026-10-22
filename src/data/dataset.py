@@ -398,3 +398,65 @@ class CachedPatchDataset(Dataset):
             if k90:
                 x, y = torch.rot90(x, k90, (-2, -1)), torch.rot90(y, k90, (-2, -1))
         return x.contiguous(), y.contiguous(), i + self.key_offset
+
+
+# --------------------------------------------------------------------------------------
+# Plan v4: a worldwide split, and scene-diversity subsets for the stage-3 learning curve
+# --------------------------------------------------------------------------------------
+def make_global_splits(df, phase1_scenes=None, n_val=18, n_test=25, caps=None, seed=42, log=print):
+    """Split ALL scenes (every continent) by scene into train / val / test.
+
+    Phase-1 scenes keep their role (Phase-1 test_id and ood scenes -> test, val -> val, train -> train),
+    so the new model and the Phase-1 models can be compared on identical test scenes. The remaining scenes
+    are shuffled within each continent and dealt out round-robin until val and test reach n_val / n_test,
+    which stratifies both by continent. Each split is capped at caps[split] patches, sampled evenly
+    across its scenes. Returns (patch_df with a 'split' column, scene_df)."""
+    caps = caps or {}
+    rng = np.random.default_rng(seed)
+    scenes = df.groupby(["season", "scene"]).agg(
+        n_patches=("patch", "size"), country=("country", "first"), continent=("continent", "first"),
+        lon=("lon", "first"), lat=("lat", "first")).reset_index()
+    assign = {}
+    if phase1_scenes is not None:
+        role = {"train": "train", "val": "val", "test_id": "test", "ood": "test"}
+        for r in phase1_scenes.itertuples():
+            assign[(r.season, int(r.scene))] = role.get(r.split, "train")
+    present = {(r.season, int(r.scene)) for r in scenes.itertuples()}
+    assign = {k: v for k, v in assign.items() if k in present}
+    pools = {}
+    for cont, g in scenes.groupby("continent"):
+        keys = [(r.season, int(r.scene)) for r in g.itertuples() if (r.season, int(r.scene)) not in assign]
+        pools[cont] = [keys[i] for i in rng.permutation(len(keys))]
+    for split, target in (("test", n_test), ("val", n_val)):
+        conts = sorted(pools)
+        while sum(v == split for v in assign.values()) < target and any(pools[c] for c in conts):
+            for c in conts:
+                if pools[c] and sum(v == split for v in assign.values()) < target:
+                    assign[pools[c].pop()] = split
+    for c in pools:
+        for k in pools[c]:
+            assign[k] = "train"
+    scenes["split"] = [assign[(r.season, int(r.scene))] for r in scenes.itertuples()]
+    df = df.merge(scenes[["season", "scene", "split"]], on=["season", "scene"], how="inner")
+    parts = [_sample_evenly(df[df.split == s], caps.get(s), rng) for s in ("train", "val", "test")]
+    out = pd.concat(parts).sort_values(["split", "season", "scene", "patch"]).reset_index(drop=True)
+    used = out.groupby(["season", "scene"]).size().rename("n_used").reset_index()
+    scenes = scenes.merge(used, on=["season", "scene"], how="left").fillna({"n_used": 0})
+    for s in ("train", "val", "test"):
+        sc = scenes[scenes.split == s]
+        conts = sc.continent.value_counts().to_dict()
+        log(f"[split] {s:5s}: {len(sc):3d} scenes, {int((out.split == s).sum()):6d} patches  continents={conts}")
+    return out, scenes
+
+
+def scene_subset_indices(split_df, n_scenes, n_patches, seed=42):
+    """Stage-3 learning curve: n_patches cache indices drawn evenly from the first n_scenes of a fixed
+    random scene order (nested: the 33-scene set is inside the 66-scene set). Keeping n_patches fixed while
+    n_scenes changes separates the effect of DIVERSITY from the effect of the amount of data."""
+    d = split_df[split_df.valid]
+    keys = sorted({(r.season, int(r.scene)) for r in d.itertuples()})
+    order = [keys[i] for i in np.random.default_rng(seed).permutation(len(keys))][:n_scenes]
+    sub = d[[(r.season, int(r.scene)) in set(order) for r in d.itertuples()]]
+    rng = np.random.default_rng(seed + 1)
+    picked = _sample_evenly(sub, n_patches, rng)
+    return np.sort(picked.cache_idx.values.astype(np.int64)), len(order)

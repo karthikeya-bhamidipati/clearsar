@@ -324,6 +324,9 @@ ARCHITECTURES = {
 
 
 def build_model(arch, in_channels=15, out_channels=13, uncertainty=False, **kwargs):
+    if arch == "clearsar_net":                 # plan v4 model (imported lazily: it reuses UNetBlock)
+        from src.models.clearsar_net import ClearSARNet
+        return ClearSARNet(in_channels=in_channels, out_channels=out_channels, uncertainty=uncertainty, **kwargs)
     if arch not in ARCHITECTURES:
         raise KeyError(f"Unknown arch {arch!r}; choose from {sorted(ARCHITECTURES)}")
     return ARCHITECTURES[arch](in_channels=in_channels, out_channels=out_channels,
@@ -335,6 +338,9 @@ def set_output_bias(model, band_means):
     """Initialise the output layer's bias so that, before any training, every model
     predicts the average reflectance of each band (sigmoid(bias) = mean) instead of 0.5.
     ("Init well", Karpathy's training recipe.) band_means: [out_channels] in (0, 1)."""
+    if hasattr(model, "init_output_bias"):     # models that know how to initialise themselves
+        model.init_output_bias(band_means)
+        return
     m = torch.as_tensor(band_means, dtype=torch.float32).clamp(1e-3, 1 - 1e-3)
     logit = torch.log(m / (1 - m))
     C = model.out_channels

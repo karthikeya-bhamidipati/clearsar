@@ -11,6 +11,63 @@ hero("SAR-to-optical cloud removal · Sentinel-1 + Sentinel-2 · Asia",
      "Clouds hide most optical satellite images. Radar sees straight through them but has no colour. "
      "ClearSAR trains three deep-learning architectures to fuse the two and reconstruct the cloud-free "
      "image - then an expert system decides how far each reconstruction can be trusted.")
+
+# ---------------------------------------------------------------- plan v4: ClearSAR-Net (if its results exist)
+from frontend.common import load_v4, pill, v4_labels  # noqa: E402
+
+v4 = load_v4()
+if v4 is not None and v4["samples"] is not None and "pred_v4_final" in v4["samples"]:
+    lab4, runs4, s4, m4 = v4_labels(v4), v4["v4_runs"].set_index("run"), v4["samples"], v4["samples_meta"]
+    p1 = [r for r in ("p1_A_unet", "p1_B_swin", "p1_C_vit", "p1_tiny_cnn") if r in runs4.index]
+    best_p1 = max(p1, key=lambda r: runs4.loc[r, "psnr"]) if p1 else None
+    names4 = [f"{m['country']} · {m['continent']} · {int(round(m['cloud_frac'] * 100))}% cloud" for m in m4["samples"]]
+    gains4 = [m["scores"].get("v4_final", {}).get("psnr", 0) - m["scores"].get("identity", {}).get("psnr", 0)
+              + (100 if 0.3 <= m["cloud_frac"] <= 0.9 else 0) for m in m4["samples"]]
+    left, right = st.columns([1.35, 1], gap="large")
+    with right:
+        st.markdown("<div style='height:.6rem'></div>", unsafe_allow_html=True)
+        i = st.selectbox("Test patch (never seen in training)", range(len(names4)), index=int(np.argmax(gains4)),
+                         format_func=lambda k: names4[k], key="home4_patch")
+        other = st.segmented_control("Compare with", ["Cloudy input", "True clear image"], default="Cloudy input",
+                                     key="home4_cmp") or "Cloudy input"
+        sc4 = m4["samples"][i]["scores"]
+        f, idn = sc4.get("v4_final", {}), sc4.get("identity", {})
+        st.markdown(
+            f"<div class='cs-card'><h4>ClearSAR-Net</h4><p>One model, built in eight stages - see "
+            f"<i>Building the model</i>. Drag the handle to compare.</p>"
+            + (f"<p style='margin-top:.7rem'><b style='color:#E6EAF2'>{f['psnr']:.2f} dB</b> PSNR vs "
+               f"<b style='color:#E6EAF2'>{idn['psnr']:.2f} dB</b> for the cloudy image · sharpness "
+               f"{f['sharpness']:.2f}</p>" if f and idn else "") + "</div>", unsafe_allow_html=True)
+        with st.expander("What the model sees"):
+            x4 = s4["x"][i].astype(np.float32)
+            c1, c2 = st.columns(2)
+            c1.image(np.clip(x4[0], 0, 1), caption="Radar VV")
+            if f"gate_v4_final" in s4:
+                from frontend.common import to_uint8
+                c2.image(to_uint8(s4["gate_v4_final"][i].astype(np.float32), cmap="viridis", vmax=1.0),
+                         caption="Where it keeps the input (gate)")
+    with left:
+        x4 = s4["x"][i].astype(np.float32)
+        base = rgb_u8(x4[2:]) if other == "Cloudy input" else rgb_u8(s4["y"][i].astype(np.float32))
+        compare_slider(base, s4["pred_v4_final"][i], other, "ClearSAR-Net", size=560)
+
+    section("At a glance", "25 held-out test scenes from every continent - the same scenes for every model.")
+    c = st.columns(4)
+    fr = runs4.loc["v4_final"]
+    kpi(c[0], "ClearSAR-Net PSNR", f"{fr.psnr:.2f} dB",
+        f"Phase 1 best ({lab4.get(best_p1, best_p1).replace('Phase 1 - ', '')}): {runs4.loc[best_p1, 'psnr']:.2f} dB" if best_p1 else "")
+    kpi(c[1], "Date shift removed", f"{fr.psnr_aligned:.2f} dB", "image quality without the date difference")
+    kpi(c[2], "Sharpness", f"{fr.sharpness:.2f}",
+        f"Phase 1 best: {runs4.loc[best_p1, 'sharpness']:.2f}" if best_p1 else "1.0 = as sharp as reality")
+    if "identity" in runs4.index:
+        kpi(c[3], "Gain over the cloudy image", f"+{fr.psnr - runs4.loc['identity', 'psnr']:.1f} dB",
+            f"cloudy input: {runs4.loc['identity', 'psnr']:.2f} dB")
+    dec4 = v4["config"].get("decisions", {})
+    st.markdown("<div style='margin-top:.8rem'>Built from: " + " ".join(pill(f"{k}: {v}", "accent") for k, v in dec4.items())
+                + "</div>", unsafe_allow_html=True)
+    st.caption("Phase 1 (the 26-run architecture comparison) is still available under *Phase 1 · exploration*.")
+    st.stop()
+
 if data is None:
     no_results()
 

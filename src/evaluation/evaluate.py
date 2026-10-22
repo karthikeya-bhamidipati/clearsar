@@ -46,20 +46,20 @@ def _enable_dropout(model):
 
 
 @torch.no_grad()
-def predict_with_uncertainty(model, x, out_channels=13, uncertainty=False, mc_passes=0):
+def predict_with_uncertainty(model, x, out_channels=13, uncertainty=False, mc_passes=0, tile=128):
     """Returns (pred [B, C, H, W], sigma [B, C, H, W] or None, kind).
     model may be a list (deep ensemble -> mean and std over members, E7c);
     mc_passes > 0 runs MC dropout (mean and std over passes, E7b);
     uncertainty=True reads the Laplace scale b = exp(s) from the variance head (E7a)."""
     if isinstance(model, (list, tuple)):
-        outs = torch.stack([predict_tiled(m, x)[:, :out_channels] for m in model])
+        outs = torch.stack([predict_tiled(m, x, tile)[:, :out_channels] for m in model])
         return outs.mean(0), outs.std(0), "gaussian"
     if mc_passes:
         _enable_dropout(model)
-        outs = torch.stack([predict_tiled(model, x)[:, :out_channels] for _ in range(mc_passes)])
+        outs = torch.stack([predict_tiled(model, x, tile)[:, :out_channels] for _ in range(mc_passes)])
         model.eval()
         return outs.mean(0), outs.std(0), "gaussian"
-    out = predict_tiled(model, x)
+    out = predict_tiled(model, x, tile)
     if uncertainty:
         return out[:, :out_channels], torch.exp(out[:, out_channels:].clamp(-10, 10)), "laplace"
     return out[:, :out_channels], None, None
@@ -67,7 +67,7 @@ def predict_with_uncertainty(model, x, out_channels=13, uncertainty=False, mc_pa
 
 @torch.no_grad()
 def evaluate(model, loader, device, out_channels=13, uncertainty=False, identity=False,
-             fid=False, unc_pixels_per_image=2000, collect=None, mc_passes=0):
+             fid=False, unc_pixels_per_image=2000, collect=None, mc_passes=0, tile=128):
     """Run a model, an ensemble (list of models) or the identity baseline over a loader.
 
     Returns (per-image metric dict of numpy arrays incl. 'cache_idx', extras) where extras
@@ -79,7 +79,7 @@ def evaluate(model, loader, device, out_channels=13, uncertainty=False, identity
         if m is not None:
             m.eval()
     fid_scorer = FIDScorer(device) if fid else None
-    rows = {k: [] for k in ("psnr", "ssim", "sam", "mae", "rmse", "cache_idx")}
+    rows = {"cache_idx": []}
     errs, sigs, samples, kind = [], [], {}, None
     gen = torch.Generator().manual_seed(0)
     for x, y, idx in loader:
@@ -87,10 +87,10 @@ def evaluate(model, loader, device, out_channels=13, uncertainty=False, identity
         if identity:
             pred, sigma = x[:, N_S1:N_S1 + out_channels], None
         else:
-            pred, sigma, kind = predict_with_uncertainty(model, x, out_channels, uncertainty, mc_passes)
+            pred, sigma, kind = predict_with_uncertainty(model, x, out_channels, uncertainty, mc_passes, tile)
         m = compute_metrics(pred, y)
         for k, v in m.items():
-            rows[k].append(v)
+            rows.setdefault(k, []).append(v)
         rows["cache_idx"].append(idx.numpy())
         if fid_scorer is not None:
             fid_scorer.update(rgb_tensor(pred), rgb_tensor(y))

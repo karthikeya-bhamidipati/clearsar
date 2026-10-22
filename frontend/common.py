@@ -265,3 +265,77 @@ def best_main_model(main, split="test_id"):
     if not len(m):
         m = main[(main.split == split) & ~main.group.isin(["identity", "tiny_cnn"])]
     return m.sort_values("psnr", ascending=False).iloc[0] if len(m) else None
+
+
+# ------------------------------------------------------------------ plan v4 outputs (outputs/v4/)
+def v4_root():
+    base = os.path.join(ROOT, "outputs", "v4")
+    if not os.path.isdir(base):
+        return None
+    for cand in [base] + [os.path.join(base, d) for d in sorted(os.listdir(base))]:
+        if os.path.exists(os.path.join(cand, "results", "v4_runs.csv")):
+            return cand
+    return None
+
+
+@st.cache_data(show_spinner=False)
+def _load_v4(root, stamp):
+    def csv(name):
+        p = os.path.join(root, "results", name)
+        return pd.read_csv(p) if os.path.exists(p) else None
+
+    d = {k: csv(f"{k}.csv") for k in ["v4_runs", "v4_by_region", "v4_by_cloud_bin", "v4_by_continent", "v4_decisions",
+                                      "v4_uncertainty", "v4_scene_splits", "stage0_ceiling", "stage0_patch_stats",
+                                      "stage1_overfit", "stage1_lr_range"]}
+    cfg_p = os.path.join(root, "config.json")
+    d["config"] = json.load(open(cfg_p)) if os.path.exists(cfg_p) else {}
+    hist = {}
+    logs = os.path.join(root, "logs")
+    if os.path.isdir(logs):
+        for f in os.listdir(logs):
+            if f.startswith("history_") and f.endswith(".csv"):
+                hist[f[8:-4]] = pd.read_csv(os.path.join(logs, f))
+    d["history"] = hist
+    sp = os.path.join(root, "results", "v4_samples.npz")
+    if os.path.exists(sp):
+        z = np.load(sp, allow_pickle=False)
+        d["samples"] = {k: z[k] for k in z.files if k != "meta"}
+        d["samples_meta"] = json.loads(str(z["meta"]))
+    else:
+        d["samples"], d["samples_meta"] = None, None
+    d["root"] = root
+    return d
+
+
+def load_v4():
+    root = v4_root()
+    if root is None:
+        return None
+    p = os.path.join(root, "results", "v4_runs.csv")
+    return _load_v4(root, os.path.getmtime(p))
+
+
+def v4_labels(v4):
+    lab = dict(v4["config"].get("labels", {}))
+    if v4["v4_runs"] is not None:
+        lab.update(dict(zip(v4["v4_runs"].run, v4["v4_runs"].label)))
+    return lab
+
+
+def lab_note(stage):
+    """The user's own prediction / explanation for a stage, read from docs/lab_notes.md."""
+    p = os.path.join(ROOT, "docs", "lab_notes.md")
+    if not os.path.exists(p):
+        return {}
+    text = open(p, encoding="utf-8").read()
+    import re
+    m = re.search(rf"## Stage {stage} .*?\n(.*?)(?=\n## Stage |\Z)", text, re.S)
+    if not m:
+        return {}
+    out = {}
+    for part in ("Prediction", "Result", "Explanation"):
+        mm = re.search(rf"\*\*{part}\*\*\s*\n(.*?)(?=\n\*\*[A-Z][a-z]+\*\*|\Z)", m.group(1), re.S)
+        val = mm.group(1).strip() if mm else ""
+        if val and not val.startswith("*(write"):
+            out[part.lower()] = val
+    return out

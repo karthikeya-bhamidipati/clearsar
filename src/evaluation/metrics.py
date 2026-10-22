@@ -6,6 +6,10 @@ Full-reference image metrics for [B, C, H, W] tensors in [0, 1] (all 13 bands).
     sam   : spectral angle mapper in degrees, averaged over pixels
     mae   : mean absolute error
     rmse  : root mean squared error
+    sharpness   : gradient energy of the prediction / of the target (1.0 = as sharp as reality;
+                  < 1 blurry, > 1 noisy or invented detail)                      [plan v4 "eye" metric]
+    colour_err  : MAE after 16 x 16 average pooling - coarse colour / brightness error     [eye metric]
+    detail_err  : MAE of the high-pass residual (image minus its 16 x 16 mean) - fine detail [eye metric]
 
 All functions return one value per image ([B] tensor) so results can be grouped later by
 scene / country / cloud-cover bin. Validated against scikit-image in tests/test_pipeline.py.
@@ -53,9 +57,40 @@ def sam_per_image(pred, target, eps=1e-8):
     return torch.rad2deg(torch.acos(cos)).mean(dim=(1, 2))
 
 
+def gradient_energy(x):
+    """Mean absolute horizontal + vertical difference per image ([B] tensor)."""
+    return (x[..., :, 1:] - x[..., :, :-1]).abs().mean(dim=(1, 2, 3)) +         (x[..., 1:, :] - x[..., :-1, :]).abs().mean(dim=(1, 2, 3))
+
+
+def psnr_aligned_per_image(pred, target):
+    """Per image and band: least-squares a, b with a * pred + b ≈ target, then PSNR of the aligned image."""
+    p, t = pred.flatten(2), target.flatten(2)                       # [B, C, N]
+    pm, tm = p.mean(-1, keepdim=True), t.mean(-1, keepdim=True)
+    var = ((p - pm) ** 2).mean(-1, keepdim=True)
+    a = ((p - pm) * (t - tm)).mean(-1, keepdim=True) / var.clamp_min(1e-8)
+    aligned = (a * (p - pm) + tm).clamp(0, 1)
+    mse = ((aligned - t) ** 2).mean(dim=(1, 2)).clamp_min(1e-10)
+    return 10.0 * torch.log10(1.0 / mse)
+
+
+def eye_metrics(pred, target, block=16):
+    """The plan-v4 'eye' metrics, per image: sharpness ratio, coarse colour error, fine detail error.
+    Splitting the error into a coarse and a fine part shows whether a model gets the colours wrong or
+    loses the detail - two different problems with different fixes."""
+    sharp = gradient_energy(pred) / gradient_energy(target).clamp_min(1e-8)
+    H, W = pred.shape[-2:]
+    k = block if H % block == 0 and W % block == 0 else 1
+    lp_p, lp_t = F.avg_pool2d(pred, k), F.avg_pool2d(target, k)
+    colour = (lp_p - lp_t).abs().mean(dim=(1, 2, 3))
+    hp_p = pred - F.interpolate(lp_p, scale_factor=k, mode="nearest")
+    hp_t = target - F.interpolate(lp_t, scale_factor=k, mode="nearest")
+    detail = (hp_p - hp_t).abs().mean(dim=(1, 2, 3))
+    return sharp, colour, detail
+
+
 @torch.no_grad()
 def compute_metrics(pred, target):
-    """Returns a dict of [B] numpy arrays: psnr, ssim, sam, mae, rmse."""
+    """Returns a dict of [B] numpy arrays: psnr, ssim, sam, mae, rmse, sharpness, colour_err, detail_err."""
     pred = pred.float().clamp(0, 1)
     target = target.float().clamp(0, 1)
     diff = pred - target
@@ -65,6 +100,8 @@ def compute_metrics(pred, target):
         "sam": sam_per_image(pred, target).cpu().numpy(),
         "mae": diff.abs().mean(dim=(1, 2, 3)).cpu().numpy(),
         "rmse": diff.pow(2).mean(dim=(1, 2, 3)).sqrt().cpu().numpy(),
+        **{k: v.cpu().numpy() for k, v in zip(("sharpness", "colour_err", "detail_err"), eye_metrics(pred, target))},
+        "psnr_aligned": psnr_aligned_per_image(pred, target).cpu().numpy(),
     }
 
 
