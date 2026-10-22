@@ -26,7 +26,13 @@ if s is not None and best is not None:
     left, right = st.columns([1.35, 1], gap="large")
     with right:
         st.markdown("<div style='height:.6rem'></div>", unsafe_allow_html=True)
-        i = st.selectbox("Test patch", range(len(names)), format_func=lambda k: names[k], key="home_patch")
+        # open on a partly cloudy Asian patch (30-90% cloud) where the best model gains most over the cloudy image
+        def gain(sm):
+            g = sm["scores"].get(best.group, {}).get("psnr", 0) - sm["scores"].get("identity", {}).get("psnr", 0)
+            return g + (100 if sm["split"] == "test_id" and 0.3 <= sm["cloud_frac"] <= 0.9 else 0)
+        gains = [gain(sm) for sm in meta["samples"]]
+        i = st.selectbox("Test patch", range(len(names)), index=int(np.argmax(gains)),
+                         format_func=lambda k: names[k], key="home_patch")
         runs = [r for r in meta["runs"] if f"pred_{r}" in s and r != "identity"]
         run = st.selectbox("Model", runs, index=runs.index(best.group) if best.group in runs else 0,
                            format_func=lambda r: lab.get(r, r), key="home_model")

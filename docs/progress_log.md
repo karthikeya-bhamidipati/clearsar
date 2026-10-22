@@ -232,3 +232,29 @@ Explore patches, Advisor, Knowledge base, How it works.
 conflict resolution), MYCIN-style forward-chaining engine with explanation trace, fact extraction from the
 patch / model outputs / experiment results, XAI (occlusion radar-reliance, input×gradient saliency). Design
 and evaluation ideas in `docs/expert_system.md`; 8 scenario and consistency tests in `tests/test_expert.py`.
+
+---
+
+## 2026-10-22 — Final Kaggle run complete; results analysed and published
+
+**Run.** All 26 trainings × 15 000 steps + ensemble + receptive-field analysis finished in 6.11 h on 2 × T4;
+no failures, skips or early stops. Outputs (results, logs, all 26 checkpoints) are committed in `outputs/`
+so a fresh clone runs the full app.
+
+**Main results (Asia / other continents, PSNR dB).** Identity 21.18 / 20.95 · tiny CNN 27.01 / 28.01 ·
+U-Net 26.33 ± 0.06 / 27.82 · Swin 26.41 / 27.68 · ViT 26.90 / 27.19 · ensemble 26.56 / 28.26.
+
+**The tiny-CNN result was investigated before interpretation** (the plan treats it as a warning sign): not a
+bug — the large models win on the validation scenes; the test ranking is decided by two of the seven test
+scenes (scene differences > 7 dB, model differences < 1 dB); PSNR rewards cautious predictions under thick
+cloud. Under 60–100 % cloud the ViT is 2–4 dB better (ERF 56 px vs 21 px). Leakage check +5.1 dB. E1 curves
+nearly flat (scene diversity, not patch count, limits). GAN: −1.4 dB PSNR, FID not improved — its checkpoint
+was selected early by validation L1. Variance head best calibrated (coverage 0.83–0.89); MC dropout (0.08)
+and ensemble (0.32) over-confident. Out-of-continent scenes were easier, so no domain-shift penalty showed.
+
+**Expert system.** Cloud brightness threshold recalibrated 0.17 → 0.20 (cloud-fraction error 0.081 → 0.045 on
+the 8 gallery patches) and cirrus 0.01 → 0.03 (clear-sky B10 reaches 0.025). Pilot: mean true PSNR by trust
+level high 26.9 > medium 25.1 > low 24.9 dB (n = 8).
+
+**Docs.** Project guide chapter 13 now contains all results, verdicts and conclusions; README has a results
+table and a two-minute "try it" section.

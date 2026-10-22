@@ -13,9 +13,49 @@ Full plan, reasoning, experiment list, week-by-week schedule and glossary:
 How everything fits together end to end (data flow, folder roles, model
 internals, the Kaggle/GitHub workflow): **[`docs/architecture.md`](docs/architecture.md)**.
 
+**Everything explained in one document** — every model, hyper-parameter, metric, experiment, result
+and likely examiner question: **[`docs/ClearSAR_Project_Guide.docx`](docs/ClearSAR_Project_Guide.docx)**.
+
 ---
 
-## Quick start
+## Try it in two minutes (trained models included)
+
+The repository contains the complete output of the final Kaggle run in [`outputs/`](outputs/): all
+results tables and figures, training logs and **all 26 trained checkpoints** — no training or data
+download needed.
+
+```bash
+git clone https://github.com/karthikeya-bhamidipati/clearsar.git
+cd clearsar
+python -m venv .venv
+.venv\Scripts\activate            # macOS / Linux: source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+## Results (final run, 15 000 steps per model, 2 × T4, 6.1 h)
+
+| Model | PSNR Asia (dB) | PSNR other continents (dB) | SSIM Asia | SAM Asia (°) |
+|---|---|---|---|---|
+| Cloudy input (identity) | 21.18 | 20.95 | 0.740 | 10.45 |
+| Tiny CNN baseline | 27.01 | 28.01 | 0.844 | 9.45 |
+| Model A — U-Net (3 seeds) | 26.33 ± 0.06 | 27.82 ± 0.30 | 0.847 | 9.43 |
+| Model B — Swin U-Net (2 seeds) | 26.41 ± 0.20 | 27.68 ± 0.39 | 0.851 | 9.55 |
+| Model C — Pure ViT (2 seeds) | 26.90 ± 0.36 | 27.19 ± 0.41 | 0.844 | 8.91 |
+| U-Net 3-seed ensemble | 26.56 | 28.26 | 0.857 | 9.08 |
+
+- All L1-trained models recover **5–7 dB** over the cloudy image.
+- No architecture is clearly best overall; differences are of the size of seed noise and far smaller than
+  scene-to-scene variation — a 3-layer CNN is competitive on PSNR.
+- **Under thick cloud (60–100 %) the ViT is 2–4 dB better** in Asia — its effective receptive field is
+  56 px versus 21 px for the U-Net.
+- A random patch split would inflate PSNR by **+5.1 dB** (leakage check).
+- Only the learned variance head gives reasonably calibrated uncertainty (coverage 0.83–0.89 vs 0.08 for
+  MC dropout).
+
+Full analysis: chapter 13 of the project guide, or the **Experiments** page of the app.
+
+## Reproduce from scratch
 
 ```bash
 # 1. set up the environment
@@ -168,7 +208,7 @@ clearsar/
 │   └── expert/                 <- ClearSAR Advisor: knowledge base, inference engine, XAI
 ├── notebooks/kaggle_pipeline.py <- the Kaggle training/evaluation script (logic lives in src/)
 ├── tests/                      <- unit tests + synthetic-data generator
-├── outputs/                    <- extracted Kaggle output (NOT tracked)
+├── outputs/                    <- final Kaggle run: results, logs, all 26 checkpoints (tracked)
 └── experiments/
     ├── checkpoints/            <- model weights (NOT tracked)
     ├── logs/                   <- training logs, metrics CSVs (tracked)
@@ -177,13 +217,11 @@ clearsar/
 
 ## Status
 
-- [ ] Week 1 — data pipeline, splits, baselines
-- [ ] Week 2 — Model A (U-Net, L1)
-- [ ] Week 3 — Model A GAN ablation
-- [ ] Week 4 — Model B (Swin-bottleneck U-Net)
-- [ ] Week 5 — Model C (pure ViT)
-- [ ] Week 6 — learning curves (E1), uncertainty (E7)
-- [ ] Week 7 — domain-shift evaluation (E2), final results
-- [ ] Week 8 — write-up
-
-(Update this checklist as you go — it's the fastest way to see progress at a glance.)
+- [x] Data pipeline: index, scene split, preprocessing, cache, baselines
+- [x] Model A (U-Net), GAN ablation, uncertainty heads
+- [x] Model B (Swin-bottleneck U-Net)
+- [x] Model C (pure ViT)
+- [x] All experiments E1–E7, leakage check, seeds — final Kaggle run 2026-10-21/22
+- [x] Frontend (Streamlit) and expert system (ClearSAR Advisor)
+- [x] Project guide with results (`docs/ClearSAR_Project_Guide.docx`)
+- [ ] Final write-up: prediction → result → explanation for each experiment

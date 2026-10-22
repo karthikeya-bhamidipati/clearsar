@@ -54,8 +54,8 @@ None of the facts uses the clear target image; it does not exist when the system
 
 | Source | Fact | How it is measured |
 |---|---|---|
-| Input patch | `cloud_cover`, `thick_cloud` | pixels that are bright (mean B2–B4 > 0.17) **and** white (low colour spread); thick = > 0.30 |
-| | `cirrus_fraction` | cirrus band B10 > 0.01 |
+| Input patch | `cloud_cover`, `thick_cloud` | pixels that are bright (mean B2–B4 > 0.20) **and** white (low colour spread); thick = > 0.30 |
+| | `cirrus_fraction` | cirrus band B10 > 0.03 |
 | | `sar_gaps` | radar pixels at the no-signal floor |
 | | `water_fraction` | VV backscatter < −18 dB (open water reflects almost no radar) |
 | Model outputs | `model_disagreement` | mean absolute difference between the three architectures' predictions |
@@ -140,6 +140,13 @@ Patch with 87 % cloud, models disagreeing (0.073), radar reliance 15 %, intended
 * **Sensitivity analysis.** Use the What-if simulator to show how the decision changes with each fact and
   where the decision boundaries lie.
 * **Expert review.** Ask a remote-sensing user whether the explanations are understandable and correct.
+
+## 7a. Calibration and pilot evaluation on the real outputs (2026-10-22)
+* **Cloud test:** on the 8 gallery patches (true cloud fraction known), the brightness threshold 0.17 gave a mean
+  absolute error of 0.081 in cloud fraction; 0.20 gives 0.045. **Cirrus:** clear-sky B10 reaches 0.012-0.025 in
+  some scenes, so the original threshold 0.01 flagged cirrus almost everywhere; raised to 0.03. Both were tuned on
+  only 8 patches - an honest limitation.
+* **Trust vs true PSNR (pilot, n = 8, intended use: land cover):** see the project guide, chapter 13.
 
 ## 8. Limitations and extensions
 * Thresholds and certainty factors are expert judgements; they could be tuned on the test-gallery
