@@ -7,6 +7,12 @@ uncertainty-quantification extension.
 
 **Goal:** complete, hands-on understanding of deep learning — not a publication.
 
+> **Current phase: [plan v4](docs/project_plan_v4.md)** — build *one* model step by step (residual
+> pass-through, many more training scenes, better losses, global attention) until its reconstructions are as
+> close to the truth as the data allows, with a prediction → result → explanation for every stage in
+> [`docs/lab_notes.md`](docs/lab_notes.md). The 26-run architecture comparison below is Phase 1 ("Stage 0:
+> exploration").
+
 Full plan, reasoning, experiment list, week-by-week schedule and glossary:
 **[`docs/project_plan.md`](docs/project_plan.md)** — read this first.
 

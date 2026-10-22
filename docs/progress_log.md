@@ -258,3 +258,15 @@ level high 26.9 > medium 25.1 > low 24.9 dB (n = 8).
 
 **Docs.** Project guide chapter 13 now contains all results, verdicts and conclusions; README has a results
 table and a two-minute "try it" section.
+
+---
+
+## 2026-10-22 (later) — Re-planned: plan v4, one model built properly
+
+Looking at the reconstructions, none comes close enough to the true clear image. Measured on the gallery: the
+U-Net is half as sharp as reality (sharpness ratio 0.50) and, larger, the coarse colour/brightness error is
+~2.5 × the fine-detail error. Decision (user): stop comparing many architectures and build **one** model step
+by step — data ceiling → training mechanics → residual pass-through → many more scenes (train on all
+continents) → better losses → global attention → proper training → one honest test — learning one DL concept
+per stage. More than 3 weeks available. Plan: `docs/project_plan_v4.md`; predictions/results:
+`docs/lab_notes.md`. Phase 1 (this comparison) becomes "Stage 0: exploration".
