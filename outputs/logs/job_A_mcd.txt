@@ -1,0 +1,99 @@
+18:44:07 [A_mcd] Model A + MC dropout: 3000 training patches (scene split, fraction 1.0)
+18:44:09 [A_mcd] output bias initialised to mean band reflectance (range 0.002-0.225)
+18:44:09 [A_mcd] Model A + MC dropout: 7.71M params, 15000 steps, lr 0.0003, gan=False, uncertainty=False
+18:44:55 [A_mcd] step    200/15000 | rec 0.0448 | gnorm 0.11 | lr 1.21e-04 | 4.3 it/s
+18:45:13 [A_mcd] step    400/15000 | rec 0.0389 | gnorm 0.10 | lr 2.41e-04 | 11.2 it/s
+18:45:31 [A_mcd] step    600/15000 | rec 0.0362 | gnorm 0.10 | lr 3.00e-04 | 11.3 it/s
+18:45:49 [A_mcd] step    800/15000 | rec 0.0346 | gnorm 0.10 | lr 3.00e-04 | 11.2 it/s
+18:46:07 [A_mcd] step   1000/15000 | rec 0.0334 | gnorm 0.10 | lr 2.99e-04 | 11.2 it/s
+18:46:14 [A_mcd] VAL step 1000: L1 0.0394 | PSNR 26.33 dB | SSIM 0.8282 | SAM 10.71 deg  * best
+18:46:32 [A_mcd] step   1200/15000 | rec 0.0280 | gnorm 0.09 | lr 2.98e-04 | 8.0 it/s
+18:46:50 [A_mcd] step   1400/15000 | rec 0.0281 | gnorm 0.10 | lr 2.97e-04 | 11.2 it/s
+18:47:08 [A_mcd] step   1600/15000 | rec 0.0278 | gnorm 0.09 | lr 2.96e-04 | 11.0 it/s
+18:47:26 [A_mcd] step   1800/15000 | rec 0.0275 | gnorm 0.09 | lr 2.94e-04 | 11.0 it/s
+18:47:44 [A_mcd] step   2000/15000 | rec 0.0273 | gnorm 0.09 | lr 2.92e-04 | 11.0 it/s
+18:47:50 [A_mcd] VAL step 2000: L1 0.0344 | PSNR 27.28 dB | SSIM 0.8485 | SAM 9.40 deg  * best
+18:48:09 [A_mcd] step   2200/15000 | rec 0.0264 | gnorm 0.09 | lr 2.90e-04 | 8.2 it/s
+18:48:27 [A_mcd] step   2400/15000 | rec 0.0262 | gnorm 0.09 | lr 2.87e-04 | 11.0 it/s
+18:48:45 [A_mcd] step   2600/15000 | rec 0.0260 | gnorm 0.08 | lr 2.85e-04 | 11.0 it/s
+18:49:03 [A_mcd] step   2800/15000 | rec 0.0259 | gnorm 0.09 | lr 2.82e-04 | 11.0 it/s
+18:49:22 [A_mcd] step   3000/15000 | rec 0.0258 | gnorm 0.08 | lr 2.79e-04 | 10.8 it/s
+18:49:28 [A_mcd] VAL step 3000: L1 0.0299 | PSNR 28.02 dB | SSIM 0.8666 | SAM 7.94 deg  * best
+18:49:46 [A_mcd] step   3200/15000 | rec 0.0257 | gnorm 0.09 | lr 2.75e-04 | 8.2 it/s
+18:50:04 [A_mcd] step   3400/15000 | rec 0.0253 | gnorm 0.08 | lr 2.71e-04 | 10.9 it/s
+18:50:23 [A_mcd] step   3600/15000 | rec 0.0252 | gnorm 0.08 | lr 2.67e-04 | 10.9 it/s
+18:50:41 [A_mcd] step   3800/15000 | rec 0.0251 | gnorm 0.08 | lr 2.63e-04 | 10.9 it/s
+18:50:59 [A_mcd] step   4000/15000 | rec 0.0250 | gnorm 0.08 | lr 2.59e-04 | 10.9 it/s
+18:51:05 [A_mcd] VAL step 4000: L1 0.0341 | PSNR 27.19 dB | SSIM 0.8517 | SAM 8.98 deg
+18:51:24 [A_mcd] step   4200/15000 | rec 0.0246 | gnorm 0.08 | lr 2.54e-04 | 8.2 it/s
+18:51:42 [A_mcd] step   4400/15000 | rec 0.0245 | gnorm 0.09 | lr 2.50e-04 | 10.9 it/s
+18:52:01 [A_mcd] step   4600/15000 | rec 0.0244 | gnorm 0.09 | lr 2.45e-04 | 10.9 it/s
+18:52:19 [A_mcd] step   4800/15000 | rec 0.0243 | gnorm 0.09 | lr 2.39e-04 | 10.9 it/s
+18:52:37 [A_mcd] step   5000/15000 | rec 0.0242 | gnorm 0.09 | lr 2.34e-04 | 10.9 it/s
+18:52:43 [A_mcd] VAL step 5000: L1 0.0304 | PSNR 28.02 dB | SSIM 0.8654 | SAM 7.71 deg
+18:53:02 [A_mcd] step   5200/15000 | rec 0.0238 | gnorm 0.08 | lr 2.29e-04 | 8.1 it/s
+18:53:20 [A_mcd] step   5400/15000 | rec 0.0236 | gnorm 0.08 | lr 2.23e-04 | 10.9 it/s
+18:53:39 [A_mcd] step   5600/15000 | rec 0.0235 | gnorm 0.08 | lr 2.17e-04 | 10.9 it/s
+18:53:57 [A_mcd] step   5800/15000 | rec 0.0234 | gnorm 0.08 | lr 2.12e-04 | 10.8 it/s
+18:54:16 [A_mcd] step   6000/15000 | rec 0.0234 | gnorm 0.08 | lr 2.06e-04 | 10.8 it/s
+18:54:21 [A_mcd] VAL step 6000: L1 0.0326 | PSNR 27.65 dB | SSIM 0.8615 | SAM 8.21 deg
+18:54:40 [A_mcd] step   6200/15000 | rec 0.0231 | gnorm 0.08 | lr 1.99e-04 | 8.3 it/s
+18:54:58 [A_mcd] step   6400/15000 | rec 0.0229 | gnorm 0.09 | lr 1.93e-04 | 10.9 it/s
+18:55:17 [A_mcd] step   6600/15000 | rec 0.0229 | gnorm 0.08 | lr 1.87e-04 | 10.8 it/s
+18:55:35 [A_mcd] step   6800/15000 | rec 0.0228 | gnorm 0.09 | lr 1.81e-04 | 10.8 it/s
+18:55:54 [A_mcd] step   7000/15000 | rec 0.0228 | gnorm 0.09 | lr 1.74e-04 | 10.8 it/s
+18:56:00 [A_mcd] VAL step 7000: L1 0.0297 | PSNR 28.23 dB | SSIM 0.8737 | SAM 7.57 deg  * best
+18:56:18 [A_mcd] step   7200/15000 | rec 0.0224 | gnorm 0.09 | lr 1.68e-04 | 8.2 it/s
+18:56:37 [A_mcd] step   7400/15000 | rec 0.0225 | gnorm 0.08 | lr 1.61e-04 | 10.8 it/s
+18:56:55 [A_mcd] step   7600/15000 | rec 0.0223 | gnorm 0.09 | lr 1.55e-04 | 10.9 it/s
+18:57:14 [A_mcd] step   7800/15000 | rec 0.0223 | gnorm 0.09 | lr 1.48e-04 | 10.9 it/s
+18:57:32 [A_mcd] step   8000/15000 | rec 0.0223 | gnorm 0.09 | lr 1.42e-04 | 10.8 it/s
+18:57:38 [A_mcd] VAL step 8000: L1 0.0303 | PSNR 28.12 dB | SSIM 0.8674 | SAM 7.55 deg
+18:57:57 [A_mcd] step   8200/15000 | rec 0.0222 | gnorm 0.09 | lr 1.35e-04 | 8.1 it/s
+18:58:15 [A_mcd] step   8400/15000 | rec 0.0220 | gnorm 0.09 | lr 1.29e-04 | 10.8 it/s
+18:58:34 [A_mcd] step   8600/15000 | rec 0.0220 | gnorm 0.09 | lr 1.23e-04 | 10.9 it/s
+18:58:52 [A_mcd] step   8800/15000 | rec 0.0219 | gnorm 0.09 | lr 1.16e-04 | 10.8 it/s
+18:59:11 [A_mcd] step   9000/15000 | rec 0.0219 | gnorm 0.09 | lr 1.10e-04 | 10.9 it/s
+18:59:17 [A_mcd] VAL step 9000: L1 0.0297 | PSNR 28.16 dB | SSIM 0.8710 | SAM 7.59 deg
+18:59:35 [A_mcd] step   9200/15000 | rec 0.0214 | gnorm 0.09 | lr 1.04e-04 | 8.1 it/s
+18:59:54 [A_mcd] step   9400/15000 | rec 0.0214 | gnorm 0.09 | lr 9.75e-05 | 10.5 it/s
+19:00:14 [A_mcd] step   9600/15000 | rec 0.0214 | gnorm 0.09 | lr 9.15e-05 | 10.3 it/s
+19:00:33 [A_mcd] step   9800/15000 | rec 0.0214 | gnorm 0.09 | lr 8.55e-05 | 10.6 it/s
+19:00:51 [A_mcd] step  10000/15000 | rec 0.0214 | gnorm 0.09 | lr 7.97e-05 | 10.6 it/s
+19:00:58 [A_mcd] VAL step 10000: L1 0.0279 | PSNR 28.62 dB | SSIM 0.8777 | SAM 7.33 deg  * best
+19:01:17 [A_mcd] step  10200/15000 | rec 0.0212 | gnorm 0.09 | lr 7.41e-05 | 7.7 it/s
+19:01:37 [A_mcd] step  10400/15000 | rec 0.0211 | gnorm 0.09 | lr 6.85e-05 | 10.4 it/s
+19:01:56 [A_mcd] step  10600/15000 | rec 0.0212 | gnorm 0.09 | lr 6.32e-05 | 10.5 it/s
+19:02:15 [A_mcd] step  10800/15000 | rec 0.0211 | gnorm 0.09 | lr 5.79e-05 | 10.5 it/s
+19:02:34 [A_mcd] step  11000/15000 | rec 0.0210 | gnorm 0.09 | lr 5.29e-05 | 10.5 it/s
+19:02:40 [A_mcd] VAL step 11000: L1 0.0291 | PSNR 28.29 dB | SSIM 0.8730 | SAM 7.30 deg
+19:02:59 [A_mcd] step  11200/15000 | rec 0.0208 | gnorm 0.09 | lr 4.80e-05 | 7.8 it/s
+19:03:18 [A_mcd] step  11400/15000 | rec 0.0207 | gnorm 0.09 | lr 4.34e-05 | 10.6 it/s
+19:03:37 [A_mcd] step  11600/15000 | rec 0.0207 | gnorm 0.09 | lr 3.89e-05 | 10.6 it/s
+19:03:56 [A_mcd] step  11800/15000 | rec 0.0207 | gnorm 0.09 | lr 3.46e-05 | 10.7 it/s
+19:04:15 [A_mcd] step  12000/15000 | rec 0.0207 | gnorm 0.09 | lr 3.06e-05 | 10.7 it/s
+19:04:22 [A_mcd] VAL step 12000: L1 0.0277 | PSNR 28.51 dB | SSIM 0.8728 | SAM 7.29 deg  * best
+19:04:40 [A_mcd] step  12200/15000 | rec 0.0207 | gnorm 0.09 | lr 2.68e-05 | 7.8 it/s
+19:04:59 [A_mcd] step  12400/15000 | rec 0.0206 | gnorm 0.09 | lr 2.32e-05 | 10.7 it/s
+19:05:17 [A_mcd] step  12600/15000 | rec 0.0205 | gnorm 0.09 | lr 1.98e-05 | 10.8 it/s
+19:05:36 [A_mcd] step  12800/15000 | rec 0.0205 | gnorm 0.09 | lr 1.67e-05 | 10.6 it/s
+19:05:55 [A_mcd] step  13000/15000 | rec 0.0204 | gnorm 0.09 | lr 1.39e-05 | 10.7 it/s
+19:06:01 [A_mcd] VAL step 13000: L1 0.0280 | PSNR 28.52 dB | SSIM 0.8760 | SAM 7.26 deg
+19:06:20 [A_mcd] step  13200/15000 | rec 0.0204 | gnorm 0.09 | lr 1.13e-05 | 8.0 it/s
+19:06:39 [A_mcd] step  13400/15000 | rec 0.0203 | gnorm 0.09 | lr 8.92e-06 | 10.8 it/s
+19:06:57 [A_mcd] step  13600/15000 | rec 0.0203 | gnorm 0.09 | lr 6.85e-06 | 10.8 it/s
+19:07:16 [A_mcd] step  13800/15000 | rec 0.0203 | gnorm 0.09 | lr 5.04e-06 | 10.7 it/s
+19:07:35 [A_mcd] step  14000/15000 | rec 0.0203 | gnorm 0.09 | lr 3.51e-06 | 10.6 it/s
+19:07:41 [A_mcd] VAL step 14000: L1 0.0275 | PSNR 28.62 dB | SSIM 0.8771 | SAM 7.13 deg  * best
+19:08:00 [A_mcd] step  14200/15000 | rec 0.0203 | gnorm 0.10 | lr 2.25e-06 | 7.9 it/s
+19:08:19 [A_mcd] step  14400/15000 | rec 0.0203 | gnorm 0.09 | lr 1.27e-06 | 10.7 it/s
+19:08:37 [A_mcd] step  14600/15000 | rec 0.0203 | gnorm 0.09 | lr 5.63e-07 | 10.7 it/s
+19:08:56 [A_mcd] step  14800/15000 | rec 0.0203 | gnorm 0.09 | lr 1.41e-07 | 10.7 it/s
+19:09:15 [A_mcd] step  15000/15000 | rec 0.0203 | gnorm 0.09 | lr 0.00e+00 | 10.7 it/s
+19:09:21 [A_mcd] VAL step 15000: L1 0.0281 | PSNR 28.51 dB | SSIM 0.8763 | SAM 7.26 deg
+19:09:21 [A_mcd] done in 25.2 min, best val L1 0.0275 at step 14000, peak GPU 5.16 GB
+19:11:07 [eval] Model A + MC dropout               test_id     PSNR  26.41 | SSIM 0.8528 | SAM  9.30 | MAE 0.0402 | FID 177.7
+19:11:07 [unc]  Model A + MC dropout               test_id     coverage95 0.079 | median sigma 0.0019 | spearman 0.519 | AUSE 0.0098
+19:12:45 [eval] Model A + MC dropout               ood         PSNR  27.95 | SSIM 0.8764 | SAM  8.20 | MAE 0.0300 | FID 169.7
+19:12:45 [unc]  Model A + MC dropout               ood         coverage95 0.089 | median sigma 0.0018 | spearman 0.424 | AUSE 0.0082
+19:12:45 [A_mcd] job finished

@@ -1,0 +1,97 @@
+19:00:10 [A_unet_s43] Model A - U-Net: 3000 training patches (scene split, fraction 1.0)
+19:00:13 [A_unet_s43] output bias initialised to mean band reflectance (range 0.002-0.223)
+19:00:13 [A_unet_s43] Model A - U-Net: 7.71M params, 15000 steps, lr 0.0003, gan=False, uncertainty=False
+19:00:59 [A_unet_s43] step    200/15000 | rec 0.0416 | gnorm 0.10 | lr 1.21e-04 | 4.3 it/s
+19:01:16 [A_unet_s43] step    400/15000 | rec 0.0366 | gnorm 0.10 | lr 2.41e-04 | 11.4 it/s
+19:01:34 [A_unet_s43] step    600/15000 | rec 0.0344 | gnorm 0.10 | lr 3.00e-04 | 11.4 it/s
+19:01:51 [A_unet_s43] step    800/15000 | rec 0.0330 | gnorm 0.09 | lr 3.00e-04 | 11.4 it/s
+19:02:09 [A_unet_s43] step   1000/15000 | rec 0.0321 | gnorm 0.09 | lr 2.99e-04 | 11.3 it/s
+19:02:17 [A_unet_s43] VAL step 1000: L1 0.0356 | PSNR 26.93 dB | SSIM 0.8425 | SAM 10.13 deg  * best
+19:02:35 [A_unet_s43] step   1200/15000 | rec 0.0281 | gnorm 0.08 | lr 2.98e-04 | 7.7 it/s
+19:02:53 [A_unet_s43] step   1400/15000 | rec 0.0281 | gnorm 0.09 | lr 2.97e-04 | 11.2 it/s
+19:03:10 [A_unet_s43] step   1600/15000 | rec 0.0277 | gnorm 0.08 | lr 2.96e-04 | 11.3 it/s
+19:03:28 [A_unet_s43] step   1800/15000 | rec 0.0276 | gnorm 0.08 | lr 2.94e-04 | 11.2 it/s
+19:03:46 [A_unet_s43] step   2000/15000 | rec 0.0274 | gnorm 0.08 | lr 2.92e-04 | 11.3 it/s
+19:03:52 [A_unet_s43] VAL step 2000: L1 0.0304 | PSNR 27.97 dB | SSIM 0.8669 | SAM 8.16 deg  * best
+19:04:10 [A_unet_s43] step   2200/15000 | rec 0.0261 | gnorm 0.08 | lr 2.90e-04 | 8.3 it/s
+19:04:28 [A_unet_s43] step   2400/15000 | rec 0.0259 | gnorm 0.08 | lr 2.87e-04 | 11.2 it/s
+19:04:46 [A_unet_s43] step   2600/15000 | rec 0.0258 | gnorm 0.08 | lr 2.85e-04 | 11.3 it/s
+19:05:04 [A_unet_s43] step   2800/15000 | rec 0.0257 | gnorm 0.08 | lr 2.82e-04 | 11.2 it/s
+19:05:22 [A_unet_s43] step   3000/15000 | rec 0.0256 | gnorm 0.08 | lr 2.79e-04 | 11.2 it/s
+19:05:28 [A_unet_s43] VAL step 3000: L1 0.0305 | PSNR 27.91 dB | SSIM 0.8603 | SAM 8.78 deg
+19:05:46 [A_unet_s43] step   3200/15000 | rec 0.0251 | gnorm 0.08 | lr 2.75e-04 | 8.2 it/s
+19:06:04 [A_unet_s43] step   3400/15000 | rec 0.0251 | gnorm 0.09 | lr 2.71e-04 | 11.1 it/s
+19:06:22 [A_unet_s43] step   3600/15000 | rec 0.0248 | gnorm 0.08 | lr 2.67e-04 | 11.3 it/s
+19:06:40 [A_unet_s43] step   3800/15000 | rec 0.0248 | gnorm 0.08 | lr 2.63e-04 | 11.2 it/s
+19:06:57 [A_unet_s43] step   4000/15000 | rec 0.0247 | gnorm 0.08 | lr 2.59e-04 | 11.2 it/s
+19:07:04 [A_unet_s43] VAL step 4000: L1 0.0343 | PSNR 27.30 dB | SSIM 0.8563 | SAM 8.94 deg
+19:07:22 [A_unet_s43] step   4200/15000 | rec 0.0245 | gnorm 0.09 | lr 2.54e-04 | 8.2 it/s
+19:07:40 [A_unet_s43] step   4400/15000 | rec 0.0243 | gnorm 0.08 | lr 2.50e-04 | 10.9 it/s
+19:07:58 [A_unet_s43] step   4600/15000 | rec 0.0242 | gnorm 0.08 | lr 2.45e-04 | 11.3 it/s
+19:08:15 [A_unet_s43] step   4800/15000 | rec 0.0243 | gnorm 0.08 | lr 2.39e-04 | 11.2 it/s
+19:08:33 [A_unet_s43] step   5000/15000 | rec 0.0241 | gnorm 0.08 | lr 2.34e-04 | 11.3 it/s
+19:08:40 [A_unet_s43] VAL step 5000: L1 0.0308 | PSNR 28.03 dB | SSIM 0.8695 | SAM 7.56 deg
+19:08:58 [A_unet_s43] step   5200/15000 | rec 0.0236 | gnorm 0.08 | lr 2.29e-04 | 8.2 it/s
+19:09:16 [A_unet_s43] step   5400/15000 | rec 0.0235 | gnorm 0.08 | lr 2.23e-04 | 11.2 it/s
+19:09:34 [A_unet_s43] step   5600/15000 | rec 0.0234 | gnorm 0.08 | lr 2.17e-04 | 11.1 it/s
+19:09:51 [A_unet_s43] step   5800/15000 | rec 0.0233 | gnorm 0.08 | lr 2.12e-04 | 11.2 it/s
+19:10:09 [A_unet_s43] step   6000/15000 | rec 0.0232 | gnorm 0.08 | lr 2.06e-04 | 11.4 it/s
+19:10:14 [A_unet_s43] VAL step 6000: L1 0.0304 | PSNR 28.03 dB | SSIM 0.8681 | SAM 8.11 deg
+19:10:32 [A_unet_s43] step   6200/15000 | rec 0.0230 | gnorm 0.09 | lr 1.99e-04 | 8.8 it/s
+19:10:50 [A_unet_s43] step   6400/15000 | rec 0.0228 | gnorm 0.09 | lr 1.93e-04 | 11.3 it/s
+19:11:07 [A_unet_s43] step   6600/15000 | rec 0.0228 | gnorm 0.09 | lr 1.87e-04 | 11.4 it/s
+19:11:25 [A_unet_s43] step   6800/15000 | rec 0.0228 | gnorm 0.09 | lr 1.81e-04 | 11.3 it/s
+19:11:42 [A_unet_s43] step   7000/15000 | rec 0.0227 | gnorm 0.08 | lr 1.74e-04 | 11.3 it/s
+19:11:47 [A_unet_s43] VAL step 7000: L1 0.0306 | PSNR 27.90 dB | SSIM 0.8696 | SAM 8.03 deg
+19:12:05 [A_unet_s43] step   7200/15000 | rec 0.0221 | gnorm 0.08 | lr 1.68e-04 | 8.8 it/s
+19:12:23 [A_unet_s43] step   7400/15000 | rec 0.0223 | gnorm 0.09 | lr 1.61e-04 | 11.3 it/s
+19:12:41 [A_unet_s43] step   7600/15000 | rec 0.0222 | gnorm 0.09 | lr 1.55e-04 | 11.3 it/s
+19:12:58 [A_unet_s43] step   7800/15000 | rec 0.0221 | gnorm 0.08 | lr 1.48e-04 | 11.4 it/s
+19:13:16 [A_unet_s43] step   8000/15000 | rec 0.0220 | gnorm 0.09 | lr 1.42e-04 | 11.3 it/s
+19:13:21 [A_unet_s43] VAL step 8000: L1 0.0279 | PSNR 28.31 dB | SSIM 0.8761 | SAM 7.34 deg  * best
+19:13:39 [A_unet_s43] step   8200/15000 | rec 0.0215 | gnorm 0.09 | lr 1.35e-04 | 8.8 it/s
+19:13:57 [A_unet_s43] step   8400/15000 | rec 0.0216 | gnorm 0.08 | lr 1.29e-04 | 11.1 it/s
+19:14:14 [A_unet_s43] step   8600/15000 | rec 0.0216 | gnorm 0.09 | lr 1.23e-04 | 11.2 it/s
+19:14:33 [A_unet_s43] step   8800/15000 | rec 0.0216 | gnorm 0.09 | lr 1.16e-04 | 11.0 it/s
+19:14:50 [A_unet_s43] step   9000/15000 | rec 0.0215 | gnorm 0.09 | lr 1.10e-04 | 11.2 it/s
+19:14:57 [A_unet_s43] VAL step 9000: L1 0.0284 | PSNR 28.49 dB | SSIM 0.8758 | SAM 7.16 deg
+19:15:15 [A_unet_s43] step   9200/15000 | rec 0.0211 | gnorm 0.08 | lr 1.04e-04 | 8.2 it/s
+19:15:33 [A_unet_s43] step   9400/15000 | rec 0.0211 | gnorm 0.09 | lr 9.75e-05 | 11.2 it/s
+19:15:51 [A_unet_s43] step   9600/15000 | rec 0.0211 | gnorm 0.09 | lr 9.15e-05 | 11.2 it/s
+19:16:08 [A_unet_s43] step   9800/15000 | rec 0.0211 | gnorm 0.08 | lr 8.55e-05 | 11.3 it/s
+19:16:26 [A_unet_s43] step  10000/15000 | rec 0.0210 | gnorm 0.09 | lr 7.97e-05 | 11.2 it/s
+19:16:33 [A_unet_s43] VAL step 10000: L1 0.0280 | PSNR 28.55 dB | SSIM 0.8762 | SAM 7.29 deg
+19:16:51 [A_unet_s43] step  10200/15000 | rec 0.0208 | gnorm 0.09 | lr 7.41e-05 | 8.1 it/s
+19:17:09 [A_unet_s43] step  10400/15000 | rec 0.0209 | gnorm 0.09 | lr 6.85e-05 | 11.2 it/s
+19:17:27 [A_unet_s43] step  10600/15000 | rec 0.0208 | gnorm 0.09 | lr 6.32e-05 | 11.1 it/s
+19:17:44 [A_unet_s43] step  10800/15000 | rec 0.0208 | gnorm 0.09 | lr 5.79e-05 | 11.2 it/s
+19:18:02 [A_unet_s43] step  11000/15000 | rec 0.0207 | gnorm 0.09 | lr 5.29e-05 | 11.2 it/s
+19:18:09 [A_unet_s43] VAL step 11000: L1 0.0298 | PSNR 28.11 dB | SSIM 0.8728 | SAM 7.90 deg
+19:18:27 [A_unet_s43] step  11200/15000 | rec 0.0206 | gnorm 0.09 | lr 4.80e-05 | 8.1 it/s
+19:18:45 [A_unet_s43] step  11400/15000 | rec 0.0205 | gnorm 0.09 | lr 4.34e-05 | 11.2 it/s
+19:19:03 [A_unet_s43] step  11600/15000 | rec 0.0204 | gnorm 0.09 | lr 3.89e-05 | 11.1 it/s
+19:19:21 [A_unet_s43] step  11800/15000 | rec 0.0205 | gnorm 0.09 | lr 3.46e-05 | 11.2 it/s
+19:19:39 [A_unet_s43] step  12000/15000 | rec 0.0205 | gnorm 0.09 | lr 3.06e-05 | 11.2 it/s
+19:19:45 [A_unet_s43] VAL step 12000: L1 0.0284 | PSNR 28.48 dB | SSIM 0.8760 | SAM 7.41 deg
+19:20:03 [A_unet_s43] step  12200/15000 | rec 0.0201 | gnorm 0.09 | lr 2.68e-05 | 8.1 it/s
+19:20:22 [A_unet_s43] step  12400/15000 | rec 0.0201 | gnorm 0.09 | lr 2.32e-05 | 11.1 it/s
+19:20:39 [A_unet_s43] step  12600/15000 | rec 0.0201 | gnorm 0.09 | lr 1.98e-05 | 11.2 it/s
+19:20:57 [A_unet_s43] step  12800/15000 | rec 0.0201 | gnorm 0.09 | lr 1.67e-05 | 11.2 it/s
+19:21:15 [A_unet_s43] step  13000/15000 | rec 0.0201 | gnorm 0.09 | lr 1.39e-05 | 11.3 it/s
+19:21:21 [A_unet_s43] VAL step 13000: L1 0.0289 | PSNR 28.31 dB | SSIM 0.8749 | SAM 7.62 deg
+19:21:39 [A_unet_s43] step  13200/15000 | rec 0.0200 | gnorm 0.09 | lr 1.13e-05 | 8.2 it/s
+19:21:57 [A_unet_s43] step  13400/15000 | rec 0.0200 | gnorm 0.09 | lr 8.92e-06 | 11.1 it/s
+19:22:15 [A_unet_s43] step  13600/15000 | rec 0.0199 | gnorm 0.09 | lr 6.85e-06 | 11.2 it/s
+19:22:33 [A_unet_s43] step  13800/15000 | rec 0.0200 | gnorm 0.09 | lr 5.04e-06 | 11.2 it/s
+19:22:51 [A_unet_s43] step  14000/15000 | rec 0.0199 | gnorm 0.09 | lr 3.51e-06 | 11.2 it/s
+19:22:57 [A_unet_s43] VAL step 14000: L1 0.0287 | PSNR 28.33 dB | SSIM 0.8748 | SAM 7.56 deg
+19:23:15 [A_unet_s43] step  14200/15000 | rec 0.0199 | gnorm 0.09 | lr 2.25e-06 | 8.2 it/s
+19:23:34 [A_unet_s43] step  14400/15000 | rec 0.0199 | gnorm 0.09 | lr 1.27e-06 | 10.8 it/s
+19:23:52 [A_unet_s43] step  14600/15000 | rec 0.0199 | gnorm 0.09 | lr 5.63e-07 | 11.2 it/s
+19:24:09 [A_unet_s43] step  14800/15000 | rec 0.0198 | gnorm 0.09 | lr 1.41e-07 | 11.2 it/s
+19:24:27 [A_unet_s43] step  15000/15000 | rec 0.0199 | gnorm 0.09 | lr 0.00e+00 | 11.2 it/s
+19:24:34 [A_unet_s43] VAL step 15000: L1 0.0286 | PSNR 28.36 dB | SSIM 0.8758 | SAM 7.57 deg
+19:24:34 [A_unet_s43] done in 24.4 min, best val L1 0.0279 at step 8000, peak GPU 5.13 GB
+19:24:57 [eval] Model A - U-Net                    test_id     PSNR  26.25 | SSIM 0.8475 | SAM  9.31 | MAE 0.0414 | FID 178.5
+19:25:12 [eval] Model A - U-Net                    ood         PSNR  27.47 | SSIM 0.8741 | SAM  8.96 | MAE 0.0315 | FID 173.0
+19:25:12 [A_unet_s43] job finished

@@ -1,0 +1,36 @@
+{
+  "info": {
+    "name": "B_f25",
+    "label": "Model B - 25% data",
+    "arch": "swin_unet",
+    "params": 7460589,
+    "steps": 15000,
+    "best_step": 8000,
+    "best_val_l1": 0.02794630452990532,
+    "best_val_psnr": 28.584394454956055,
+    "best_val_ssim": 0.8768337965011597,
+    "steps_done": 15000,
+    "stopped_early": false,
+    "train_minutes": 30.14642817179362,
+    "peak_gpu_gb": 5.309548544
+  },
+  "config": {
+    "name": "B_f25",
+    "arch": "swin_unet",
+    "label": "Model B - 25% data",
+    "model_kwargs": {},
+    "uncertainty": false,
+    "use_gan": false,
+    "gan_lambda": 100.0,
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "steps": 15000,
+    "warmup": 500,
+    "val_every": 1000,
+    "log_every": 200,
+    "grad_clip": 1.0,
+    "seed": 42,
+    "loss": "l1",
+    "deadline": 1792631691.3808339
+  }
+}

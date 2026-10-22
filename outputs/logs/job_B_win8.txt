@@ -1,0 +1,97 @@
+20:01:57 [B_win8] Model B - window 8: 3000 training patches (scene split, fraction 1.0)
+20:02:00 [B_win8] output bias initialised to mean band reflectance (range 0.002-0.232)
+20:02:00 [B_win8] Model B - window 8: 7.47M params, 15000 steps, lr 0.0003, gan=False, uncertainty=False
+20:02:49 [B_win8] step    200/15000 | rec 0.0437 | gnorm 0.11 | lr 1.21e-04 | 4.1 it/s
+20:03:12 [B_win8] step    400/15000 | rec 0.0382 | gnorm 0.11 | lr 2.41e-04 | 8.7 it/s
+20:03:34 [B_win8] step    600/15000 | rec 0.0358 | gnorm 0.10 | lr 3.00e-04 | 9.1 it/s
+20:03:56 [B_win8] step    800/15000 | rec 0.0343 | gnorm 0.10 | lr 3.00e-04 | 9.0 it/s
+20:04:19 [B_win8] step   1000/15000 | rec 0.0332 | gnorm 0.10 | lr 2.99e-04 | 8.8 it/s
+20:04:27 [B_win8] VAL step 1000: L1 0.0478 | PSNR 25.33 dB | SSIM 0.7830 | SAM 14.12 deg  * best
+20:04:49 [B_win8] step   1200/15000 | rec 0.0284 | gnorm 0.08 | lr 2.98e-04 | 6.7 it/s
+20:05:11 [B_win8] step   1400/15000 | rec 0.0281 | gnorm 0.08 | lr 2.97e-04 | 9.0 it/s
+20:05:33 [B_win8] step   1600/15000 | rec 0.0282 | gnorm 0.09 | lr 2.96e-04 | 9.0 it/s
+20:05:55 [B_win8] step   1800/15000 | rec 0.0280 | gnorm 0.09 | lr 2.94e-04 | 9.0 it/s
+20:06:18 [B_win8] step   2000/15000 | rec 0.0279 | gnorm 0.09 | lr 2.92e-04 | 9.0 it/s
+20:06:24 [B_win8] VAL step 2000: L1 0.0331 | PSNR 27.46 dB | SSIM 0.8499 | SAM 9.22 deg  * best
+20:06:47 [B_win8] step   2200/15000 | rec 0.0268 | gnorm 0.09 | lr 2.90e-04 | 6.9 it/s
+20:07:09 [B_win8] step   2400/15000 | rec 0.0268 | gnorm 0.09 | lr 2.87e-04 | 9.0 it/s
+20:07:31 [B_win8] step   2600/15000 | rec 0.0266 | gnorm 0.08 | lr 2.85e-04 | 9.1 it/s
+20:07:53 [B_win8] step   2800/15000 | rec 0.0265 | gnorm 0.08 | lr 2.82e-04 | 9.0 it/s
+20:08:16 [B_win8] step   3000/15000 | rec 0.0265 | gnorm 0.08 | lr 2.79e-04 | 9.0 it/s
+20:08:22 [B_win8] VAL step 3000: L1 0.0333 | PSNR 27.43 dB | SSIM 0.8571 | SAM 8.65 deg
+20:08:44 [B_win8] step   3200/15000 | rec 0.0264 | gnorm 0.09 | lr 2.75e-04 | 7.0 it/s
+20:09:06 [B_win8] step   3400/15000 | rec 0.0263 | gnorm 0.08 | lr 2.71e-04 | 9.0 it/s
+20:09:29 [B_win8] step   3600/15000 | rec 0.0260 | gnorm 0.08 | lr 2.67e-04 | 8.9 it/s
+20:09:51 [B_win8] step   3800/15000 | rec 0.0259 | gnorm 0.08 | lr 2.63e-04 | 9.0 it/s
+20:10:13 [B_win8] step   4000/15000 | rec 0.0258 | gnorm 0.08 | lr 2.59e-04 | 9.0 it/s
+20:10:20 [B_win8] VAL step 4000: L1 0.0308 | PSNR 27.99 dB | SSIM 0.8625 | SAM 8.26 deg  * best
+20:10:42 [B_win8] step   4200/15000 | rec 0.0254 | gnorm 0.08 | lr 2.54e-04 | 6.9 it/s
+20:11:04 [B_win8] step   4400/15000 | rec 0.0252 | gnorm 0.08 | lr 2.50e-04 | 8.9 it/s
+20:11:27 [B_win8] step   4600/15000 | rec 0.0254 | gnorm 0.09 | lr 2.45e-04 | 9.0 it/s
+20:11:49 [B_win8] step   4800/15000 | rec 0.0253 | gnorm 0.08 | lr 2.39e-04 | 8.9 it/s
+20:12:12 [B_win8] step   5000/15000 | rec 0.0251 | gnorm 0.08 | lr 2.34e-04 | 8.9 it/s
+20:12:18 [B_win8] VAL step 5000: L1 0.0352 | PSNR 27.29 dB | SSIM 0.8488 | SAM 9.49 deg
+20:12:41 [B_win8] step   5200/15000 | rec 0.0245 | gnorm 0.08 | lr 2.29e-04 | 6.8 it/s
+20:13:03 [B_win8] step   5400/15000 | rec 0.0247 | gnorm 0.08 | lr 2.23e-04 | 9.0 it/s
+20:13:26 [B_win8] step   5600/15000 | rec 0.0245 | gnorm 0.08 | lr 2.17e-04 | 8.9 it/s
+20:13:48 [B_win8] step   5800/15000 | rec 0.0245 | gnorm 0.08 | lr 2.12e-04 | 8.8 it/s
+20:14:11 [B_win8] step   6000/15000 | rec 0.0244 | gnorm 0.08 | lr 2.06e-04 | 9.0 it/s
+20:14:17 [B_win8] VAL step 6000: L1 0.0318 | PSNR 27.69 dB | SSIM 0.8606 | SAM 8.65 deg
+20:14:39 [B_win8] step   6200/15000 | rec 0.0238 | gnorm 0.08 | lr 1.99e-04 | 7.0 it/s
+20:15:01 [B_win8] step   6400/15000 | rec 0.0238 | gnorm 0.07 | lr 1.93e-04 | 8.9 it/s
+20:15:24 [B_win8] step   6600/15000 | rec 0.0237 | gnorm 0.08 | lr 1.87e-04 | 8.9 it/s
+20:15:46 [B_win8] step   6800/15000 | rec 0.0238 | gnorm 0.08 | lr 1.81e-04 | 9.0 it/s
+20:16:08 [B_win8] step   7000/15000 | rec 0.0237 | gnorm 0.08 | lr 1.74e-04 | 9.0 it/s
+20:16:15 [B_win8] VAL step 7000: L1 0.0312 | PSNR 27.75 dB | SSIM 0.8642 | SAM 8.15 deg
+20:16:37 [B_win8] step   7200/15000 | rec 0.0236 | gnorm 0.09 | lr 1.68e-04 | 7.0 it/s
+20:16:59 [B_win8] step   7400/15000 | rec 0.0235 | gnorm 0.09 | lr 1.61e-04 | 9.1 it/s
+20:17:20 [B_win8] step   7600/15000 | rec 0.0235 | gnorm 0.08 | lr 1.55e-04 | 9.4 it/s
+20:17:42 [B_win8] step   7800/15000 | rec 0.0234 | gnorm 0.08 | lr 1.48e-04 | 9.4 it/s
+20:18:03 [B_win8] step   8000/15000 | rec 0.0233 | gnorm 0.08 | lr 1.42e-04 | 9.3 it/s
+20:18:09 [B_win8] VAL step 8000: L1 0.0291 | PSNR 28.38 dB | SSIM 0.8716 | SAM 7.43 deg  * best
+20:18:31 [B_win8] step   8200/15000 | rec 0.0227 | gnorm 0.07 | lr 1.35e-04 | 7.2 it/s
+20:18:53 [B_win8] step   8400/15000 | rec 0.0229 | gnorm 0.08 | lr 1.29e-04 | 9.3 it/s
+20:19:14 [B_win8] step   8600/15000 | rec 0.0228 | gnorm 0.08 | lr 1.23e-04 | 9.3 it/s
+20:19:36 [B_win8] step   8800/15000 | rec 0.0228 | gnorm 0.08 | lr 1.16e-04 | 9.1 it/s
+20:19:58 [B_win8] step   9000/15000 | rec 0.0228 | gnorm 0.08 | lr 1.10e-04 | 9.2 it/s
+20:20:04 [B_win8] VAL step 9000: L1 0.0308 | PSNR 27.93 dB | SSIM 0.8679 | SAM 7.94 deg
+20:20:26 [B_win8] step   9200/15000 | rec 0.0228 | gnorm 0.08 | lr 1.04e-04 | 7.2 it/s
+20:20:47 [B_win8] step   9400/15000 | rec 0.0227 | gnorm 0.08 | lr 9.75e-05 | 9.3 it/s
+20:21:09 [B_win8] step   9600/15000 | rec 0.0225 | gnorm 0.08 | lr 9.15e-05 | 9.3 it/s
+20:21:31 [B_win8] step   9800/15000 | rec 0.0225 | gnorm 0.08 | lr 8.55e-05 | 9.2 it/s
+20:21:52 [B_win8] step  10000/15000 | rec 0.0224 | gnorm 0.08 | lr 7.97e-05 | 9.3 it/s
+20:21:58 [B_win8] VAL step 10000: L1 0.0302 | PSNR 28.10 dB | SSIM 0.8669 | SAM 8.04 deg
+20:22:19 [B_win8] step  10200/15000 | rec 0.0227 | gnorm 0.09 | lr 7.41e-05 | 7.3 it/s
+20:22:41 [B_win8] step  10400/15000 | rec 0.0225 | gnorm 0.09 | lr 6.85e-05 | 9.5 it/s
+20:23:02 [B_win8] step  10600/15000 | rec 0.0223 | gnorm 0.09 | lr 6.32e-05 | 9.5 it/s
+20:23:23 [B_win8] step  10800/15000 | rec 0.0223 | gnorm 0.09 | lr 5.79e-05 | 9.5 it/s
+20:23:44 [B_win8] step  11000/15000 | rec 0.0223 | gnorm 0.09 | lr 5.29e-05 | 9.3 it/s
+20:23:50 [B_win8] VAL step 11000: L1 0.0298 | PSNR 28.13 dB | SSIM 0.8697 | SAM 7.65 deg
+20:24:12 [B_win8] step  11200/15000 | rec 0.0219 | gnorm 0.08 | lr 4.80e-05 | 7.2 it/s
+20:24:33 [B_win8] step  11400/15000 | rec 0.0218 | gnorm 0.08 | lr 4.34e-05 | 9.3 it/s
+20:24:55 [B_win8] step  11600/15000 | rec 0.0217 | gnorm 0.08 | lr 3.89e-05 | 9.3 it/s
+20:25:16 [B_win8] step  11800/15000 | rec 0.0217 | gnorm 0.08 | lr 3.46e-05 | 9.4 it/s
+20:25:38 [B_win8] step  12000/15000 | rec 0.0217 | gnorm 0.08 | lr 3.06e-05 | 9.1 it/s
+20:25:45 [B_win8] VAL step 12000: L1 0.0331 | PSNR 27.66 dB | SSIM 0.8560 | SAM 8.92 deg
+20:26:06 [B_win8] step  12200/15000 | rec 0.0218 | gnorm 0.09 | lr 2.68e-05 | 7.1 it/s
+20:26:27 [B_win8] step  12400/15000 | rec 0.0217 | gnorm 0.09 | lr 2.32e-05 | 9.5 it/s
+20:26:48 [B_win8] step  12600/15000 | rec 0.0216 | gnorm 0.09 | lr 1.98e-05 | 9.4 it/s
+20:27:10 [B_win8] step  12800/15000 | rec 0.0216 | gnorm 0.09 | lr 1.67e-05 | 9.5 it/s
+20:27:31 [B_win8] step  13000/15000 | rec 0.0215 | gnorm 0.09 | lr 1.39e-05 | 9.3 it/s
+20:27:37 [B_win8] VAL step 13000: L1 0.0317 | PSNR 27.80 dB | SSIM 0.8641 | SAM 8.21 deg
+20:27:59 [B_win8] step  13200/15000 | rec 0.0215 | gnorm 0.08 | lr 1.13e-05 | 7.2 it/s
+20:28:20 [B_win8] step  13400/15000 | rec 0.0214 | gnorm 0.08 | lr 8.92e-06 | 9.5 it/s
+20:28:41 [B_win8] step  13600/15000 | rec 0.0214 | gnorm 0.08 | lr 6.85e-06 | 9.4 it/s
+20:29:02 [B_win8] step  13800/15000 | rec 0.0215 | gnorm 0.09 | lr 5.04e-06 | 9.4 it/s
+20:29:24 [B_win8] step  14000/15000 | rec 0.0214 | gnorm 0.09 | lr 3.51e-06 | 9.4 it/s
+20:29:29 [B_win8] VAL step 14000: L1 0.0289 | PSNR 28.32 dB | SSIM 0.8739 | SAM 7.53 deg  * best
+20:29:51 [B_win8] step  14200/15000 | rec 0.0215 | gnorm 0.08 | lr 2.25e-06 | 7.2 it/s
+20:30:13 [B_win8] step  14400/15000 | rec 0.0215 | gnorm 0.08 | lr 1.27e-06 | 9.4 it/s
+20:30:34 [B_win8] step  14600/15000 | rec 0.0214 | gnorm 0.09 | lr 5.63e-07 | 9.4 it/s
+20:30:55 [B_win8] step  14800/15000 | rec 0.0214 | gnorm 0.09 | lr 1.41e-07 | 9.5 it/s
+20:31:16 [B_win8] step  15000/15000 | rec 0.0215 | gnorm 0.09 | lr 0.00e+00 | 9.5 it/s
+20:31:22 [B_win8] VAL step 15000: L1 0.0297 | PSNR 28.21 dB | SSIM 0.8705 | SAM 7.72 deg
+20:31:22 [B_win8] done in 29.4 min, best val L1 0.0289 at step 14000, peak GPU 5.33 GB
+20:31:45 [eval] Model B - window 8                 test_id     PSNR  26.22 | SSIM 0.8500 | SAM  9.70 | MAE 0.0413 | FID 179.5
+20:32:00 [eval] Model B - window 8                 ood         PSNR  27.93 | SSIM 0.8728 | SAM  8.15 | MAE 0.0305 | FID 179.2
+20:32:00 [B_win8] job finished

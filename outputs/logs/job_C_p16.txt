@@ -1,0 +1,97 @@
+19:55:07 [C_p16] Model C - patch 16: 3000 training patches (scene split, fraction 1.0)
+19:55:10 [C_p16] output bias initialised to mean band reflectance (range 0.002-0.219)
+19:55:10 [C_p16] Model C - patch 16: 5.84M params, 15000 steps, lr 0.0003, gan=False, uncertainty=False
+19:55:29 [C_p16] step    200/15000 | rec 0.0533 | gnorm 0.06 | lr 1.21e-04 | 10.5 it/s
+19:55:47 [C_p16] step    400/15000 | rec 0.0457 | gnorm 0.06 | lr 2.41e-04 | 11.1 it/s
+19:56:05 [C_p16] step    600/15000 | rec 0.0421 | gnorm 0.06 | lr 3.00e-04 | 11.5 it/s
+19:56:22 [C_p16] step    800/15000 | rec 0.0397 | gnorm 0.06 | lr 3.00e-04 | 11.8 it/s
+19:56:39 [C_p16] step   1000/15000 | rec 0.0379 | gnorm 0.06 | lr 2.99e-04 | 11.2 it/s
+19:56:46 [C_p16] VAL step 1000: L1 0.0332 | PSNR 27.13 dB | SSIM 0.8216 | SAM 10.87 deg  * best
+19:57:03 [C_p16] step   1200/15000 | rec 0.0301 | gnorm 0.05 | lr 2.98e-04 | 8.4 it/s
+19:57:20 [C_p16] step   1400/15000 | rec 0.0297 | gnorm 0.05 | lr 2.97e-04 | 11.7 it/s
+19:57:37 [C_p16] step   1600/15000 | rec 0.0296 | gnorm 0.05 | lr 2.96e-04 | 11.9 it/s
+19:57:54 [C_p16] step   1800/15000 | rec 0.0295 | gnorm 0.04 | lr 2.94e-04 | 11.9 it/s
+19:58:12 [C_p16] step   2000/15000 | rec 0.0292 | gnorm 0.04 | lr 2.92e-04 | 11.4 it/s
+19:58:18 [C_p16] VAL step 2000: L1 0.0293 | PSNR 27.96 dB | SSIM 0.8412 | SAM 9.12 deg  * best
+19:58:36 [C_p16] step   2200/15000 | rec 0.0277 | gnorm 0.04 | lr 2.90e-04 | 8.3 it/s
+19:58:53 [C_p16] step   2400/15000 | rec 0.0275 | gnorm 0.04 | lr 2.87e-04 | 11.5 it/s
+19:59:10 [C_p16] step   2600/15000 | rec 0.0276 | gnorm 0.04 | lr 2.85e-04 | 11.8 it/s
+19:59:27 [C_p16] step   2800/15000 | rec 0.0274 | gnorm 0.04 | lr 2.82e-04 | 11.8 it/s
+19:59:45 [C_p16] step   3000/15000 | rec 0.0272 | gnorm 0.04 | lr 2.79e-04 | 11.3 it/s
+19:59:51 [C_p16] VAL step 3000: L1 0.0321 | PSNR 27.36 dB | SSIM 0.8418 | SAM 8.43 deg
+20:00:08 [C_p16] step   3200/15000 | rec 0.0280 | gnorm 0.04 | lr 2.75e-04 | 8.6 it/s
+20:00:25 [C_p16] step   3400/15000 | rec 0.0274 | gnorm 0.04 | lr 2.71e-04 | 11.4 it/s
+20:00:43 [C_p16] step   3600/15000 | rec 0.0272 | gnorm 0.04 | lr 2.67e-04 | 11.5 it/s
+20:01:00 [C_p16] step   3800/15000 | rec 0.0268 | gnorm 0.04 | lr 2.63e-04 | 11.6 it/s
+20:01:16 [C_p16] step   4000/15000 | rec 0.0266 | gnorm 0.04 | lr 2.59e-04 | 12.3 it/s
+20:01:21 [C_p16] VAL step 4000: L1 0.0293 | PSNR 27.94 dB | SSIM 0.8497 | SAM 8.07 deg
+20:01:36 [C_p16] step   4200/15000 | rec 0.0251 | gnorm 0.03 | lr 2.54e-04 | 10.1 it/s
+20:01:51 [C_p16] step   4400/15000 | rec 0.0248 | gnorm 0.03 | lr 2.50e-04 | 13.5 it/s
+20:02:04 [C_p16] step   4600/15000 | rec 0.0250 | gnorm 0.03 | lr 2.45e-04 | 15.3 it/s
+20:02:16 [C_p16] step   4800/15000 | rec 0.0250 | gnorm 0.03 | lr 2.39e-04 | 16.8 it/s
+20:02:28 [C_p16] step   5000/15000 | rec 0.0249 | gnorm 0.03 | lr 2.34e-04 | 16.2 it/s
+20:02:34 [C_p16] VAL step 5000: L1 0.0303 | PSNR 27.76 dB | SSIM 0.8440 | SAM 8.26 deg
+20:02:50 [C_p16] step   5200/15000 | rec 0.0247 | gnorm 0.03 | lr 2.29e-04 | 9.3 it/s
+20:03:05 [C_p16] step   5400/15000 | rec 0.0245 | gnorm 0.03 | lr 2.23e-04 | 13.0 it/s
+20:03:20 [C_p16] step   5600/15000 | rec 0.0245 | gnorm 0.03 | lr 2.17e-04 | 13.2 it/s
+20:03:36 [C_p16] step   5800/15000 | rec 0.0245 | gnorm 0.03 | lr 2.12e-04 | 12.9 it/s
+20:03:51 [C_p16] step   6000/15000 | rec 0.0243 | gnorm 0.03 | lr 2.06e-04 | 13.1 it/s
+20:03:57 [C_p16] VAL step 6000: L1 0.0285 | PSNR 28.21 dB | SSIM 0.8476 | SAM 7.96 deg  * best
+20:04:12 [C_p16] step   6200/15000 | rec 0.0240 | gnorm 0.03 | lr 1.99e-04 | 9.5 it/s
+20:04:29 [C_p16] step   6400/15000 | rec 0.0238 | gnorm 0.03 | lr 1.93e-04 | 12.2 it/s
+20:04:44 [C_p16] step   6600/15000 | rec 0.0237 | gnorm 0.03 | lr 1.87e-04 | 13.2 it/s
+20:04:59 [C_p16] step   6800/15000 | rec 0.0236 | gnorm 0.03 | lr 1.81e-04 | 13.2 it/s
+20:05:14 [C_p16] step   7000/15000 | rec 0.0236 | gnorm 0.03 | lr 1.74e-04 | 13.1 it/s
+20:05:20 [C_p16] VAL step 7000: L1 0.0299 | PSNR 27.87 dB | SSIM 0.8453 | SAM 7.94 deg
+20:05:35 [C_p16] step   7200/15000 | rec 0.0232 | gnorm 0.03 | lr 1.68e-04 | 9.4 it/s
+20:05:50 [C_p16] step   7400/15000 | rec 0.0232 | gnorm 0.03 | lr 1.61e-04 | 13.3 it/s
+20:06:06 [C_p16] step   7600/15000 | rec 0.0232 | gnorm 0.03 | lr 1.55e-04 | 12.8 it/s
+20:06:23 [C_p16] step   7800/15000 | rec 0.0231 | gnorm 0.03 | lr 1.48e-04 | 11.8 it/s
+20:06:38 [C_p16] step   8000/15000 | rec 0.0230 | gnorm 0.03 | lr 1.42e-04 | 13.4 it/s
+20:06:44 [C_p16] VAL step 8000: L1 0.0298 | PSNR 28.05 dB | SSIM 0.8469 | SAM 7.40 deg
+20:06:59 [C_p16] step   8200/15000 | rec 0.0226 | gnorm 0.03 | lr 1.35e-04 | 9.4 it/s
+20:07:14 [C_p16] step   8400/15000 | rec 0.0225 | gnorm 0.03 | lr 1.29e-04 | 13.2 it/s
+20:07:30 [C_p16] step   8600/15000 | rec 0.0224 | gnorm 0.03 | lr 1.23e-04 | 13.0 it/s
+20:07:45 [C_p16] step   8800/15000 | rec 0.0224 | gnorm 0.03 | lr 1.16e-04 | 13.0 it/s
+20:08:00 [C_p16] step   9000/15000 | rec 0.0223 | gnorm 0.03 | lr 1.10e-04 | 13.3 it/s
+20:08:06 [C_p16] VAL step 9000: L1 0.0292 | PSNR 28.02 dB | SSIM 0.8498 | SAM 7.68 deg
+20:08:23 [C_p16] step   9200/15000 | rec 0.0223 | gnorm 0.03 | lr 1.04e-04 | 8.8 it/s
+20:08:39 [C_p16] step   9400/15000 | rec 0.0221 | gnorm 0.03 | lr 9.75e-05 | 12.8 it/s
+20:08:54 [C_p16] step   9600/15000 | rec 0.0222 | gnorm 0.03 | lr 9.15e-05 | 13.0 it/s
+20:09:09 [C_p16] step   9800/15000 | rec 0.0220 | gnorm 0.03 | lr 8.55e-05 | 13.2 it/s
+20:09:24 [C_p16] step  10000/15000 | rec 0.0219 | gnorm 0.03 | lr 7.97e-05 | 13.1 it/s
+20:09:30 [C_p16] VAL step 10000: L1 0.0314 | PSNR 27.59 dB | SSIM 0.8355 | SAM 8.69 deg
+20:09:45 [C_p16] step  10200/15000 | rec 0.0217 | gnorm 0.03 | lr 7.41e-05 | 9.4 it/s
+20:10:01 [C_p16] step  10400/15000 | rec 0.0215 | gnorm 0.03 | lr 6.85e-05 | 13.2 it/s
+20:10:17 [C_p16] step  10600/15000 | rec 0.0215 | gnorm 0.03 | lr 6.32e-05 | 12.4 it/s
+20:10:32 [C_p16] step  10800/15000 | rec 0.0215 | gnorm 0.03 | lr 5.79e-05 | 12.7 it/s
+20:10:48 [C_p16] step  11000/15000 | rec 0.0215 | gnorm 0.03 | lr 5.29e-05 | 13.1 it/s
+20:10:53 [C_p16] VAL step 11000: L1 0.0298 | PSNR 27.90 dB | SSIM 0.8417 | SAM 8.20 deg
+20:11:09 [C_p16] step  11200/15000 | rec 0.0212 | gnorm 0.03 | lr 4.80e-05 | 9.5 it/s
+20:11:24 [C_p16] step  11400/15000 | rec 0.0211 | gnorm 0.03 | lr 4.34e-05 | 13.1 it/s
+20:11:40 [C_p16] step  11600/15000 | rec 0.0211 | gnorm 0.03 | lr 3.89e-05 | 12.6 it/s
+20:11:55 [C_p16] step  11800/15000 | rec 0.0212 | gnorm 0.03 | lr 3.46e-05 | 13.2 it/s
+20:12:10 [C_p16] step  12000/15000 | rec 0.0212 | gnorm 0.03 | lr 3.06e-05 | 13.2 it/s
+20:12:17 [C_p16] VAL step 12000: L1 0.0335 | PSNR 27.29 dB | SSIM 0.8258 | SAM 9.54 deg
+20:12:32 [C_p16] step  12200/15000 | rec 0.0211 | gnorm 0.03 | lr 2.68e-05 | 9.1 it/s
+20:12:48 [C_p16] step  12400/15000 | rec 0.0210 | gnorm 0.03 | lr 2.32e-05 | 13.0 it/s
+20:13:03 [C_p16] step  12600/15000 | rec 0.0209 | gnorm 0.03 | lr 1.98e-05 | 12.9 it/s
+20:13:18 [C_p16] step  12800/15000 | rec 0.0209 | gnorm 0.03 | lr 1.67e-05 | 13.1 it/s
+20:13:33 [C_p16] step  13000/15000 | rec 0.0209 | gnorm 0.03 | lr 1.39e-05 | 13.2 it/s
+20:13:39 [C_p16] VAL step 13000: L1 0.0316 | PSNR 27.52 dB | SSIM 0.8346 | SAM 8.64 deg
+20:13:54 [C_p16] step  13200/15000 | rec 0.0209 | gnorm 0.03 | lr 1.13e-05 | 9.6 it/s
+20:14:09 [C_p16] step  13400/15000 | rec 0.0207 | gnorm 0.03 | lr 8.92e-06 | 13.3 it/s
+20:14:26 [C_p16] step  13600/15000 | rec 0.0207 | gnorm 0.03 | lr 6.85e-06 | 12.1 it/s
+20:14:41 [C_p16] step  13800/15000 | rec 0.0207 | gnorm 0.02 | lr 5.04e-06 | 13.2 it/s
+20:14:57 [C_p16] step  14000/15000 | rec 0.0207 | gnorm 0.02 | lr 3.51e-06 | 12.9 it/s
+20:15:02 [C_p16] VAL step 14000: L1 0.0331 | PSNR 27.30 dB | SSIM 0.8268 | SAM 9.45 deg
+20:15:18 [C_p16] step  14200/15000 | rec 0.0207 | gnorm 0.02 | lr 2.25e-06 | 9.4 it/s
+20:15:33 [C_p16] step  14400/15000 | rec 0.0207 | gnorm 0.02 | lr 1.27e-06 | 13.2 it/s
+20:15:48 [C_p16] step  14600/15000 | rec 0.0207 | gnorm 0.02 | lr 5.63e-07 | 13.1 it/s
+20:16:04 [C_p16] step  14800/15000 | rec 0.0206 | gnorm 0.02 | lr 1.41e-07 | 12.8 it/s
+20:16:21 [C_p16] step  15000/15000 | rec 0.0206 | gnorm 0.02 | lr 0.00e+00 | 11.9 it/s
+20:16:27 [C_p16] VAL step 15000: L1 0.0333 | PSNR 27.25 dB | SSIM 0.8254 | SAM 9.57 deg
+20:16:27 [C_p16] done in 21.3 min, best val L1 0.0285 at step 6000, peak GPU 0.54 GB
+20:16:46 [eval] Model C - patch 16                 test_id     PSNR  26.98 | SSIM 0.8415 | SAM  9.10 | MAE 0.0381 | FID 281.1
+20:16:57 [eval] Model C - patch 16                 ood         PSNR  27.74 | SSIM 0.8614 | SAM  9.41 | MAE 0.0312 | FID 269.8
+20:16:57 [C_p16] job finished

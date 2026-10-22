@@ -1,0 +1,36 @@
+{
+  "info": {
+    "name": "A_gan",
+    "label": "Model A + PatchGAN (lambda 100)",
+    "arch": "unet",
+    "params": 7707853,
+    "steps": 15000,
+    "best_step": 4000,
+    "best_val_l1": 0.032375410199165344,
+    "best_val_psnr": 27.267070770263672,
+    "best_val_ssim": 0.840128481388092,
+    "steps_done": 15000,
+    "stopped_early": false,
+    "train_minutes": 31.190981245040895,
+    "peak_gpu_gb": 5.179706368
+  },
+  "config": {
+    "name": "A_gan",
+    "arch": "unet",
+    "label": "Model A + PatchGAN (lambda 100)",
+    "model_kwargs": {},
+    "uncertainty": false,
+    "use_gan": true,
+    "gan_lambda": 100.0,
+    "lr": 0.0002,
+    "weight_decay": 0.01,
+    "steps": 15000,
+    "warmup": 500,
+    "val_every": 1000,
+    "log_every": 200,
+    "grad_clip": 1.0,
+    "seed": 42,
+    "loss": "l1",
+    "deadline": 1792631691.3808339
+  }
+}

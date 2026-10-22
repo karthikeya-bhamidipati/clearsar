@@ -1,0 +1,96 @@
+17:00:41 [A_random] Model A - random patch split: 3000 training patches (random split, fraction 1.0)
+17:00:44 [A_random] output bias initialised to mean band reflectance (range 0.002-0.230)
+17:00:44 [A_random] Model A - random patch split: 7.71M params, 15000 steps, lr 0.0003, gan=False, uncertainty=False
+17:01:37 [A_random] step    200/15000 | rec 0.0451 | gnorm 0.11 | lr 1.21e-04 | 3.7 it/s
+17:01:55 [A_random] step    400/15000 | rec 0.0392 | gnorm 0.11 | lr 2.41e-04 | 11.1 it/s
+17:02:13 [A_random] step    600/15000 | rec 0.0368 | gnorm 0.11 | lr 3.00e-04 | 11.1 it/s
+17:02:31 [A_random] step    800/15000 | rec 0.0353 | gnorm 0.10 | lr 3.00e-04 | 11.1 it/s
+17:02:49 [A_random] step   1000/15000 | rec 0.0343 | gnorm 0.10 | lr 2.99e-04 | 11.0 it/s
+17:02:57 [A_random] VAL step 1000: L1 0.0301 | PSNR 28.12 dB | SSIM 0.8357 | SAM 8.60 deg  * best
+17:03:15 [A_random] step   1200/15000 | rec 0.0295 | gnorm 0.09 | lr 2.98e-04 | 7.7 it/s
+17:03:33 [A_random] step   1400/15000 | rec 0.0292 | gnorm 0.09 | lr 2.97e-04 | 11.2 it/s
+17:03:51 [A_random] step   1600/15000 | rec 0.0289 | gnorm 0.09 | lr 2.96e-04 | 11.2 it/s
+17:04:08 [A_random] step   1800/15000 | rec 0.0287 | gnorm 0.09 | lr 2.94e-04 | 11.4 it/s
+17:04:26 [A_random] step   2000/15000 | rec 0.0286 | gnorm 0.09 | lr 2.92e-04 | 11.4 it/s
+17:04:31 [A_random] VAL step 2000: L1 0.0287 | PSNR 28.52 dB | SSIM 0.8446 | SAM 8.20 deg  * best
+17:04:48 [A_random] step   2200/15000 | rec 0.0279 | gnorm 0.10 | lr 2.90e-04 | 8.9 it/s
+17:05:06 [A_random] step   2400/15000 | rec 0.0276 | gnorm 0.09 | lr 2.87e-04 | 11.2 it/s
+17:05:24 [A_random] step   2600/15000 | rec 0.0274 | gnorm 0.09 | lr 2.85e-04 | 11.2 it/s
+17:05:42 [A_random] step   2800/15000 | rec 0.0273 | gnorm 0.09 | lr 2.82e-04 | 11.1 it/s
+17:06:00 [A_random] step   3000/15000 | rec 0.0272 | gnorm 0.09 | lr 2.79e-04 | 11.1 it/s
+17:06:07 [A_random] VAL step 3000: L1 0.0268 | PSNR 29.03 dB | SSIM 0.8394 | SAM 7.95 deg  * best
+17:06:25 [A_random] step   3200/15000 | rec 0.0266 | gnorm 0.09 | lr 2.75e-04 | 8.1 it/s
+17:06:43 [A_random] step   3400/15000 | rec 0.0265 | gnorm 0.09 | lr 2.71e-04 | 11.2 it/s
+17:07:01 [A_random] step   3600/15000 | rec 0.0263 | gnorm 0.09 | lr 2.67e-04 | 11.2 it/s
+17:07:19 [A_random] step   3800/15000 | rec 0.0262 | gnorm 0.09 | lr 2.63e-04 | 11.2 it/s
+17:07:36 [A_random] step   4000/15000 | rec 0.0262 | gnorm 0.09 | lr 2.59e-04 | 11.3 it/s
+17:07:43 [A_random] VAL step 4000: L1 0.0253 | PSNR 29.52 dB | SSIM 0.8593 | SAM 6.82 deg  * best
+17:08:01 [A_random] step   4200/15000 | rec 0.0253 | gnorm 0.08 | lr 2.54e-04 | 8.0 it/s
+17:08:19 [A_random] step   4400/15000 | rec 0.0255 | gnorm 0.09 | lr 2.50e-04 | 11.2 it/s
+17:08:37 [A_random] step   4600/15000 | rec 0.0254 | gnorm 0.09 | lr 2.45e-04 | 11.1 it/s
+17:08:55 [A_random] step   4800/15000 | rec 0.0254 | gnorm 0.09 | lr 2.39e-04 | 11.3 it/s
+17:09:13 [A_random] step   5000/15000 | rec 0.0253 | gnorm 0.09 | lr 2.34e-04 | 11.2 it/s
+17:09:19 [A_random] VAL step 5000: L1 0.0241 | PSNR 29.84 dB | SSIM 0.8628 | SAM 6.72 deg  * best
+17:09:37 [A_random] step   5200/15000 | rec 0.0246 | gnorm 0.09 | lr 2.29e-04 | 8.2 it/s
+17:09:55 [A_random] step   5400/15000 | rec 0.0246 | gnorm 0.09 | lr 2.23e-04 | 11.2 it/s
+17:10:13 [A_random] step   5600/15000 | rec 0.0246 | gnorm 0.09 | lr 2.17e-04 | 11.1 it/s
+17:10:31 [A_random] step   5800/15000 | rec 0.0245 | gnorm 0.09 | lr 2.12e-04 | 11.1 it/s
+17:10:49 [A_random] step   6000/15000 | rec 0.0245 | gnorm 0.09 | lr 2.06e-04 | 11.2 it/s
+17:10:55 [A_random] VAL step 6000: L1 0.0238 | PSNR 29.96 dB | SSIM 0.8657 | SAM 6.54 deg  * best
+17:11:14 [A_random] step   6200/15000 | rec 0.0240 | gnorm 0.09 | lr 1.99e-04 | 8.1 it/s
+17:11:32 [A_random] step   6400/15000 | rec 0.0240 | gnorm 0.09 | lr 1.93e-04 | 11.2 it/s
+17:11:50 [A_random] step   6600/15000 | rec 0.0240 | gnorm 0.09 | lr 1.87e-04 | 11.1 it/s
+17:12:08 [A_random] step   6800/15000 | rec 0.0240 | gnorm 0.09 | lr 1.81e-04 | 11.1 it/s
+17:12:26 [A_random] step   7000/15000 | rec 0.0239 | gnorm 0.09 | lr 1.74e-04 | 11.1 it/s
+17:12:33 [A_random] VAL step 7000: L1 0.0224 | PSNR 30.33 dB | SSIM 0.8704 | SAM 6.34 deg  * best
+17:12:51 [A_random] step   7200/15000 | rec 0.0235 | gnorm 0.09 | lr 1.68e-04 | 7.9 it/s
+17:13:09 [A_random] step   7400/15000 | rec 0.0234 | gnorm 0.09 | lr 1.61e-04 | 11.1 it/s
+17:13:27 [A_random] step   7600/15000 | rec 0.0235 | gnorm 0.09 | lr 1.55e-04 | 11.0 it/s
+17:13:46 [A_random] step   7800/15000 | rec 0.0234 | gnorm 0.10 | lr 1.48e-04 | 11.0 it/s
+17:14:03 [A_random] step   8000/15000 | rec 0.0233 | gnorm 0.10 | lr 1.42e-04 | 11.2 it/s
+17:14:10 [A_random] VAL step 8000: L1 0.0227 | PSNR 30.32 dB | SSIM 0.8710 | SAM 6.22 deg
+17:14:28 [A_random] step   8200/15000 | rec 0.0229 | gnorm 0.10 | lr 1.35e-04 | 8.1 it/s
+17:14:46 [A_random] step   8400/15000 | rec 0.0228 | gnorm 0.09 | lr 1.29e-04 | 11.1 it/s
+17:15:04 [A_random] step   8600/15000 | rec 0.0227 | gnorm 0.09 | lr 1.23e-04 | 11.1 it/s
+17:15:22 [A_random] step   8800/15000 | rec 0.0227 | gnorm 0.09 | lr 1.16e-04 | 11.0 it/s
+17:15:40 [A_random] step   9000/15000 | rec 0.0227 | gnorm 0.10 | lr 1.10e-04 | 11.2 it/s
+17:15:47 [A_random] VAL step 9000: L1 0.0218 | PSNR 30.65 dB | SSIM 0.8735 | SAM 6.08 deg  * best
+17:16:05 [A_random] step   9200/15000 | rec 0.0222 | gnorm 0.10 | lr 1.04e-04 | 8.1 it/s
+17:16:23 [A_random] step   9400/15000 | rec 0.0224 | gnorm 0.10 | lr 9.75e-05 | 11.1 it/s
+17:16:41 [A_random] step   9600/15000 | rec 0.0223 | gnorm 0.10 | lr 9.15e-05 | 11.1 it/s
+17:16:59 [A_random] step   9800/15000 | rec 0.0222 | gnorm 0.10 | lr 8.55e-05 | 11.2 it/s
+17:17:17 [A_random] step  10000/15000 | rec 0.0222 | gnorm 0.10 | lr 7.97e-05 | 11.2 it/s
+17:17:23 [A_random] VAL step 10000: L1 0.0214 | PSNR 30.80 dB | SSIM 0.8745 | SAM 5.97 deg  * best
+17:17:41 [A_random] step  10200/15000 | rec 0.0220 | gnorm 0.10 | lr 7.41e-05 | 8.1 it/s
+17:17:59 [A_random] step  10400/15000 | rec 0.0219 | gnorm 0.10 | lr 6.85e-05 | 11.2 it/s
+17:18:17 [A_random] step  10600/15000 | rec 0.0218 | gnorm 0.10 | lr 6.32e-05 | 11.3 it/s
+17:18:35 [A_random] step  10800/15000 | rec 0.0217 | gnorm 0.10 | lr 5.79e-05 | 11.2 it/s
+17:18:53 [A_random] step  11000/15000 | rec 0.0217 | gnorm 0.10 | lr 5.29e-05 | 11.1 it/s
+17:18:59 [A_random] VAL step 11000: L1 0.0208 | PSNR 30.91 dB | SSIM 0.8759 | SAM 5.84 deg  * best
+17:19:18 [A_random] step  11200/15000 | rec 0.0214 | gnorm 0.10 | lr 4.80e-05 | 8.1 it/s
+17:19:36 [A_random] step  11400/15000 | rec 0.0214 | gnorm 0.10 | lr 4.34e-05 | 11.0 it/s
+17:19:54 [A_random] step  11600/15000 | rec 0.0214 | gnorm 0.10 | lr 3.89e-05 | 11.0 it/s
+17:20:12 [A_random] step  11800/15000 | rec 0.0214 | gnorm 0.10 | lr 3.46e-05 | 11.1 it/s
+17:20:30 [A_random] step  12000/15000 | rec 0.0213 | gnorm 0.10 | lr 3.06e-05 | 11.0 it/s
+17:20:37 [A_random] VAL step 12000: L1 0.0208 | PSNR 30.96 dB | SSIM 0.8764 | SAM 5.94 deg  * best
+17:20:56 [A_random] step  12200/15000 | rec 0.0211 | gnorm 0.10 | lr 2.68e-05 | 7.9 it/s
+17:21:14 [A_random] step  12400/15000 | rec 0.0213 | gnorm 0.10 | lr 2.32e-05 | 11.0 it/s
+17:21:32 [A_random] step  12600/15000 | rec 0.0211 | gnorm 0.10 | lr 1.98e-05 | 10.9 it/s
+17:21:50 [A_random] step  12800/15000 | rec 0.0211 | gnorm 0.10 | lr 1.67e-05 | 11.2 it/s
+17:22:08 [A_random] step  13000/15000 | rec 0.0212 | gnorm 0.10 | lr 1.39e-05 | 11.0 it/s
+17:22:15 [A_random] VAL step 13000: L1 0.0204 | PSNR 31.09 dB | SSIM 0.8774 | SAM 5.80 deg  * best
+17:22:33 [A_random] step  13200/15000 | rec 0.0211 | gnorm 0.10 | lr 1.13e-05 | 7.9 it/s
+17:22:51 [A_random] step  13400/15000 | rec 0.0210 | gnorm 0.10 | lr 8.92e-06 | 11.1 it/s
+17:23:09 [A_random] step  13600/15000 | rec 0.0210 | gnorm 0.10 | lr 6.85e-06 | 11.0 it/s
+17:23:27 [A_random] step  13800/15000 | rec 0.0210 | gnorm 0.10 | lr 5.04e-06 | 11.1 it/s
+17:23:46 [A_random] step  14000/15000 | rec 0.0210 | gnorm 0.10 | lr 3.51e-06 | 11.1 it/s
+17:23:52 [A_random] VAL step 14000: L1 0.0204 | PSNR 31.09 dB | SSIM 0.8774 | SAM 5.80 deg  * best
+17:24:11 [A_random] step  14200/15000 | rec 0.0210 | gnorm 0.10 | lr 2.25e-06 | 8.0 it/s
+17:24:29 [A_random] step  14400/15000 | rec 0.0209 | gnorm 0.10 | lr 1.27e-06 | 11.1 it/s
+17:24:47 [A_random] step  14600/15000 | rec 0.0208 | gnorm 0.10 | lr 5.63e-07 | 11.1 it/s
+17:25:04 [A_random] step  14800/15000 | rec 0.0209 | gnorm 0.10 | lr 1.41e-07 | 11.2 it/s
+17:25:22 [A_random] step  15000/15000 | rec 0.0209 | gnorm 0.10 | lr 0.00e+00 | 11.1 it/s
+17:25:29 [A_random] VAL step 15000: L1 0.0204 | PSNR 31.10 dB | SSIM 0.8774 | SAM 5.75 deg
+17:25:29 [A_random] done in 24.8 min, best val L1 0.0204 at step 14000, peak GPU 5.13 GB
+17:25:53 [eval] Model A - random patch split       random_test PSNR  31.48 | SSIM 0.8830 | SAM  5.86 | MAE 0.0196 | FID 133.3
+17:25:53 [A_random] job finished

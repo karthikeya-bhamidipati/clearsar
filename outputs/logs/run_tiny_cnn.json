@@ -1,0 +1,36 @@
+{
+  "info": {
+    "name": "tiny_cnn",
+    "label": "Baseline - tiny CNN",
+    "arch": "tiny_cnn",
+    "params": 53133,
+    "steps": 15000,
+    "best_step": 3000,
+    "best_val_l1": 0.030319809913635254,
+    "best_val_psnr": 27.878931045532227,
+    "best_val_ssim": 0.8567641377449036,
+    "steps_done": 15000,
+    "stopped_early": false,
+    "train_minutes": 17.826112306118013,
+    "peak_gpu_gb": 2.378582528
+  },
+  "config": {
+    "name": "tiny_cnn",
+    "arch": "tiny_cnn",
+    "label": "Baseline - tiny CNN",
+    "model_kwargs": {},
+    "uncertainty": false,
+    "use_gan": false,
+    "gan_lambda": 100.0,
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "steps": 15000,
+    "warmup": 500,
+    "val_every": 1000,
+    "log_every": 200,
+    "grad_clip": 1.0,
+    "seed": 42,
+    "loss": "l1",
+    "deadline": 1792631691.3808339
+  }
+}

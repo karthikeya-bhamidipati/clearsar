@@ -1,0 +1,97 @@
+17:56:43 [C_nopos] Model C - no positional embedding: 3000 training patches (scene split, fraction 1.0)
+17:56:46 [C_nopos] output bias initialised to mean band reflectance (range 0.002-0.236)
+17:56:46 [C_nopos] Model C - no positional embedding: 4.79M params, 15000 steps, lr 0.0003, gan=False, uncertainty=False
+17:57:02 [C_nopos] step    200/15000 | rec 0.0510 | gnorm 0.09 | lr 1.21e-04 | 12.2 it/s
+17:57:18 [C_nopos] step    400/15000 | rec 0.0441 | gnorm 0.11 | lr 2.41e-04 | 12.7 it/s
+17:57:32 [C_nopos] step    600/15000 | rec 0.0406 | gnorm 0.12 | lr 3.00e-04 | 13.9 it/s
+17:57:47 [C_nopos] step    800/15000 | rec 0.0384 | gnorm 0.12 | lr 3.00e-04 | 14.0 it/s
+17:57:59 [C_nopos] step   1000/15000 | rec 0.0366 | gnorm 0.11 | lr 2.99e-04 | 15.7 it/s
+17:58:04 [C_nopos] VAL step 1000: L1 0.0293 | PSNR 27.96 dB | SSIM 0.8503 | SAM 8.25 deg  * best
+17:58:17 [C_nopos] step   1200/15000 | rec 0.0297 | gnorm 0.09 | lr 2.98e-04 | 11.2 it/s
+17:58:30 [C_nopos] step   1400/15000 | rec 0.0291 | gnorm 0.09 | lr 2.97e-04 | 16.3 it/s
+17:58:44 [C_nopos] step   1600/15000 | rec 0.0289 | gnorm 0.09 | lr 2.96e-04 | 14.2 it/s
+17:58:59 [C_nopos] step   1800/15000 | rec 0.0287 | gnorm 0.08 | lr 2.94e-04 | 13.0 it/s
+17:59:15 [C_nopos] step   2000/15000 | rec 0.0284 | gnorm 0.08 | lr 2.92e-04 | 12.5 it/s
+17:59:21 [C_nopos] VAL step 2000: L1 0.0299 | PSNR 27.78 dB | SSIM 0.8478 | SAM 8.49 deg
+17:59:37 [C_nopos] step   2200/15000 | rec 0.0273 | gnorm 0.08 | lr 2.90e-04 | 9.2 it/s
+17:59:52 [C_nopos] step   2400/15000 | rec 0.0271 | gnorm 0.07 | lr 2.87e-04 | 13.0 it/s
+18:00:07 [C_nopos] step   2600/15000 | rec 0.0270 | gnorm 0.07 | lr 2.85e-04 | 13.1 it/s
+18:00:23 [C_nopos] step   2800/15000 | rec 0.0269 | gnorm 0.07 | lr 2.82e-04 | 12.6 it/s
+18:00:40 [C_nopos] step   3000/15000 | rec 0.0267 | gnorm 0.07 | lr 2.79e-04 | 11.9 it/s
+18:00:46 [C_nopos] VAL step 3000: L1 0.0293 | PSNR 27.93 dB | SSIM 0.8507 | SAM 8.74 deg  * best
+18:01:02 [C_nopos] step   3200/15000 | rec 0.0256 | gnorm 0.06 | lr 2.75e-04 | 9.0 it/s
+18:01:18 [C_nopos] step   3400/15000 | rec 0.0254 | gnorm 0.06 | lr 2.71e-04 | 12.2 it/s
+18:01:34 [C_nopos] step   3600/15000 | rec 0.0255 | gnorm 0.06 | lr 2.67e-04 | 13.0 it/s
+18:01:49 [C_nopos] step   3800/15000 | rec 0.0255 | gnorm 0.06 | lr 2.63e-04 | 12.9 it/s
+18:02:05 [C_nopos] step   4000/15000 | rec 0.0252 | gnorm 0.06 | lr 2.59e-04 | 12.8 it/s
+18:02:12 [C_nopos] VAL step 4000: L1 0.0308 | PSNR 27.63 dB | SSIM 0.8416 | SAM 9.05 deg
+18:02:28 [C_nopos] step   4200/15000 | rec 0.0253 | gnorm 0.06 | lr 2.54e-04 | 8.5 it/s
+18:02:44 [C_nopos] step   4400/15000 | rec 0.0249 | gnorm 0.06 | lr 2.50e-04 | 12.9 it/s
+18:02:59 [C_nopos] step   4600/15000 | rec 0.0247 | gnorm 0.06 | lr 2.45e-04 | 13.0 it/s
+18:03:15 [C_nopos] step   4800/15000 | rec 0.0244 | gnorm 0.06 | lr 2.39e-04 | 12.6 it/s
+18:03:31 [C_nopos] step   5000/15000 | rec 0.0243 | gnorm 0.05 | lr 2.34e-04 | 13.1 it/s
+18:03:37 [C_nopos] VAL step 5000: L1 0.0285 | PSNR 28.34 dB | SSIM 0.8486 | SAM 8.21 deg  * best
+18:03:52 [C_nopos] step   5200/15000 | rec 0.0236 | gnorm 0.05 | lr 2.29e-04 | 9.3 it/s
+18:04:08 [C_nopos] step   5400/15000 | rec 0.0233 | gnorm 0.05 | lr 2.23e-04 | 12.3 it/s
+18:04:25 [C_nopos] step   5600/15000 | rec 0.0236 | gnorm 0.05 | lr 2.17e-04 | 11.7 it/s
+18:04:41 [C_nopos] step   5800/15000 | rec 0.0234 | gnorm 0.05 | lr 2.12e-04 | 12.9 it/s
+18:04:56 [C_nopos] step   6000/15000 | rec 0.0233 | gnorm 0.05 | lr 2.06e-04 | 12.8 it/s
+18:05:03 [C_nopos] VAL step 6000: L1 0.0307 | PSNR 27.80 dB | SSIM 0.8453 | SAM 8.10 deg
+18:05:19 [C_nopos] step   6200/15000 | rec 0.0228 | gnorm 0.05 | lr 1.99e-04 | 9.0 it/s
+18:05:34 [C_nopos] step   6400/15000 | rec 0.0227 | gnorm 0.05 | lr 1.93e-04 | 12.8 it/s
+18:05:50 [C_nopos] step   6600/15000 | rec 0.0226 | gnorm 0.05 | lr 1.87e-04 | 13.0 it/s
+18:06:06 [C_nopos] step   6800/15000 | rec 0.0226 | gnorm 0.05 | lr 1.81e-04 | 12.5 it/s
+18:06:23 [C_nopos] step   7000/15000 | rec 0.0225 | gnorm 0.05 | lr 1.74e-04 | 11.7 it/s
+18:06:29 [C_nopos] VAL step 7000: L1 0.0311 | PSNR 27.75 dB | SSIM 0.8432 | SAM 7.98 deg
+18:06:45 [C_nopos] step   7200/15000 | rec 0.0219 | gnorm 0.05 | lr 1.68e-04 | 8.8 it/s
+18:07:01 [C_nopos] step   7400/15000 | rec 0.0220 | gnorm 0.05 | lr 1.61e-04 | 13.0 it/s
+18:07:17 [C_nopos] step   7600/15000 | rec 0.0219 | gnorm 0.05 | lr 1.55e-04 | 12.4 it/s
+18:07:32 [C_nopos] step   7800/15000 | rec 0.0219 | gnorm 0.05 | lr 1.48e-04 | 12.9 it/s
+18:07:48 [C_nopos] step   8000/15000 | rec 0.0218 | gnorm 0.05 | lr 1.42e-04 | 13.0 it/s
+18:07:54 [C_nopos] VAL step 8000: L1 0.0357 | PSNR 27.08 dB | SSIM 0.8184 | SAM 10.49 deg
+18:08:09 [C_nopos] step   8200/15000 | rec 0.0216 | gnorm 0.05 | lr 1.35e-04 | 9.3 it/s
+18:08:26 [C_nopos] step   8400/15000 | rec 0.0213 | gnorm 0.04 | lr 1.29e-04 | 12.0 it/s
+18:08:42 [C_nopos] step   8600/15000 | rec 0.0214 | gnorm 0.05 | lr 1.23e-04 | 12.8 it/s
+18:08:57 [C_nopos] step   8800/15000 | rec 0.0213 | gnorm 0.05 | lr 1.16e-04 | 12.8 it/s
+18:09:13 [C_nopos] step   9000/15000 | rec 0.0212 | gnorm 0.05 | lr 1.10e-04 | 12.6 it/s
+18:09:19 [C_nopos] VAL step 9000: L1 0.0295 | PSNR 28.21 dB | SSIM 0.8465 | SAM 8.10 deg
+18:09:35 [C_nopos] step   9200/15000 | rec 0.0210 | gnorm 0.05 | lr 1.04e-04 | 9.1 it/s
+18:09:51 [C_nopos] step   9400/15000 | rec 0.0208 | gnorm 0.04 | lr 9.75e-05 | 12.8 it/s
+18:10:06 [C_nopos] step   9600/15000 | rec 0.0207 | gnorm 0.04 | lr 9.15e-05 | 12.8 it/s
+18:10:23 [C_nopos] step   9800/15000 | rec 0.0207 | gnorm 0.04 | lr 8.55e-05 | 12.0 it/s
+18:10:38 [C_nopos] step  10000/15000 | rec 0.0207 | gnorm 0.04 | lr 7.97e-05 | 13.0 it/s
+18:10:45 [C_nopos] VAL step 10000: L1 0.0322 | PSNR 27.81 dB | SSIM 0.8369 | SAM 8.74 deg
+18:11:00 [C_nopos] step  10200/15000 | rec 0.0207 | gnorm 0.05 | lr 7.41e-05 | 9.1 it/s
+18:11:16 [C_nopos] step  10400/15000 | rec 0.0204 | gnorm 0.04 | lr 6.85e-05 | 12.8 it/s
+18:11:32 [C_nopos] step  10600/15000 | rec 0.0204 | gnorm 0.04 | lr 6.32e-05 | 12.5 it/s
+18:11:48 [C_nopos] step  10800/15000 | rec 0.0203 | gnorm 0.04 | lr 5.79e-05 | 12.8 it/s
+18:12:03 [C_nopos] step  11000/15000 | rec 0.0203 | gnorm 0.04 | lr 5.29e-05 | 13.0 it/s
+18:12:10 [C_nopos] VAL step 11000: L1 0.0340 | PSNR 27.65 dB | SSIM 0.8259 | SAM 9.71 deg
+18:12:26 [C_nopos] step  11200/15000 | rec 0.0200 | gnorm 0.04 | lr 4.80e-05 | 8.7 it/s
+18:12:41 [C_nopos] step  11400/15000 | rec 0.0199 | gnorm 0.04 | lr 4.34e-05 | 13.2 it/s
+18:12:57 [C_nopos] step  11600/15000 | rec 0.0199 | gnorm 0.04 | lr 3.89e-05 | 12.9 it/s
+18:13:12 [C_nopos] step  11800/15000 | rec 0.0198 | gnorm 0.04 | lr 3.46e-05 | 12.8 it/s
+18:13:28 [C_nopos] step  12000/15000 | rec 0.0198 | gnorm 0.04 | lr 3.06e-05 | 12.6 it/s
+18:13:34 [C_nopos] VAL step 12000: L1 0.0348 | PSNR 27.48 dB | SSIM 0.8241 | SAM 9.51 deg
+18:13:50 [C_nopos] step  12200/15000 | rec 0.0197 | gnorm 0.04 | lr 2.68e-05 | 9.1 it/s
+18:14:07 [C_nopos] step  12400/15000 | rec 0.0196 | gnorm 0.04 | lr 2.32e-05 | 11.9 it/s
+18:14:22 [C_nopos] step  12600/15000 | rec 0.0196 | gnorm 0.04 | lr 1.98e-05 | 13.1 it/s
+18:14:38 [C_nopos] step  12800/15000 | rec 0.0196 | gnorm 0.04 | lr 1.67e-05 | 12.9 it/s
+18:14:54 [C_nopos] step  13000/15000 | rec 0.0195 | gnorm 0.04 | lr 1.39e-05 | 12.6 it/s
+18:15:00 [C_nopos] VAL step 13000: L1 0.0343 | PSNR 27.54 dB | SSIM 0.8257 | SAM 9.43 deg
+18:15:15 [C_nopos] step  13200/15000 | rec 0.0196 | gnorm 0.04 | lr 1.13e-05 | 9.3 it/s
+18:15:31 [C_nopos] step  13400/15000 | rec 0.0194 | gnorm 0.04 | lr 8.92e-06 | 13.0 it/s
+18:15:46 [C_nopos] step  13600/15000 | rec 0.0193 | gnorm 0.04 | lr 6.85e-06 | 12.9 it/s
+18:16:03 [C_nopos] step  13800/15000 | rec 0.0193 | gnorm 0.04 | lr 5.04e-06 | 12.0 it/s
+18:16:18 [C_nopos] step  14000/15000 | rec 0.0193 | gnorm 0.04 | lr 3.51e-06 | 12.8 it/s
+18:16:24 [C_nopos] VAL step 14000: L1 0.0343 | PSNR 27.56 dB | SSIM 0.8253 | SAM 9.52 deg
+18:16:39 [C_nopos] step  14200/15000 | rec 0.0193 | gnorm 0.04 | lr 2.25e-06 | 9.5 it/s
+18:16:55 [C_nopos] step  14400/15000 | rec 0.0192 | gnorm 0.04 | lr 1.27e-06 | 12.9 it/s
+18:17:10 [C_nopos] step  14600/15000 | rec 0.0192 | gnorm 0.04 | lr 5.63e-07 | 12.9 it/s
+18:17:26 [C_nopos] step  14800/15000 | rec 0.0192 | gnorm 0.04 | lr 1.41e-07 | 12.9 it/s
+18:17:41 [C_nopos] step  15000/15000 | rec 0.0193 | gnorm 0.04 | lr 0.00e+00 | 13.1 it/s
+18:17:47 [C_nopos] VAL step 15000: L1 0.0344 | PSNR 27.56 dB | SSIM 0.8249 | SAM 9.50 deg
+18:17:47 [C_nopos] done in 21.0 min, best val L1 0.0285 at step 5000, peak GPU 0.53 GB
+18:18:08 [eval] Model C - no positional embedding  test_id     PSNR  27.10 | SSIM 0.8457 | SAM  9.03 | MAE 0.0370 | FID 241.0
+18:18:20 [eval] Model C - no positional embedding  ood         PSNR  27.90 | SSIM 0.8619 | SAM  8.77 | MAE 0.0306 | FID 224.0
+18:18:20 [C_nopos] job finished

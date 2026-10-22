@@ -1,0 +1,181 @@
+14:42:33 ==========================================================================================
+14:42:33 ClearSAR complete pipeline | repo /kaggle/working/clearsar | quick=False | budget 11.0 h
+14:42:33 [gpu] cuda:0 Tesla T4 (sm_75), torch 2.11.0+cu128
+14:42:33 [gpu] cuda:1 Tesla T4 (sm_75), torch 2.11.0+cu128
+14:43:48 [index] 366654 .tif files under 1 root(s) -> 122218 patch keys, 122218 complete triplets (0 incomplete skipped), 175 scenes
+14:43:49 [disk] cache needs ~16.9 GB, 1145.9 GB free at /tmp/clearsar_cache
+14:43:50 [split] train   : 23 scenes,  3000 patches  countries=['CN', 'IN', 'IQ', 'IR', 'JP', 'KR', 'TR', 'YE']
+14:43:50 [split] val     :  7 scenes,   400 patches  countries=['CN', 'IR', 'JP', 'KZ', 'MM', 'PK', 'SA']
+14:43:50 [split] test_id :  7 scenes,   600 patches  countries=['CN', 'IN', 'IR', 'LB', 'TM', 'TW']
+14:43:50 [split] ood     :  4 scenes,   600 patches  countries=['AR', 'CF', 'FR', 'US']
+14:45:57 [cache] train: 1008/3000 patches
+14:47:50 [cache] train: 2000/3000 patches
+14:49:44 [cache] train: 3000/3000 patches
+14:49:48 [cache] train: 3000 valid patches (359s)
+14:50:40 [cache] val: 400/400 patches
+14:50:44 [cache] val: 400 valid patches (56s)
+14:52:02 [cache] test_id: 600/600 patches
+14:52:04 [cache] test_id: 600 valid patches (79s)
+14:53:12 [cache] ood: 600/600 patches
+14:53:13 [cache] ood: 600 valid patches (70s)
+14:53:50 [eval] Identity (cloudy input)            test_id     PSNR  21.18 | SSIM 0.7400 | SAM 10.45 | MAE 0.0908 | FID 128.4
+14:53:59 [eval] Identity (cloudy input)            ood         PSNR  20.95 | SSIM 0.7186 | SAM 12.93 | MAE 0.0916 | FID 164.3
+14:54:02 [bench] swin        90.9 ms/step  (11.0 it/s)
+14:54:02 [bench] tiny        13.4 ms/step  (74.7 it/s)
+14:54:04 [bench] unet        79.1 ms/step  (12.6 it/s)
+14:54:06 [bench] unet_gan   102.6 ms/step  (9.7 it/s)
+14:54:07 [bench] vit         28.8 ms/step  (34.7 it/s)
+14:54:07 [bench] vit16       25.9 ms/step  (38.6 it/s)
+14:54:07 [plan]  15000 steps/run -> predicted  5.59 h for 26 runs on 2 slot(s) (budget 10.39 h)
+14:54:07 [plan] 15000 steps per run, validation every 1000, 2 parallel slot(s), 10.39 h available for training
+14:54:07 [sched] START A_unet on slot 0 (predicted 28 min)
+14:54:07 [sched] START B_swin on slot 1 (predicted 32 min)
+15:20:31 [sched] DONE  A_unet in 26 min
+15:20:32 [sched] START C_vit on slot 0 (predicted 12 min)
+15:23:55 [sched] DONE  B_swin in 30 min
+15:23:55 [sched] START tiny_cnn on slot 1 (predicted 8 min)
+15:42:32 [sched] DONE  tiny_cnn in 19 min
+15:42:32 [sched] START A_f25 on slot 1 (predicted 26 min)
+15:44:21 [sched] DONE  C_vit in 24 min
+15:44:21 [sched] START B_f25 on slot 0 (predicted 30 min)
+16:08:12 [sched] DONE  A_f25 in 26 min
+16:08:12 [sched] START C_f25 on slot 1 (predicted 24 min)
+16:15:23 [sched] DONE  B_f25 in 31 min
+16:15:23 [sched] START A_f50 on slot 0 (predicted 26 min)
+16:30:40 [sched] DONE  C_f25 in 22 min
+16:30:40 [sched] START B_f50 on slot 1 (predicted 31 min)
+16:42:04 [sched] DONE  A_f50 in 27 min
+16:42:04 [sched] START C_f50 on slot 0 (predicted 22 min)
+17:00:37 [sched] DONE  B_f50 in 30 min
+17:00:37 [sched] START A_random on slot 1 (predicted 27 min)
+17:04:02 [sched] DONE  C_f50 in 22 min
+17:04:02 [sched] START A_noskip on slot 0 (predicted 27 min)
+17:25:55 [sched] DONE  A_random in 25 min
+17:25:56 [sched] START A_gan on slot 1 (predicted 36 min)
+17:29:39 [sched] DONE  A_noskip in 26 min
+17:29:39 [sched] START A_unc on slot 0 (predicted 26 min)
+17:56:39 [sched] DONE  A_unc in 27 min
+17:56:40 [sched] START C_nopos on slot 0 (predicted 22 min)
+17:58:01 [sched] DONE  A_gan in 32 min
+17:58:01 [sched] START B_noshift on slot 1 (predicted 30 min)
+18:18:24 [sched] DONE  C_nopos in 22 min
+18:18:24 [sched] START A_l2 on slot 0 (predicted 27 min)
+18:28:10 [sched] DONE  B_noshift in 30 min
+18:28:10 [sched] START A_gan10 on slot 1 (predicted 32 min)
+18:44:03 [sched] DONE  A_l2 in 26 min
+18:44:04 [sched] START A_mcd on slot 0 (predicted 33 min)
+19:00:06 [sched] DONE  A_gan10 in 32 min
+19:00:06 [sched] START A_unet_s43 on slot 1 (predicted 26 min)
+19:12:53 [sched] DONE  A_mcd in 29 min
+19:12:53 [sched] START A_unet_s44 on slot 0 (predicted 21 min)
+19:25:18 [sched] DONE  A_unet_s43 in 25 min
+19:25:19 [sched] START B_swin_s43 on slot 1 (predicted 30 min)
+19:39:04 [sched] DONE  A_unet_s44 in 26 min
+19:39:04 [sched] START C_vit_s43 on slot 0 (predicted 22 min)
+19:55:03 [sched] DONE  B_swin_s43 in 30 min
+19:55:03 [sched] START C_p16 on slot 1 (predicted 12 min)
+20:01:54 [sched] DONE  C_vit_s43 in 23 min
+20:01:54 [sched] START B_win8 on slot 0 (predicted 30 min)
+20:17:01 [sched] DONE  C_p16 in 22 min
+20:17:01 [sched] START B_win16 on slot 1 (predicted 30 min)
+20:32:04 [sched] DONE  B_win8 in 30 min
+20:48:09 [sched] DONE  B_win16 in 31 min
+20:48:32 [eval] Model A - 3-seed ensemble          test_id     PSNR  26.56 | SSIM 0.8574 | SAM  9.08 | MAE 0.0398 | FID 176.5
+20:48:32 [unc]  Model A - 3-seed ensemble          test_id     coverage95 0.324 | median sigma 0.0083 | spearman 0.462 | AUSE 0.0111
+20:48:54 [eval] Model A - 3-seed ensemble          ood         PSNR  28.26 | SSIM 0.8823 | SAM  8.31 | MAE 0.0290 | FID 181.8
+20:48:54 [unc]  Model A - 3-seed ensemble          ood         coverage95 0.372 | median sigma 0.0075 | spearman 0.399 | AUSE 0.0083
+20:49:09 ==========================================================================================
+20:49:09 MAIN RESULTS (mean over seeds, 15000 steps per run)
+20:49:09 
+                          label   split  n_seeds    psnr   ssim     sam    mae   rmse      fid
+        Identity (cloudy input) test_id        1 21.1825 0.7400 10.4489 0.0908 0.1172 128.4452
+        Identity (cloudy input)     ood        1 20.9494 0.7186 12.9331 0.0916 0.1176 164.2771
+            Baseline - tiny CNN test_id        1 27.0093 0.8440  9.4471 0.0379 0.0501 224.5637
+            Baseline - tiny CNN     ood        1 28.0075 0.8657  8.6843 0.0303 0.0414 232.5947
+                Model A - U-Net test_id        3 26.3307 0.8470  9.4342 0.0409 0.0532 179.8414
+                Model A - U-Net     ood        3 27.8189 0.8743  8.6096 0.0305 0.0423 176.0559
+           Model B - Swin U-Net test_id        2 26.4078 0.8505  9.5531 0.0409 0.0537 197.7834
+           Model B - Swin U-Net     ood        2 27.6788 0.8711  8.8903 0.0314 0.0427 189.5330
+             Model C - Pure ViT test_id        2 26.9021 0.8437  8.9147 0.0376 0.0495 255.9802
+             Model C - Pure ViT     ood        2 27.1923 0.8551  9.9708 0.0341 0.0455 239.0015
+Model A + PatchGAN (lambda 100) test_id        1 25.0030 0.8156 10.0412 0.0455 0.0612 214.2379
+Model A + PatchGAN (lambda 100)     ood        1 25.3062 0.8095  8.8357 0.0408 0.0558 208.6322
+        Model A + variance head test_id        1 26.5864 0.8466  9.5189 0.0392 0.0516 190.7467
+        Model A + variance head     ood        1 28.2049 0.8734  8.1149 0.0296 0.0411 176.1082
+           Model A + MC dropout test_id        1 26.4144 0.8528  9.3016 0.0402 0.0530 177.6724
+           Model A + MC dropout     ood        1 27.9450 0.8764  8.1984 0.0300 0.0419 169.7453
+      Model A - 3-seed ensemble test_id        1 26.5636 0.8574  9.0796 0.0398 0.0518 176.4548
+      Model A - 3-seed ensemble     ood        1 28.2602 0.8823  8.3149 0.0290 0.0402 181.7616
+20:49:09 
+EXPERIMENTS (delta vs reference)
+20:49:09 
+experiment                             label       split  delta_psnr  delta_ssim  delta_sam  delta_fid
+  baseline               Baseline - tiny CNN     test_id      +0.653      -0.007     +0.195    +48.083
+  baseline               Baseline - tiny CNN         ood      +0.238      -0.008     +0.416    +56.815
+        E1                Model A - 25% data     test_id      -0.168      -0.005     -0.092     +4.521
+        E1                Model A - 25% data         ood      -0.168      -0.004     +0.228     +2.523
+        E1                Model B - 25% data     test_id      +0.218      +0.004     -0.028     -1.675
+        E1                Model B - 25% data         ood      -0.325      +0.001     -0.839    -16.420
+        E1                Model C - 25% data     test_id      -0.457      -0.012     +0.741    -28.201
+        E1                Model C - 25% data         ood      +0.438      +0.004     -1.177    -11.804
+        E1                Model A - 50% data     test_id      -0.026      +0.001     +0.373     +1.169
+        E1                Model A - 50% data         ood      +0.305      +0.000     +0.067     -4.048
+        E1                Model B - 50% data     test_id      +0.022      -0.001     +0.229     -9.152
+        E1                Model B - 50% data         ood      +0.044      -0.002     -0.340     -2.866
+        E1                Model C - 50% data     test_id      -0.370      -0.003     +0.082    -22.970
+        E1                Model C - 50% data         ood      +1.097      +0.005     -1.576     -6.463
+   leakage      Model A - random patch split random_test      +5.119      +0.032     -3.396    -43.137
+       E3a     Model A - no skip connections     test_id      -0.148      -0.010     +0.632   +105.581
+       E3a     Model A - no skip connections         ood      -0.379      -0.003     +1.119   +114.845
+        E4   Model A + PatchGAN (lambda 100)     test_id      -1.353      -0.036     +0.789    +37.758
+        E4   Model A + PatchGAN (lambda 100)         ood      -2.464      -0.065     +0.567    +32.853
+       E7a           Model A + variance head     test_id      +0.231      -0.005     +0.267    +14.266
+       E7a           Model A + variance head         ood      +0.435      -0.001     -0.153     +0.329
+       E6a Model C - no positional embedding     test_id      -0.156      -0.003     +0.163    -26.667
+       E6a Model C - no positional embedding         ood      +1.114      +0.007     -1.763    -22.957
+       E5a         Model B - no window shift     test_id      +0.375      +0.001     -0.472     -7.351
+       E5a         Model B - no window shift         ood      -0.136      -0.004     -0.373     -6.913
+       E3b                 Model A - L2 loss     test_id      +0.011      +0.001     +0.042    +13.530
+       E3b                 Model A - L2 loss         ood      +0.019      -0.003     +0.492    +18.835
+        E4    Model A + PatchGAN (lambda 10)     test_id      -0.785      -0.067     +3.795    +54.990
+        E4    Model A + PatchGAN (lambda 10)         ood      -1.682      -0.054     +3.732    +40.237
+       E7b              Model A + MC dropout     test_id      +0.059      +0.002     +0.049     +1.192
+       E7b              Model A + MC dropout         ood      +0.175      +0.002     -0.070     -6.034
+       E6b                Model C - patch 16     test_id      -0.280      -0.007     +0.232    +13.462
+       E6b                Model C - patch 16         ood      +0.951      +0.007     -1.117    +22.855
+       E5b                Model B - window 8     test_id      +0.003      +0.002     +0.025    -11.268
+       E5b                Model B - window 8         ood      -0.138      -0.001     -0.531     -3.361
+       E5b      Model B - window 16 (global)     test_id      +0.294      +0.007     -0.648     -4.202
+       E5b      Model B - window 16 (global)         ood      -0.386      -0.001     -0.229     -1.770
+       E7c         Model A - 3-seed ensemble     test_id      +0.208      +0.006     -0.173     -0.026
+       E7c         Model A - 3-seed ensemble         ood      +0.490      +0.008     +0.047     +5.982
+20:49:09 ==========================================================================================
+20:49:09 RUN STATUS
+20:49:09   A_unet       done (26 min)
+20:49:09   B_swin       done (30 min)
+20:49:09   C_vit        done (24 min)
+20:49:09   tiny_cnn     done (19 min)
+20:49:09   A_f25        done (26 min)
+20:49:09   B_f25        done (31 min)
+20:49:09   C_f25        done (22 min)
+20:49:09   A_f50        done (27 min)
+20:49:09   B_f50        done (30 min)
+20:49:09   C_f50        done (22 min)
+20:49:09   A_random     done (25 min)
+20:49:09   A_noskip     done (26 min)
+20:49:09   A_gan        done (32 min)
+20:49:09   A_unc        done (27 min)
+20:49:09   C_nopos      done (22 min)
+20:49:09   B_noshift    done (30 min)
+20:49:09   A_l2         done (26 min)
+20:49:09   A_gan10      done (32 min)
+20:49:09   A_mcd        done (29 min)
+20:49:09   A_unet_s43   done (25 min)
+20:49:09   A_unet_s44   done (26 min)
+20:49:09   B_swin_s43   done (30 min)
+20:49:09   C_vit_s43    done (23 min)
+20:49:09   C_p16        done (22 min)
+20:49:09   B_win8       done (30 min)
+20:49:09   B_win16      done (31 min)
+20:49:09   A_ens        done (3 members)
+20:49:09 Total time 6.11 h

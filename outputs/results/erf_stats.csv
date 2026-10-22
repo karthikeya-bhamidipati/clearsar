@@ -1,0 +1,8 @@
+run,label,radius50,radius90
+tiny_cnn,Baseline - tiny CNN,1.4142135623730951,3.1622776601683795
+A_unet,Model A - U-Net,21.095023109728988,37.69615364994153
+A_noskip,Model A - no skip connections,19.1049731745428,31.240998703626616
+B_swin,Model B - Swin U-Net,2.23606797749979,33.83784863137726
+B_noshift,Model B - no window shift,6.324555320336759,29.732137494637012
+C_vit,Model C - Pure ViT,56.0357029044876,73.0
+C_nopos,Model C - no positional embedding,46.51881339845203,69.63476143421474

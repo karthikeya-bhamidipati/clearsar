@@ -1,0 +1,97 @@
+15:23:59 [tiny_cnn] Baseline - tiny CNN: 3000 training patches (scene split, fraction 1.0)
+15:24:01 [tiny_cnn] output bias initialised to mean band reflectance (range 0.002-0.218)
+15:24:01 [tiny_cnn] Baseline - tiny CNN: 0.05M params, 15000 steps, lr 0.0003, gan=False, uncertainty=False
+15:24:26 [tiny_cnn] step    200/15000 | rec 0.0461 | gnorm 0.03 | lr 1.21e-04 | 8.2 it/s
+15:24:39 [tiny_cnn] step    400/15000 | rec 0.0415 | gnorm 0.07 | lr 2.41e-04 | 15.5 it/s
+15:24:51 [tiny_cnn] step    600/15000 | rec 0.0387 | gnorm 0.09 | lr 3.00e-04 | 15.7 it/s
+15:25:05 [tiny_cnn] step    800/15000 | rec 0.0369 | gnorm 0.10 | lr 3.00e-04 | 15.3 it/s
+15:25:17 [tiny_cnn] step   1000/15000 | rec 0.0356 | gnorm 0.11 | lr 2.99e-04 | 16.0 it/s
+15:25:24 [tiny_cnn] VAL step 1000: L1 0.0336 | PSNR 27.18 dB | SSIM 0.8483 | SAM 9.65 deg  * best
+15:25:37 [tiny_cnn] step   1200/15000 | rec 0.0299 | gnorm 0.14 | lr 2.98e-04 | 10.2 it/s
+15:25:50 [tiny_cnn] step   1400/15000 | rec 0.0297 | gnorm 0.14 | lr 2.97e-04 | 15.2 it/s
+15:26:03 [tiny_cnn] step   1600/15000 | rec 0.0294 | gnorm 0.14 | lr 2.96e-04 | 15.2 it/s
+15:26:15 [tiny_cnn] step   1800/15000 | rec 0.0291 | gnorm 0.14 | lr 2.94e-04 | 16.3 it/s
+15:26:28 [tiny_cnn] step   2000/15000 | rec 0.0290 | gnorm 0.15 | lr 2.92e-04 | 15.6 it/s
+15:26:34 [tiny_cnn] VAL step 2000: L1 0.0381 | PSNR 26.48 dB | SSIM 0.8290 | SAM 9.75 deg
+15:26:47 [tiny_cnn] step   2200/15000 | rec 0.0283 | gnorm 0.15 | lr 2.90e-04 | 10.7 it/s
+15:26:59 [tiny_cnn] step   2400/15000 | rec 0.0281 | gnorm 0.15 | lr 2.87e-04 | 16.0 it/s
+15:27:12 [tiny_cnn] step   2600/15000 | rec 0.0279 | gnorm 0.15 | lr 2.85e-04 | 16.1 it/s
+15:27:24 [tiny_cnn] step   2800/15000 | rec 0.0277 | gnorm 0.15 | lr 2.82e-04 | 15.8 it/s
+15:27:38 [tiny_cnn] step   3000/15000 | rec 0.0277 | gnorm 0.15 | lr 2.79e-04 | 14.8 it/s
+15:27:44 [tiny_cnn] VAL step 3000: L1 0.0303 | PSNR 27.88 dB | SSIM 0.8568 | SAM 7.84 deg  * best
+15:27:57 [tiny_cnn] step   3200/15000 | rec 0.0270 | gnorm 0.14 | lr 2.75e-04 | 10.4 it/s
+15:28:10 [tiny_cnn] step   3400/15000 | rec 0.0270 | gnorm 0.15 | lr 2.71e-04 | 15.2 it/s
+15:28:23 [tiny_cnn] step   3600/15000 | rec 0.0270 | gnorm 0.15 | lr 2.67e-04 | 15.7 it/s
+15:28:36 [tiny_cnn] step   3800/15000 | rec 0.0269 | gnorm 0.15 | lr 2.63e-04 | 15.3 it/s
+15:28:49 [tiny_cnn] step   4000/15000 | rec 0.0269 | gnorm 0.15 | lr 2.59e-04 | 15.9 it/s
+15:28:56 [tiny_cnn] VAL step 4000: L1 0.0321 | PSNR 27.50 dB | SSIM 0.8476 | SAM 8.39 deg
+15:29:08 [tiny_cnn] step   4200/15000 | rec 0.0263 | gnorm 0.16 | lr 2.54e-04 | 10.3 it/s
+15:29:21 [tiny_cnn] step   4400/15000 | rec 0.0263 | gnorm 0.16 | lr 2.50e-04 | 15.7 it/s
+15:29:33 [tiny_cnn] step   4600/15000 | rec 0.0264 | gnorm 0.16 | lr 2.45e-04 | 16.0 it/s
+15:29:46 [tiny_cnn] step   4800/15000 | rec 0.0262 | gnorm 0.16 | lr 2.39e-04 | 15.3 it/s
+15:29:59 [tiny_cnn] step   5000/15000 | rec 0.0262 | gnorm 0.15 | lr 2.34e-04 | 15.8 it/s
+15:30:05 [tiny_cnn] VAL step 5000: L1 0.0313 | PSNR 27.67 dB | SSIM 0.8485 | SAM 7.99 deg
+15:30:18 [tiny_cnn] step   5200/15000 | rec 0.0259 | gnorm 0.15 | lr 2.29e-04 | 10.7 it/s
+15:30:31 [tiny_cnn] step   5400/15000 | rec 0.0259 | gnorm 0.15 | lr 2.23e-04 | 15.5 it/s
+15:30:43 [tiny_cnn] step   5600/15000 | rec 0.0258 | gnorm 0.14 | lr 2.17e-04 | 15.9 it/s
+15:30:56 [tiny_cnn] step   5800/15000 | rec 0.0257 | gnorm 0.15 | lr 2.12e-04 | 15.6 it/s
+15:31:09 [tiny_cnn] step   6000/15000 | rec 0.0257 | gnorm 0.15 | lr 2.06e-04 | 15.0 it/s
+15:31:16 [tiny_cnn] VAL step 6000: L1 0.0326 | PSNR 27.37 dB | SSIM 0.8431 | SAM 8.10 deg
+15:31:28 [tiny_cnn] step   6200/15000 | rec 0.0255 | gnorm 0.16 | lr 1.99e-04 | 10.4 it/s
+15:31:41 [tiny_cnn] step   6400/15000 | rec 0.0255 | gnorm 0.15 | lr 1.93e-04 | 16.0 it/s
+15:31:54 [tiny_cnn] step   6600/15000 | rec 0.0255 | gnorm 0.15 | lr 1.87e-04 | 15.3 it/s
+15:32:07 [tiny_cnn] step   6800/15000 | rec 0.0254 | gnorm 0.15 | lr 1.81e-04 | 15.6 it/s
+15:32:20 [tiny_cnn] step   7000/15000 | rec 0.0253 | gnorm 0.15 | lr 1.74e-04 | 15.1 it/s
+15:32:27 [tiny_cnn] VAL step 7000: L1 0.0334 | PSNR 27.25 dB | SSIM 0.8389 | SAM 8.57 deg
+15:32:39 [tiny_cnn] step   7200/15000 | rec 0.0252 | gnorm 0.15 | lr 1.68e-04 | 10.7 it/s
+15:32:52 [tiny_cnn] step   7400/15000 | rec 0.0252 | gnorm 0.15 | lr 1.61e-04 | 15.1 it/s
+15:33:05 [tiny_cnn] step   7600/15000 | rec 0.0252 | gnorm 0.16 | lr 1.55e-04 | 15.2 it/s
+15:33:18 [tiny_cnn] step   7800/15000 | rec 0.0251 | gnorm 0.16 | lr 1.48e-04 | 15.4 it/s
+15:33:31 [tiny_cnn] step   8000/15000 | rec 0.0251 | gnorm 0.16 | lr 1.42e-04 | 15.7 it/s
+15:33:37 [tiny_cnn] VAL step 8000: L1 0.0326 | PSNR 27.42 dB | SSIM 0.8394 | SAM 8.78 deg
+15:33:50 [tiny_cnn] step   8200/15000 | rec 0.0249 | gnorm 0.16 | lr 1.35e-04 | 10.7 it/s
+15:34:03 [tiny_cnn] step   8400/15000 | rec 0.0248 | gnorm 0.16 | lr 1.29e-04 | 15.5 it/s
+15:34:16 [tiny_cnn] step   8600/15000 | rec 0.0248 | gnorm 0.16 | lr 1.23e-04 | 15.2 it/s
+15:34:29 [tiny_cnn] step   8800/15000 | rec 0.0248 | gnorm 0.16 | lr 1.16e-04 | 14.9 it/s
+15:34:42 [tiny_cnn] step   9000/15000 | rec 0.0248 | gnorm 0.16 | lr 1.10e-04 | 15.8 it/s
+15:34:48 [tiny_cnn] VAL step 9000: L1 0.0325 | PSNR 27.42 dB | SSIM 0.8380 | SAM 8.50 deg
+15:35:00 [tiny_cnn] step   9200/15000 | rec 0.0247 | gnorm 0.15 | lr 1.04e-04 | 10.8 it/s
+15:35:13 [tiny_cnn] step   9400/15000 | rec 0.0246 | gnorm 0.15 | lr 9.75e-05 | 15.5 it/s
+15:35:26 [tiny_cnn] step   9600/15000 | rec 0.0246 | gnorm 0.15 | lr 9.15e-05 | 15.2 it/s
+15:35:39 [tiny_cnn] step   9800/15000 | rec 0.0246 | gnorm 0.15 | lr 8.55e-05 | 15.9 it/s
+15:35:52 [tiny_cnn] step  10000/15000 | rec 0.0246 | gnorm 0.15 | lr 7.97e-05 | 15.1 it/s
+15:35:58 [tiny_cnn] VAL step 10000: L1 0.0330 | PSNR 27.32 dB | SSIM 0.8366 | SAM 8.49 deg
+15:36:11 [tiny_cnn] step  10200/15000 | rec 0.0242 | gnorm 0.15 | lr 7.41e-05 | 10.5 it/s
+15:36:24 [tiny_cnn] step  10400/15000 | rec 0.0244 | gnorm 0.15 | lr 6.85e-05 | 16.0 it/s
+15:36:37 [tiny_cnn] step  10600/15000 | rec 0.0243 | gnorm 0.15 | lr 6.32e-05 | 15.4 it/s
+15:36:49 [tiny_cnn] step  10800/15000 | rec 0.0243 | gnorm 0.15 | lr 5.79e-05 | 15.7 it/s
+15:37:02 [tiny_cnn] step  11000/15000 | rec 0.0243 | gnorm 0.15 | lr 5.29e-05 | 15.6 it/s
+15:37:09 [tiny_cnn] VAL step 11000: L1 0.0337 | PSNR 27.21 dB | SSIM 0.8328 | SAM 8.74 deg
+15:37:22 [tiny_cnn] step  11200/15000 | rec 0.0240 | gnorm 0.15 | lr 4.80e-05 | 10.3 it/s
+15:37:34 [tiny_cnn] step  11400/15000 | rec 0.0241 | gnorm 0.15 | lr 4.34e-05 | 16.1 it/s
+15:37:47 [tiny_cnn] step  11600/15000 | rec 0.0241 | gnorm 0.15 | lr 3.89e-05 | 15.0 it/s
+15:38:00 [tiny_cnn] step  11800/15000 | rec 0.0241 | gnorm 0.15 | lr 3.46e-05 | 15.6 it/s
+15:38:13 [tiny_cnn] step  12000/15000 | rec 0.0241 | gnorm 0.15 | lr 3.06e-05 | 15.9 it/s
+15:38:20 [tiny_cnn] VAL step 12000: L1 0.0334 | PSNR 27.23 dB | SSIM 0.8339 | SAM 8.62 deg
+15:38:32 [tiny_cnn] step  12200/15000 | rec 0.0241 | gnorm 0.15 | lr 2.68e-05 | 10.2 it/s
+15:38:45 [tiny_cnn] step  12400/15000 | rec 0.0240 | gnorm 0.15 | lr 2.32e-05 | 15.7 it/s
+15:38:58 [tiny_cnn] step  12600/15000 | rec 0.0241 | gnorm 0.15 | lr 1.98e-05 | 16.0 it/s
+15:39:11 [tiny_cnn] step  12800/15000 | rec 0.0241 | gnorm 0.15 | lr 1.67e-05 | 15.1 it/s
+15:39:24 [tiny_cnn] step  13000/15000 | rec 0.0240 | gnorm 0.15 | lr 1.39e-05 | 15.7 it/s
+15:39:30 [tiny_cnn] VAL step 13000: L1 0.0329 | PSNR 27.34 dB | SSIM 0.8363 | SAM 8.51 deg
+15:39:43 [tiny_cnn] step  13200/15000 | rec 0.0240 | gnorm 0.15 | lr 1.13e-05 | 10.3 it/s
+15:39:55 [tiny_cnn] step  13400/15000 | rec 0.0241 | gnorm 0.15 | lr 8.92e-06 | 16.3 it/s
+15:40:09 [tiny_cnn] step  13600/15000 | rec 0.0241 | gnorm 0.15 | lr 6.85e-06 | 14.9 it/s
+15:40:21 [tiny_cnn] step  13800/15000 | rec 0.0241 | gnorm 0.15 | lr 5.04e-06 | 15.8 it/s
+15:40:35 [tiny_cnn] step  14000/15000 | rec 0.0241 | gnorm 0.15 | lr 3.51e-06 | 14.7 it/s
+15:40:41 [tiny_cnn] VAL step 14000: L1 0.0330 | PSNR 27.32 dB | SSIM 0.8354 | SAM 8.57 deg
+15:40:54 [tiny_cnn] step  14200/15000 | rec 0.0239 | gnorm 0.14 | lr 2.25e-06 | 10.3 it/s
+15:41:08 [tiny_cnn] step  14400/15000 | rec 0.0240 | gnorm 0.14 | lr 1.27e-06 | 15.2 it/s
+15:41:20 [tiny_cnn] step  14600/15000 | rec 0.0239 | gnorm 0.14 | lr 5.63e-07 | 16.4 it/s
+15:41:32 [tiny_cnn] step  14800/15000 | rec 0.0239 | gnorm 0.14 | lr 1.41e-07 | 16.0 it/s
+15:41:45 [tiny_cnn] step  15000/15000 | rec 0.0239 | gnorm 0.14 | lr 0.00e+00 | 16.1 it/s
+15:41:51 [tiny_cnn] VAL step 15000: L1 0.0329 | PSNR 27.33 dB | SSIM 0.8356 | SAM 8.55 deg
+15:41:51 [tiny_cnn] done in 17.8 min, best val L1 0.0303 at step 3000, peak GPU 2.38 GB
+15:42:13 [eval] Baseline - tiny CNN                test_id     PSNR  27.01 | SSIM 0.8440 | SAM  9.45 | MAE 0.0379 | FID 224.6
+15:42:25 [eval] Baseline - tiny CNN                ood         PSNR  28.01 | SSIM 0.8657 | SAM  8.68 | MAE 0.0303 | FID 232.6
+15:42:25 [tiny_cnn] job finished

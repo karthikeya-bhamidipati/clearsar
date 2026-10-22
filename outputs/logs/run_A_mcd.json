@@ -1,0 +1,38 @@
+{
+  "info": {
+    "name": "A_mcd",
+    "label": "Model A + MC dropout",
+    "arch": "unet",
+    "params": 7707853,
+    "steps": 15000,
+    "best_step": 14000,
+    "best_val_l1": 0.02752627804875374,
+    "best_val_psnr": 28.622236251831055,
+    "best_val_ssim": 0.8770782351493835,
+    "steps_done": 15000,
+    "stopped_early": false,
+    "train_minutes": 25.194848958651225,
+    "peak_gpu_gb": 5.162551808
+  },
+  "config": {
+    "name": "A_mcd",
+    "arch": "unet",
+    "label": "Model A + MC dropout",
+    "model_kwargs": {
+      "dropout": 0.1
+    },
+    "uncertainty": false,
+    "use_gan": false,
+    "gan_lambda": 100.0,
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "steps": 15000,
+    "warmup": 500,
+    "val_every": 1000,
+    "log_every": 200,
+    "grad_clip": 1.0,
+    "seed": 42,
+    "loss": "l1",
+    "deadline": 1792631241.3808339
+  }
+}

@@ -1,0 +1,97 @@
+17:26:00 [A_gan] Model A + PatchGAN (lambda 100): 3000 training patches (scene split, fraction 1.0)
+17:26:03 [A_gan] output bias initialised to mean band reflectance (range 0.002-0.226)
+17:26:03 [A_gan] Model A + PatchGAN (lambda 100): 7.71M params, 15000 steps, lr 0.0002, gan=True, uncertainty=False
+17:26:57 [A_gan] step    200/15000 | rec 0.0466 | gnorm 15.29 | lr 8.04e-05 | 3.6 it/s | adv 1.080 | D 0.540
+17:27:21 [A_gan] step    400/15000 | rec 0.0412 | gnorm 16.77 | lr 1.60e-04 | 8.5 it/s | adv 1.046 | D 0.589
+17:27:44 [A_gan] step    600/15000 | rec 0.0387 | gnorm 16.51 | lr 2.00e-04 | 8.6 it/s | adv 0.991 | D 0.616
+17:28:08 [A_gan] step    800/15000 | rec 0.0372 | gnorm 16.36 | lr 2.00e-04 | 8.5 it/s | adv 0.962 | D 0.628
+17:28:31 [A_gan] step   1000/15000 | rec 0.0361 | gnorm 16.25 | lr 1.99e-04 | 8.5 it/s | adv 0.950 | D 0.634
+17:28:39 [A_gan] VAL step 1000: L1 0.0393 | PSNR 26.09 dB | SSIM 0.8060 | SAM 11.47 deg  * best
+17:29:03 [A_gan] step   1200/15000 | rec 0.0314 | gnorm 15.82 | lr 1.99e-04 | 6.4 it/s | adv 0.916 | D 0.646
+17:29:26 [A_gan] step   1400/15000 | rec 0.0312 | gnorm 16.05 | lr 1.98e-04 | 8.7 it/s | adv 0.951 | D 0.639
+17:29:49 [A_gan] step   1600/15000 | rec 0.0310 | gnorm 15.98 | lr 1.97e-04 | 8.7 it/s | adv 0.982 | D 0.632
+17:30:11 [A_gan] step   1800/15000 | rec 0.0309 | gnorm 16.35 | lr 1.96e-04 | 8.8 it/s | adv 1.010 | D 0.624
+17:30:34 [A_gan] step   2000/15000 | rec 0.0308 | gnorm 16.74 | lr 1.95e-04 | 8.6 it/s | adv 1.028 | D 0.622
+17:30:40 [A_gan] VAL step 2000: L1 0.0445 | PSNR 25.35 dB | SSIM 0.8014 | SAM 11.20 deg
+17:31:04 [A_gan] step   2200/15000 | rec 0.0301 | gnorm 17.44 | lr 1.93e-04 | 6.8 it/s | adv 1.089 | D 0.607
+17:31:27 [A_gan] step   2400/15000 | rec 0.0301 | gnorm 17.77 | lr 1.92e-04 | 8.6 it/s | adv 1.098 | D 0.604
+17:31:50 [A_gan] step   2600/15000 | rec 0.0300 | gnorm 18.34 | lr 1.90e-04 | 8.6 it/s | adv 1.111 | D 0.603
+17:32:13 [A_gan] step   2800/15000 | rec 0.0299 | gnorm 18.64 | lr 1.88e-04 | 8.7 it/s | adv 1.107 | D 0.603
+17:32:36 [A_gan] step   3000/15000 | rec 0.0298 | gnorm 18.92 | lr 1.86e-04 | 8.6 it/s | adv 1.105 | D 0.603
+17:32:42 [A_gan] VAL step 3000: L1 0.0356 | PSNR 26.58 dB | SSIM 0.8350 | SAM 9.11 deg  * best
+17:33:06 [A_gan] step   3200/15000 | rec 0.0291 | gnorm 21.48 | lr 1.83e-04 | 6.8 it/s | adv 1.106 | D 0.598
+17:33:29 [A_gan] step   3400/15000 | rec 0.0292 | gnorm 21.98 | lr 1.81e-04 | 8.6 it/s | adv 1.130 | D 0.594
+17:33:52 [A_gan] step   3600/15000 | rec 0.0290 | gnorm 22.40 | lr 1.78e-04 | 8.6 it/s | adv 1.127 | D 0.593
+17:34:15 [A_gan] step   3800/15000 | rec 0.0289 | gnorm 22.55 | lr 1.76e-04 | 8.6 it/s | adv 1.145 | D 0.589
+17:34:38 [A_gan] step   4000/15000 | rec 0.0289 | gnorm 22.73 | lr 1.73e-04 | 8.7 it/s | adv 1.157 | D 0.585
+17:34:45 [A_gan] VAL step 4000: L1 0.0324 | PSNR 27.27 dB | SSIM 0.8401 | SAM 8.20 deg  * best
+17:35:08 [A_gan] step   4200/15000 | rec 0.0288 | gnorm 24.01 | lr 1.70e-04 | 6.7 it/s | adv 1.193 | D 0.575
+17:35:32 [A_gan] step   4400/15000 | rec 0.0287 | gnorm 25.89 | lr 1.66e-04 | 8.5 it/s | adv 1.221 | D 0.565
+17:35:55 [A_gan] step   4600/15000 | rec 0.0285 | gnorm 26.47 | lr 1.63e-04 | 8.6 it/s | adv 1.235 | D 0.554
+17:36:18 [A_gan] step   4800/15000 | rec 0.0284 | gnorm 27.30 | lr 1.60e-04 | 8.6 it/s | adv 1.245 | D 0.555
+17:36:41 [A_gan] step   5000/15000 | rec 0.0283 | gnorm 28.07 | lr 1.56e-04 | 8.6 it/s | adv 1.260 | D 0.550
+17:36:48 [A_gan] VAL step 5000: L1 0.0362 | PSNR 26.64 dB | SSIM 0.8193 | SAM 8.79 deg
+17:37:11 [A_gan] step   5200/15000 | rec 0.0281 | gnorm 35.08 | lr 1.52e-04 | 6.7 it/s | adv 1.347 | D 0.524
+17:37:34 [A_gan] step   5400/15000 | rec 0.0280 | gnorm 35.27 | lr 1.49e-04 | 8.6 it/s | adv 1.333 | D 0.533
+17:37:58 [A_gan] step   5600/15000 | rec 0.0280 | gnorm 34.99 | lr 1.45e-04 | 8.7 it/s | adv 1.326 | D 0.535
+17:38:21 [A_gan] step   5800/15000 | rec 0.0280 | gnorm 35.53 | lr 1.41e-04 | 8.6 it/s | adv 1.336 | D 0.530
+17:38:44 [A_gan] step   6000/15000 | rec 0.0280 | gnorm 36.77 | lr 1.37e-04 | 8.5 it/s | adv 1.350 | D 0.523
+17:38:51 [A_gan] VAL step 6000: L1 0.0328 | PSNR 27.37 dB | SSIM 0.8267 | SAM 8.47 deg
+17:39:14 [A_gan] step   6200/15000 | rec 0.0281 | gnorm 43.38 | lr 1.33e-04 | 6.8 it/s | adv 1.379 | D 0.515
+17:39:37 [A_gan] step   6400/15000 | rec 0.0280 | gnorm 45.59 | lr 1.29e-04 | 8.6 it/s | adv 1.398 | D 0.504
+17:40:00 [A_gan] step   6600/15000 | rec 0.0279 | gnorm 45.98 | lr 1.25e-04 | 8.6 it/s | adv 1.405 | D 0.507
+17:40:24 [A_gan] step   6800/15000 | rec 0.0279 | gnorm 47.12 | lr 1.20e-04 | 8.5 it/s | adv 1.429 | D 0.502
+17:40:47 [A_gan] step   7000/15000 | rec 0.0279 | gnorm 48.12 | lr 1.16e-04 | 8.6 it/s | adv 1.435 | D 0.500
+17:40:54 [A_gan] VAL step 7000: L1 0.0388 | PSNR 26.04 dB | SSIM 0.7981 | SAM 11.38 deg
+17:41:17 [A_gan] step   7200/15000 | rec 0.0280 | gnorm 49.84 | lr 1.12e-04 | 6.6 it/s | adv 1.427 | D 0.507
+17:41:40 [A_gan] step   7400/15000 | rec 0.0278 | gnorm 51.99 | lr 1.08e-04 | 8.6 it/s | adv 1.466 | D 0.494
+17:42:04 [A_gan] step   7600/15000 | rec 0.0279 | gnorm 53.42 | lr 1.03e-04 | 8.5 it/s | adv 1.497 | D 0.483
+17:42:27 [A_gan] step   7800/15000 | rec 0.0278 | gnorm 55.36 | lr 9.89e-05 | 8.6 it/s | adv 1.530 | D 0.472
+17:42:50 [A_gan] step   8000/15000 | rec 0.0279 | gnorm 57.60 | lr 9.46e-05 | 8.6 it/s | adv 1.538 | D 0.472
+17:42:56 [A_gan] VAL step 8000: L1 0.0366 | PSNR 26.56 dB | SSIM 0.8072 | SAM 9.54 deg
+17:43:20 [A_gan] step   8200/15000 | rec 0.0277 | gnorm 63.30 | lr 9.03e-05 | 6.8 it/s | adv 1.596 | D 0.452
+17:43:43 [A_gan] step   8400/15000 | rec 0.0275 | gnorm 64.14 | lr 8.60e-05 | 8.6 it/s | adv 1.580 | D 0.452
+17:44:06 [A_gan] step   8600/15000 | rec 0.0275 | gnorm 65.01 | lr 8.17e-05 | 8.5 it/s | adv 1.586 | D 0.447
+17:44:30 [A_gan] step   8800/15000 | rec 0.0275 | gnorm 67.18 | lr 7.74e-05 | 8.6 it/s | adv 1.592 | D 0.443
+17:44:53 [A_gan] step   9000/15000 | rec 0.0276 | gnorm 67.48 | lr 7.32e-05 | 8.7 it/s | adv 1.611 | D 0.445
+17:44:59 [A_gan] VAL step 9000: L1 0.0367 | PSNR 26.51 dB | SSIM 0.8141 | SAM 9.17 deg
+17:45:23 [A_gan] step   9200/15000 | rec 0.0271 | gnorm 76.40 | lr 6.91e-05 | 6.7 it/s | adv 1.634 | D 0.440
+17:45:46 [A_gan] step   9400/15000 | rec 0.0272 | gnorm 76.85 | lr 6.50e-05 | 8.5 it/s | adv 1.619 | D 0.438
+17:46:09 [A_gan] step   9600/15000 | rec 0.0272 | gnorm 81.98 | lr 6.10e-05 | 8.7 it/s | adv 1.623 | D 0.436
+17:46:32 [A_gan] step   9800/15000 | rec 0.0273 | gnorm 83.46 | lr 5.70e-05 | 8.6 it/s | adv 1.632 | D 0.432
+17:46:55 [A_gan] step  10000/15000 | rec 0.0272 | gnorm 84.44 | lr 5.32e-05 | 8.7 it/s | adv 1.648 | D 0.426
+17:47:01 [A_gan] VAL step 10000: L1 0.0358 | PSNR 26.65 dB | SSIM 0.7968 | SAM 9.12 deg
+17:47:25 [A_gan] step  10200/15000 | rec 0.0275 | gnorm 89.59 | lr 4.94e-05 | 6.7 it/s | adv 1.738 | D 0.405
+17:47:48 [A_gan] step  10400/15000 | rec 0.0273 | gnorm 90.11 | lr 4.57e-05 | 8.7 it/s | adv 1.705 | D 0.419
+17:48:11 [A_gan] step  10600/15000 | rec 0.0272 | gnorm 91.74 | lr 4.21e-05 | 8.6 it/s | adv 1.684 | D 0.418
+17:48:35 [A_gan] step  10800/15000 | rec 0.0271 | gnorm 92.15 | lr 3.86e-05 | 8.6 it/s | adv 1.670 | D 0.421
+17:48:58 [A_gan] step  11000/15000 | rec 0.0272 | gnorm 94.82 | lr 3.53e-05 | 8.6 it/s | adv 1.680 | D 0.414
+17:49:04 [A_gan] VAL step 11000: L1 0.0404 | PSNR 25.67 dB | SSIM 0.7848 | SAM 10.39 deg
+17:49:27 [A_gan] step  11200/15000 | rec 0.0268 | gnorm 99.85 | lr 3.20e-05 | 6.7 it/s | adv 1.644 | D 0.400
+17:49:51 [A_gan] step  11400/15000 | rec 0.0268 | gnorm 102.82 | lr 2.89e-05 | 8.6 it/s | adv 1.658 | D 0.395
+17:50:14 [A_gan] step  11600/15000 | rec 0.0269 | gnorm 106.02 | lr 2.59e-05 | 8.6 it/s | adv 1.679 | D 0.393
+17:50:37 [A_gan] step  11800/15000 | rec 0.0269 | gnorm 106.31 | lr 2.31e-05 | 8.7 it/s | adv 1.681 | D 0.392
+17:51:00 [A_gan] step  12000/15000 | rec 0.0269 | gnorm 106.86 | lr 2.04e-05 | 8.6 it/s | adv 1.677 | D 0.391
+17:51:06 [A_gan] VAL step 12000: L1 0.0354 | PSNR 26.76 dB | SSIM 0.8096 | SAM 9.18 deg
+17:51:30 [A_gan] step  12200/15000 | rec 0.0268 | gnorm 122.24 | lr 1.78e-05 | 6.8 it/s | adv 1.784 | D 0.363
+17:51:53 [A_gan] step  12400/15000 | rec 0.0270 | gnorm 122.44 | lr 1.55e-05 | 8.6 it/s | adv 1.757 | D 0.359
+17:52:16 [A_gan] step  12600/15000 | rec 0.0269 | gnorm 120.28 | lr 1.32e-05 | 8.6 it/s | adv 1.704 | D 0.375
+17:52:39 [A_gan] step  12800/15000 | rec 0.0269 | gnorm 120.41 | lr 1.11e-05 | 8.6 it/s | adv 1.711 | D 0.368
+17:53:02 [A_gan] step  13000/15000 | rec 0.0269 | gnorm 120.98 | lr 9.24e-06 | 8.6 it/s | adv 1.697 | D 0.366
+17:53:09 [A_gan] VAL step 13000: L1 0.0347 | PSNR 26.74 dB | SSIM 0.7973 | SAM 9.96 deg
+17:53:32 [A_gan] step  13200/15000 | rec 0.0268 | gnorm 126.64 | lr 7.51e-06 | 6.7 it/s | adv 1.637 | D 0.396
+17:53:56 [A_gan] step  13400/15000 | rec 0.0270 | gnorm 120.54 | lr 5.95e-06 | 8.5 it/s | adv 1.672 | D 0.374
+17:54:19 [A_gan] step  13600/15000 | rec 0.0269 | gnorm 122.31 | lr 4.57e-06 | 8.5 it/s | adv 1.668 | D 0.372
+17:54:42 [A_gan] step  13800/15000 | rec 0.0269 | gnorm 124.36 | lr 3.36e-06 | 8.7 it/s | adv 1.659 | D 0.370
+17:55:05 [A_gan] step  14000/15000 | rec 0.0268 | gnorm 123.25 | lr 2.34e-06 | 8.7 it/s | adv 1.637 | D 0.374
+17:55:11 [A_gan] VAL step 14000: L1 0.0346 | PSNR 26.71 dB | SSIM 0.8047 | SAM 9.76 deg
+17:55:35 [A_gan] step  14200/15000 | rec 0.0267 | gnorm 117.06 | lr 1.50e-06 | 6.7 it/s | adv 1.607 | D 0.365
+17:55:58 [A_gan] step  14400/15000 | rec 0.0266 | gnorm 119.84 | lr 8.44e-07 | 8.6 it/s | adv 1.597 | D 0.375
+17:56:21 [A_gan] step  14600/15000 | rec 0.0266 | gnorm 118.67 | lr 3.75e-07 | 8.7 it/s | adv 1.570 | D 0.375
+17:56:44 [A_gan] step  14800/15000 | rec 0.0266 | gnorm 119.71 | lr 9.39e-08 | 8.8 it/s | adv 1.578 | D 0.373
+17:57:07 [A_gan] step  15000/15000 | rec 0.0267 | gnorm 119.13 | lr 0.00e+00 | 8.5 it/s | adv 1.589 | D 0.369
+17:57:14 [A_gan] VAL step 15000: L1 0.0338 | PSNR 26.87 dB | SSIM 0.8024 | SAM 9.58 deg
+17:57:14 [A_gan] done in 31.2 min, best val L1 0.0324 at step 4000, peak GPU 5.18 GB
+17:57:39 [eval] Model A + PatchGAN (lambda 100)    test_id     PSNR  25.00 | SSIM 0.8156 | SAM 10.04 | MAE 0.0455 | FID 214.2
+17:57:54 [eval] Model A + PatchGAN (lambda 100)    ood         PSNR  25.31 | SSIM 0.8095 | SAM  8.84 | MAE 0.0408 | FID 208.6
+17:57:54 [A_gan] job finished

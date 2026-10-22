@@ -1,0 +1,36 @@
+{
+  "info": {
+    "name": "A_unc",
+    "label": "Model A + variance head",
+    "arch": "unet",
+    "params": 7708698,
+    "steps": 15000,
+    "best_step": 7000,
+    "best_val_l1": 0.028744110837578773,
+    "best_val_psnr": 28.295063018798828,
+    "best_val_ssim": 0.8701524138450623,
+    "steps_done": 15000,
+    "stopped_early": false,
+    "train_minutes": 26.128571685155233,
+    "peak_gpu_gb": 5.139984896
+  },
+  "config": {
+    "name": "A_unc",
+    "arch": "unet",
+    "label": "Model A + variance head",
+    "model_kwargs": {},
+    "uncertainty": true,
+    "use_gan": false,
+    "gan_lambda": 100.0,
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "steps": 15000,
+    "warmup": 500,
+    "val_every": 1000,
+    "log_every": 200,
+    "grad_clip": 1.0,
+    "seed": 42,
+    "loss": "l1",
+    "deadline": 1792631691.3808339
+  }
+}
