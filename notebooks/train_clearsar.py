@@ -90,6 +90,9 @@ CFG = dict(
     workers=_env("WORKERS", 4, int), pool_size=256, max_echo=4,       # 4 workers x 3 threads per GPU process
     val_every_min=_env("VAL_EVERY_MIN", 2.0 if QUICK else 20.0, float),
     log_every=20 if QUICK else 200, sync_every=10,
+    # NaN guard: roll back if > half the steps fail for nan_patience x sync_every steps in a row
+    nan_patience=3 if QUICK else 20, snapshot_every=20 if QUICK else 1000, max_restores=3,
+    inject_nan_step=_env("INJECT_NAN_STEP", 0, int),           # test only
     p1_checkpoint=os.path.join(REPO, "outputs", "checkpoints", "best_A_unet.pt"),
 )
 CLOUD_BINS = [0, 0.1, 0.3, 0.6, 0.9, 1.01]

@@ -320,7 +320,23 @@ def _probe(G, D, device, candidates, w_ssim, budget):
 # The training process (one per GPU)
 # --------------------------------------------------------------------------------------
 def _mean(values):
-    return float(torch.stack([torch.as_tensor(v, dtype=torch.float32).cpu() for v in values]).mean())
+    """Mean over the finite values (skipped non-finite steps are counted separately in 'nonfinite')."""
+    return float(torch.stack([torch.as_tensor(v, dtype=torch.float32).cpu() for v in values]).nanmean())
+
+
+def _cpu_copy(obj):
+    """Deep copy of a (nested) state dict with every tensor moved to the CPU."""
+    if torch.is_tensor(obj):
+        return obj.detach().to("cpu", copy=True)
+    if isinstance(obj, dict):
+        return {k: _cpu_copy(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return type(obj)(_cpu_copy(v) for v in obj)
+    return obj
+
+
+def _finite_state(module):
+    return all(bool(torch.isfinite(v).all()) for v in module.state_dict().values() if v.is_floating_point())
 
 
 class RankLog:
@@ -428,6 +444,17 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
     log(f"[train] budget {budget / 3600:.2f} h | part A (reconstruction) until {cfg['gan_start']:.0%}, "
         f"then part B (+ PatchGAN, adaptive weight factor {cfg['adv_factor']})")
 
+    # ---- NaN guard. GradScaler already skips single steps whose gradients are inf / NaN. If MOST steps keep
+    # failing (the weights or the batch-norm statistics have gone bad), every rank rolls back to the last good
+    # snapshot (weights, optimiser, EMA), halves the learning rate and carries on. Never more than max_restores.
+    def take_snapshot():
+        return dict(step=step, g=_cpu_copy(unwrap(G).state_dict()), opt_g=_cpu_copy(opt_g.state_dict()),
+                    d=_cpu_copy(unwrap(D).state_dict()), opt_d=_cpu_copy(opt_d.state_dict()),
+                    ema=_cpu_copy(ema.state_dict()) if ema is not None else None)
+
+    snap = take_snapshot()
+    bad_t = torch.zeros((), device=device)
+    bad_run, restores, lr_mult, need_restore, guard_events = 0, 0, 1.0, False, []
     in_b = stop = False
     while True:
         # ---- events (validation, part B, stop) are decided by rank 0 from its clock every sync_every steps
@@ -435,12 +462,38 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
         frac = (time.time() - t0) / budget
         do_val = False
         if step % cfg["sync_every"] == 0:
-            flags = torch.tensor([frac, float((time.time() - last_val) >= cfg["val_every_min"] * 60), float(frac >= 1.0)],
-                                 device=device, dtype=torch.float64)
+            flags = torch.tensor([frac, float((time.time() - last_val) >= cfg["val_every_min"] * 60), float(frac >= 1.0),
+                                  float(need_restore)], device=device, dtype=torch.float64)
             if ddp:
                 dist.broadcast(flags, 0)
-            frac, do_val, stop = float(flags[0]), bool(flags[1]), bool(flags[2])
+                dist.all_reduce(bad_t, op=dist.ReduceOp.MAX)
+            frac, do_val, stop, val_bad = float(flags[0]), bool(flags[1]), bool(flags[2]), bool(flags[3])
             in_b = frac >= cfg["gan_start"]
+            n_bad = int(bad_t.item())
+            bad_t.zero_()
+            bad_run = bad_run + 1 if n_bad > cfg["sync_every"] // 2 else 0
+            if (bad_run >= cfg["nan_patience"] or val_bad) and not stop:
+                restores += 1
+                why = "validation is NaN" if val_bad else f"{bad_run * cfg['sync_every']} steps mostly non-finite"
+                if restores > cfg["max_restores"]:
+                    log(f"[guard] step {step}: {why} again - stopping training early, keeping the best checkpoints")
+                    guard_events.append(dict(step=step, action="stop", why=why))
+                    stop = True
+                else:
+                    unwrap(G).load_state_dict(snap["g"])
+                    opt_g.load_state_dict(snap["opt_g"])
+                    unwrap(D).load_state_dict(snap["d"])
+                    opt_d.load_state_dict(snap["opt_d"])
+                    if ema is not None:
+                        ema.load_state_dict(snap["ema"])
+                    scaler_g = torch.amp.GradScaler("cuda", enabled=amp)
+                    scaler_d = torch.amp.GradScaler("cuda", enabled=amp)
+                    lr_mult *= 0.5
+                    log(f"[guard] step {step}: {why} -> rolled back to step {snap['step']}, learning rate x{lr_mult:g}")
+                    guard_events.append(dict(step=step, action="rollback", to_step=snap["step"], lr_mult=lr_mult, why=why))
+                bad_run, need_restore = 0, False
+            elif n_bad == 0 and step - snap["step"] >= cfg["snapshot_every"] and _finite_state(unwrap(G)):
+                snap = take_snapshot()
         frac = max(frac, cfg["gan_start"]) if in_b else min(frac, cfg["gan_start"] - 1e-9)
         if in_b and not phase_logged:
             phase_logged = True
@@ -461,7 +514,7 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
             break
 
         x, y, fresh = feeder.next(batch)
-        g_lr = lr_g(cfg, frac, step)
+        g_lr = lr_g(cfg, frac, step) * lr_mult
         for gr in opt_g.param_groups:
             gr["lr"] = g_lr
         rec_parts = {}
@@ -472,7 +525,7 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
         loss = rec
         if in_b:
             # ---- discriminator step: real pairs (x, y) -> 1, generated pairs (x, G(x)) -> 0
-            d_lr = lr_d(cfg, frac)
+            d_lr = lr_d(cfg, frac) * lr_mult
             for gr in opt_d.param_groups:
                 gr["lr"] = d_lr
             unwrap(D).train()
@@ -504,6 +557,7 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
             rec_parts.update(d_loss=d_loss.detach(), d_real=d_real.mean().detach(), d_fake=d_fake.mean().detach(), lr_d=d_lr)
             b_step += 1
 
+        bad_t += (~torch.isfinite(loss.detach())).float()
         opt_g.zero_grad(set_to_none=True)
         scaler_g.scale(loss).backward()
         scaler_g.unscale_(opt_g)
@@ -513,16 +567,19 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
         if ema is not None:
             ema.update_parameters(unwrap(G))
         step += 1
+        if cfg.get("inject_nan_step") and step == cfg["inject_nan_step"]:     # test hook: break the model on purpose
+            with torch.no_grad():
+                unwrap(G).dec1.conv[0].weight.fill_(float("inf"))
 
         # ---- logging
         for k, v in dict(loss=loss.detach(), l1=l1.detach(), ssim_loss=ssim_l.detach(), gnorm=gnorm.detach(),
-                         **rec_parts).items():
+                         nonfinite=(~torch.isfinite(loss.detach())).float(), **rec_parts).items():
             acc.setdefault(k, []).append(v)        # tensors stay on the GPU until the next log line (no stall)
         if step % cfg["log_every"] == 0:
             dt = time.time() - t_log
             nf, ne = feeder.n_fresh - fresh_log[0], feeder.n_echo - fresh_log[1]
             row = dict(step=step, time_h=(time.time() - t0) / 3600, phase="B" if in_b else "A", lr_g=g_lr,
-                       it_s=cfg["log_every"] / dt, fresh=nf / max(1, nf + ne),
+                       it_s=cfg["log_every"] / dt, fresh=nf / max(1, nf + ne), amp_scale=scaler_g.get_scale() if amp else 1.0,
                        patches_read_s=nf * batch * world / dt, epoch=feeder.epoch,
                        **{k: _mean(v) for k, v in acc.items()})
             rows.append(row)
@@ -532,9 +589,10 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
                 mem = torch.cuda.max_memory_allocated(device) / 1e9 if amp else 0
                 gan = (f" | D {row['d_loss']:.3f} (real {row['d_real']:.2f} fake {row['d_fake']:.2f})"
                        f" adv {row.get('adv', float('nan')):.3f} lambda {row.get('lam', 0):.3g}") if in_b else ""
-                log(f"[{row['phase']}] step {step:6d} {frac:5.1%} | L1 {row['l1']:.4f} 1-SSIM {row['ssim_loss']:.4f}"
+                skip = f" | SKIPPED {row['nonfinite']:.0%} (non-finite)" if row["nonfinite"] > 0 else ""
+                log(f"[{row['phase']}] step {step:6d} {frac:5.1%} | L1 {row['l1']:.4f} 1-SSIM {row['ssim_loss']:.4f}{skip}"
                     f"{gan} | lr {g_lr:.2e} | {row['it_s']:.2f} it/s, fresh {row['fresh']:.0%}, "
-                    f"read {row['patches_read_s']:.0f} patch/s, epoch {feeder.epoch} | {mem:.1f} GB")
+                    f"read {row['patches_read_s']:.0f} patch/s, epoch {feeder.epoch} | {mem:.1f} GB | scale {row['amp_scale']:.0f}")
 
         # ---- validation + checkpoint selection (rank 0)
         if do_val:
@@ -551,6 +609,9 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
                 vrows.append(dict(step=step, time_h=(time.time() - t0) / 3600, phase="B" if in_b else "A",
                                   gan_on=gan_on, **m))
                 pd.DataFrame(vrows).to_csv(val_p, index=False)
+                if not np.isfinite(m["mae"]):
+                    need_restore = True
+                    log("[guard] WARNING validation is NaN - the next sync rolls back to the last good snapshot")
                 log(f"[val] step {step}: L1 {m['mae']:.4f} PSNR {m['psnr']:.2f} SSIM {m['ssim']:.3f} "
                     f"aligned {m['psnr_aligned']:.2f} sharp {m['sharpness']:.2f} score {m['score']:.4f}{tag}")
             last_val = time.time()
@@ -572,7 +633,8 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
             json.dump(dict(steps=step, batch_per_gpu=batch, world=world, generator_params=n_g, discriminator_params=n_d,
                            train_hours=(time.time() - t0) / 3600, best_val_l1_before_gan=best_a,
                            best_val_score_final=best_b, epochs_started=feeder.epoch,
-                           fresh_fraction=feeder.n_fresh / max(1, feeder.n_fresh + feeder.n_echo)), f, indent=2)
+                           fresh_fraction=feeder.n_fresh / max(1, feeder.n_fresh + feeder.n_echo),
+                           nan_guard_events=guard_events), f, indent=2)
         log(f"[train] done: {step} steps in {(time.time() - t0) / 3600:.2f} h, {feeder.epoch} epoch(s) started")
     if ddp:
         dist.barrier()

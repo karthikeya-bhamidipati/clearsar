@@ -106,3 +106,18 @@ def test_checkpoint_round_trip(tmp_path):
 def test_stream_dataset_drops_unreadable_files():
     ds = ft.TripletStream([dict(s1="missing.tif", s2="missing.tif", s2_cloudy="missing.tif")])
     assert ds[0][3] is False and ft.stream_collate([ds[0]]) is None
+
+
+def test_bottleneck_stays_bounded_when_attention_grows():
+    """Root cause of the first full run's NaNs: an unnormalised attention residual stream feeding the decoder
+    overflowed fp16. The final LayerNorm must keep the decoder input normalised whatever the stream size."""
+    m = build_model("clearsar_net", **FINAL).eval()
+    with torch.no_grad():
+        for blk in m.attn:
+            blk.mlp[2].weight.mul_(1e4)
+            blk.mlp[2].bias.fill_(1e3)
+    seen = {}
+    m.up3.register_forward_hook(lambda mod, inp, out: seen.update(x=inp[0]))
+    out = m(torch.rand(2, 15, 64, 64))
+    assert torch.isfinite(out).all()
+    assert seen["x"].abs().max() < 50 and seen["x"].dtype == torch.float32

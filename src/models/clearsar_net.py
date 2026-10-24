@@ -94,9 +94,12 @@ class GlobalAttentionBlock(nn.Module):
         return self.proj(out.transpose(1, 2).reshape(B, N, C))
 
     def forward(self, x):
+        # the residual stream x is kept in float32: under mixed precision only the matrix products run in fp16.
+        # (An fp16 residual stream can grow past fp16's limit of 65 504 and turn into inf / NaN.)
         attn = self.attention if self.keep_weights else self.fast_attention
-        x = x + attn(self.norm1(x))
-        return x + self.mlp(self.norm2(x))
+        x = x.float()
+        x = x + attn(self.norm1(x)).float()
+        return x + self.mlp(self.norm2(x)).float()
 
 
 class ClearSARNet(nn.Module):
@@ -114,6 +117,9 @@ class ClearSARNet(nn.Module):
         self.pool = nn.MaxPool2d(2, 2)
         self.bottleneck = UNetBlock(4 * w, 8 * w)
         self.attn = nn.ModuleList([GlobalAttentionBlock(8 * w, attn_heads, attn_mlp_ratio) for _ in range(attn_layers)])
+        # final LayerNorm (as in every ViT): the decoder always receives normalised features, whatever the size
+        # the residual stream grows to. Without it the first decoder convolution can overflow in fp16.
+        self.attn_norm = nn.LayerNorm(8 * w) if attn_layers else nn.Identity()
         def up(cin, cout):
             if upsample == "transpose":
                 return nn.ConvTranspose2d(cin, cout, 2, stride=2)
@@ -156,10 +162,10 @@ class ClearSARNet(nn.Module):
         b = self.drop(self.bottleneck(self.pool(e3)))
         if len(self.attn):
             B, C, H, W = b.shape
-            t = b.flatten(2).transpose(1, 2) + sinusoidal_2d(H, W, C, b.device).to(b.dtype)[None]
+            t = b.float().flatten(2).transpose(1, 2) + sinusoidal_2d(H, W, C, b.device)[None]
             for blk in self.attn:
                 t = blk(t)
-            b = t.transpose(1, 2).reshape(B, C, H, W)
+            b = self.attn_norm(t).transpose(1, 2).reshape(B, C, H, W).to(b.dtype)
         d3 = self.drop(self.dec3(torch.cat([self.up3(b), e3], 1)))
         d2 = self.drop(self.dec2(torch.cat([self.up2(d3), e2], 1)))
         return self.dec1(torch.cat([self.up1(d2), e1], 1))
