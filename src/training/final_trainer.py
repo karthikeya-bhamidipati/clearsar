@@ -41,13 +41,37 @@ import torch.distributed as dist
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 
-from src.data.dataset import IN_CHANNELS, N_S1, OUT_CHANNELS, PATCH_SIZE, read_triplet
+from src.data.dataset import IN_CHANNELS, N_S1, N_S2, OUT_CHANNELS, PATCH_SIZE, preprocess_s1, preprocess_s2
 from src.evaluation.metrics import compute_metrics, ssim_per_image
 
 
 # --------------------------------------------------------------------------------------
 # Data: read triplets straight from the GeoTIFFs
 # --------------------------------------------------------------------------------------
+_POOL = None
+
+
+def _read_bands(path):
+    import rasterio
+    with rasterio.open(path) as src:
+        return src.read()
+
+
+def read_triplet_parallel(rec):
+    """read_triplet() with the three GeoTIFFs of a patch read at the same time by three threads. Reading on
+    Kaggle is limited by storage latency, not CPU (quick test: ~15 patches/s cold), so overlapping the waits
+    is what makes it faster. Each thread opens its own file handle (GDAL is thread-safe that way)."""
+    global _POOL
+    if _POOL is None:                                  # one small pool per DataLoader worker process
+        from concurrent.futures import ThreadPoolExecutor
+        _POOL = ThreadPoolExecutor(max_workers=3)
+    s1, s2c, s2 = _POOL.map(_read_bands, (rec["s1"], rec["s2_cloudy"], rec["s2"]))
+    if s1.shape[0] < N_S1 or s2c.shape[0] < N_S2 or s2.shape[0] < N_S2:
+        raise ValueError(f"Unexpected band counts S1={s1.shape[0]} S2c={s2c.shape[0]} S2={s2.shape[0]}")
+    x = np.concatenate([preprocess_s1(s1[:N_S1]), preprocess_s2(s2c[:N_S2])], axis=0)
+    return x, preprocess_s2(s2[:N_S2])
+
+
 class TripletStream(Dataset):
     """records: list of dicts with s1 / s2 / s2_cloudy paths. Returns (x fp16 [15,256,256], y fp16 [13,256,256],
     record index, ok). Unreadable or mis-shaped files return ok=False and are dropped by the collate."""
@@ -60,7 +84,7 @@ class TripletStream(Dataset):
 
     def __getitem__(self, i):
         try:
-            x, y = read_triplet(self.records[i])
+            x, y = read_triplet_parallel(self.records[i])
             if x.shape != (IN_CHANNELS, PATCH_SIZE, PATCH_SIZE) or y.shape != (OUT_CHANNELS, PATCH_SIZE, PATCH_SIZE):
                 raise ValueError(f"shape {x.shape} / {y.shape}")
             return torch.from_numpy(x.astype(np.float16)), torch.from_numpy(y.astype(np.float16)), i, True
@@ -323,7 +347,11 @@ def train_worker(rank, world, cfg, train_records, val_records, band_means):
     if ddp:
         os.environ.setdefault("MASTER_ADDR", "127.0.0.1")
         os.environ.setdefault("MASTER_PORT", str(cfg.get("port", 29533)))
-        dist.init_process_group("nccl", rank=rank, world_size=world, timeout=timedelta(minutes=60))
+        try:
+            dist.init_process_group("nccl", rank=rank, world_size=world, timeout=timedelta(minutes=60),
+                                    device_id=torch.device(f"cuda:{rank}"))
+        except TypeError:                              # older torch without device_id
+            dist.init_process_group("nccl", rank=rank, world_size=world, timeout=timedelta(minutes=60))
     device = torch.device(f"cuda:{rank}" if torch.cuda.is_available() else "cpu")
     if device.type == "cuda":
         torch.cuda.set_device(device)

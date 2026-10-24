@@ -87,7 +87,7 @@ CFG = dict(
     d_warmup_steps=_env("D_WARMUP", 10 if QUICK else 300, int), adv_ramp_steps=_env("ADV_RAMP", 20 if QUICK else 1000, int),
     lambda_every=10,
     # ---- data feeding / bookkeeping
-    workers=_env("WORKERS", 3, int), pool_size=128, max_echo=4,
+    workers=_env("WORKERS", 4, int), pool_size=256, max_echo=4,       # 4 workers x 3 threads per GPU process
     val_every_min=_env("VAL_EVERY_MIN", 2.0 if QUICK else 20.0, float),
     log_every=20 if QUICK else 200, sync_every=10,
     p1_checkpoint=os.path.join(REPO, "outputs", "checkpoints", "best_A_unet.pt"),
