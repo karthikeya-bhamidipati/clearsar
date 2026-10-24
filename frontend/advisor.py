@@ -6,10 +6,11 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from frontend.common import (compare_slider, hero, labels, load, no_results, pill, rgb_u8, sample_names, section,
-                             to_uint8, verdict_grid)
+from frontend.common import (FINAL_LABELS, compare_slider, final_sample_names, hero, labels, load, load_final,
+                             no_results, pill, rgb_u8, sample_names, section, to_uint8, verdict_grid)
 
 root, data = load()
+fin = load_final()
 hero("Expert system · explainable decision support",
      "Should you <span class='cs-grad'>trust this reconstruction?</span>",
      "The deep-learning models fill in what the clouds hide. The advisor measures the evidence - cloud cover, how "
@@ -21,7 +22,7 @@ if data is None:
 from src.expert.advisor import Advisor, region_from_lonlat  # noqa: E402
 from src.expert.engine import KnowledgeBase  # noqa: E402
 
-lab = labels(data)
+lab = {**labels(data), **FINAL_LABELS}
 kb = KnowledgeBase.load()
 USE_CASES = kb.labels["use_case"]
 REGION_NAMES = {"in_region": "Inside the training region (Asia)", "out_of_region": "Outside Asia",
@@ -29,11 +30,17 @@ REGION_NAMES = {"in_region": "Inside the training region (Asia)", "out_of_region
 
 
 @st.cache_resource(show_spinner=False)
-def get_advisor(root_dir, stamp):
-    return Advisor(os.path.join(root_dir, "checkpoints"), os.path.join(root_dir, "results"), labels(data))
+def get_advisor(root_dir, final_dir, stamp):
+    return Advisor(os.path.join(root_dir, "checkpoints"), os.path.join(root_dir, "results"), lab, final_dir=final_dir)
 
 
-advisor = get_advisor(root, os.path.getmtime(os.path.join(root, "results", "metrics_summary.csv")))
+final_dir = fin["root"] if fin is not None else None
+advisor = get_advisor(root, final_dir, (os.path.getmtime(os.path.join(root, "results", "metrics_summary.csv")),
+                                        os.path.getmtime(os.path.join(final_dir, "results", "test_summary.csv"))
+                                        if final_dir else 0))
+if advisor.final_mode:
+    st.caption("Reconstruction model: **ClearSAR-Net** (final, and before its GAN part). The three Phase 1 "
+               "architectures run alongside as independent second opinions - their disagreement is one of the facts.")
 if not advisor.available:
     st.warning("No model checkpoints in this run folder - the advisor needs `checkpoints/best_*.pt`.")
     st.stop()
@@ -46,11 +53,12 @@ use_case = c2.selectbox("Intended use", list(USE_CASES), format_func=USE_CASES.g
 x = key = None
 auto_region, region_note = "unknown", ""
 if source == "Test gallery":
-    s, meta = data["samples"], data["samples_meta"]
+    use_final = advisor.final_mode and fin["samples"] is not None
+    s, meta = (fin["samples"], fin["samples_meta"]) if use_final else (data["samples"], data["samples_meta"])
     if s is None:
         st.info("No gallery samples in this run - upload GeoTIFFs instead.")
         st.stop()
-    names = sample_names(meta)
+    names = final_sample_names(meta) if use_final else sample_names(meta)
     i = c3.selectbox("Test patch", range(len(names)), format_func=lambda k: names[k], key="adv_patch")
     x = s["x"][i].astype(np.float32)
     info = meta["samples"][i]
@@ -89,9 +97,13 @@ else:
     else:
         st.caption("SEN12MS-CR style patches. The clear image is not needed - the advisor never sees the answer.")
 
-region = st.radio("Region", list(REGION_NAMES), index=list(REGION_NAMES).index(auto_region), horizontal=True,
-                  format_func=REGION_NAMES.get, key=f"adv_region_{key}",
-                  help=f"Detected automatically {region_note}" if region_note else None)
+if advisor.final_mode:                 # trained on every continent: no region is outside the training data
+    region = "in_region"
+    REGION_NAMES["in_region"] = "Inside the training data (the final model was trained on every continent)"
+else:
+    region = st.radio("Region", list(REGION_NAMES), index=list(REGION_NAMES).index(auto_region), horizontal=True,
+                      format_func=REGION_NAMES.get, key=f"adv_region_{key}",
+                      help=f"Detected automatically {region_note}" if region_note else None)
 if x is None:
     st.stop()
 
@@ -113,7 +125,7 @@ for fact, title in zip(["trust", "recommended_model", "suitability", "action"],
                        ["Trust", "Recommended model", "Fit for purpose", "Recommended action"]):
     v, cf = res.value(fact)
     if fact == "recommended_model":
-        items.append((title, lab.get(v, v), "#2DD4BF", "Best match for this cloud level in the experiments.", cf))
+        items.append((title, lab.get(v, v), "#2DD4BF", "Best match for this cloud level and use in the test results.", cf))
     else:
         meta_l = kb.labels.get(fact, {}).get(v, {})
         items.append((title, meta_l.get("title", v), TONE.get(v, "#E6EAF2"), meta_l.get("text", ""), cf))
@@ -142,9 +154,10 @@ with t_vis:
         g[0].image(to_uint8(adv.cloud_mask.astype(np.float32), vmax=1.0), caption=f"Detected cloud · {100 * adv.numeric['cloud_cover']:.0f}%")
         g[1].image(to_uint8(adv.occlusion["reliance"], cmap="cividis", vmax=1.0),
                    caption=f"Radar reliance · {100 * adv.numeric['sar_reliance']:.0f}% under cloud")
-        g[0].image(to_uint8(dis, cmap="inferno", vmax=0.1), caption="Disagreement between architectures")
+        g[0].image(to_uint8(dis, cmap="inferno", vmax=0.1), caption="Disagreement between the Phase 1 architectures")
         if adv.sigma is not None:
-            g[1].image(to_uint8(adv.sigma, cmap="magma"), caption="Predicted uncertainty")
+            g[1].image(to_uint8(adv.sigma, cmap="magma"),
+                       caption="Uncertainty (flip test, scaled to expected error)" if advisor.final_mode else "Predicted uncertainty")
     st.caption("Radar reliance: how much the output changes when the radar is removed, relative to removing the "
                "optical input (bright = the model is using the radar there). Under thick cloud it should be bright.")
     from src.expert.xai import CHANNEL_NAMES

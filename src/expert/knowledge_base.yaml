@@ -183,15 +183,21 @@ rules:
   - id: M2
     group: model
     if: [{fact: use_case, is: visual_inspection}, {fact: gan_available, is: "yes"}, {fact: trust, in: [high, medium]}]
-    then: {fact: recommended_model, is: A_gan}
+    then: {fact: recommended_model, value_from: gan_model}
     cf: 0.5
-    because: "For purely visual use, the GAN model produces sharper, more natural-looking texture (lower FID), even though its pixel values are less exact."
+    because: "For purely visual use, the GAN-trained model ({gan_model_label}) produces sharper, more natural-looking texture, even though its pixel values can be less exact."
   - id: M3
     group: model
     if: [{fact: use_case, in: [vegetation_monitoring, land_cover, change_detection]}]
     then: {fact: warning_avoid_gan, is: "yes"}
     cf: 0.9
     because: "Quantitative uses need faithful pixel values; GAN outputs can contain plausible-looking but invented detail."
+  - id: M4
+    group: model
+    if: [{fact: use_case, in: [vegetation_monitoring, land_cover, change_detection]}, {fact: gan_available, is: "yes"}]
+    then: {fact: recommended_model, value_from: nongan_model}
+    cf: 0.85
+    because: "For a quantitative use the most faithful model without adversarial training is preferred: {nongan_model_label}."
 
   # ------------------------------------------------------------------ suitability for the user's purpose
   - id: U1

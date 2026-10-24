@@ -2,29 +2,28 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from frontend.common import (compare_slider, hero, labels, load, no_results, rgb_u8, sample_names, section,
-                             to_uint8)
-
-from frontend.common import load_v4, v4_labels  # noqa: E402
+from frontend.common import (FINAL_LABELS, compare_slider, final_sample_names, hero, labels, load, load_final,
+                             no_results, rgb_u8, sample_names, section, to_uint8)
 
 root, data = load()
-v4 = load_v4()
+fin = load_final()
 hero("Explore patches", "Look at the <span class='cs-grad'>reconstructions</span> yourself",
-     "Held-out test patches from Asia and from other continents, chosen across the whole range of cloud cover. "
-     "Your eyes catch artefacts that metrics miss - blur, invented texture, blocky patches.")
-sources = (["Plan v4 test scenes"] if v4 is not None and v4["samples"] is not None else []) +           (["Phase 1 test scenes"] if data is not None and data["samples"] is not None else [])
+     "Held-out test patches from every continent, chosen across the whole range of cloud cover - per cloud level the "
+     "patches closest to the median score, not the best ones. Your eyes catch what metrics miss: blur, invented "
+     "texture, wrong colours.")
+sources = (["Final model (18 test scenes)"] if fin is not None and fin["samples"] is not None else []) +           (["Phase 1 (Asian test scenes)"] if data is not None and data["samples"] is not None else [])
 if not sources:
     no_results()
 src = st.segmented_control("Gallery", sources, default=sources[0], key="ex_src") or sources[0]
-if src.startswith("Plan v4"):
-    s, meta, lab = v4["samples"], v4["samples_meta"], v4_labels(v4)
-    names = [f"{m['country']} · {m['continent']} · {int(round(m['cloud_frac'] * 100))}% cloud" for m in meta["samples"]]
+if src.startswith("Final"):
+    s, meta, lab = fin["samples"], fin["samples_meta"], dict(FINAL_LABELS)
+    names = final_sample_names(meta)
 else:
     s, meta, lab = data["samples"], data["samples_meta"], labels(data)
     names = sample_names(meta)
 runs = [r for r in meta["runs"] if f"pred_{r}" in s and r != "identity"]
-if src.startswith("Plan v4") and "v4_final" in runs:
-    runs = ["v4_final"] + [r for r in runs if r != "v4_final"]
+if "final" in runs:
+    runs = ["final"] + [r for r in runs if r != "final"]
 
 c1, c2 = st.columns([1, 1])
 i = c1.selectbox("Patch", range(len(names)), format_func=lambda k: names[k], key="ex_patch")
@@ -52,10 +51,11 @@ tiles = [(to_uint8(np.clip(x[0], 0, 1), vmax=1.0), "Radar VV"), (to_uint8(np.cli
          (rgb_u8(x[2:]), "Cloudy input"), (truth, "True clear image"), (pred, lab.get(run, run)),
          (to_uint8(err, cmap="inferno", vmax=0.25), "Error vs truth")]
 if f"gate_{run}" in s:
-    tiles.append((to_uint8(s[f"gate_{run}"][i].astype(np.float32), cmap="viridis", vmax=1.0), "Gate: where it keeps the input"))
+    tiles.append((to_uint8(s[f"gate_{run}"][i].astype(np.float32), cmap="viridis", vmax=1.0), "Cloud gate: bright = input kept"))
 sig_runs = [r for r in runs if f"sigma_{r}" in s and np.any(s[f"sigma_{r}"][i])]
 for r in sig_runs:
-    tiles.append((to_uint8(s[f"sigma_{r}"][i].astype(np.float32), cmap="magma"), f"Uncertainty · {lab.get(r, r)}"))
+    tiles.append((to_uint8(s[f"sigma_{r}"][i].astype(np.float32), cmap="magma"),
+                  f"Uncertainty · {lab.get(r, r)}" + (" (flip test)" if r == "final" else "")))
 cols = st.columns(4)
 for k, (img, cap) in enumerate(tiles):
     cols[k % 4].image(img, caption=cap)

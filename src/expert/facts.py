@@ -23,6 +23,15 @@ B2, B3, B4, B8, B10 = 1, 2, 3, 7, 10          # indices inside the 13-band S2 st
 VV_WATER = (-18.0 + 25.0) / 25.0             # -18 dB in the [0, 1] scaling of VV
 CLOUD_BINS = [(0.2, "0-20%"), (0.4, "20-40%"), (0.6, "40-60%"), (0.8, "60-80%"), (1.01, "80-100%")]
 MAIN_CANDIDATES = ["A_unet", "B_swin", "C_vit", "A_unc", "A_mcd", "A_gan"]
+FINAL_CANDIDATES = ["before_gan", "final"]          # the final ClearSAR-Net before / after its GAN part
+FINAL_CLOUD_BINS = [(0.1, "0-10%"), (0.3, "10-30%"), (0.6, "30-60%"), (0.9, "60-90%"), (1.01, "90-100%")]
+
+
+def final_cloud_bin(frac):
+    for hi, name in FINAL_CLOUD_BINS:
+        if frac < hi:
+            return name
+    return FINAL_CLOUD_BINS[-1][1]
 
 
 def cloud_masks(x):
@@ -81,14 +90,29 @@ def model_facts(x, preds, cloud, core=("A_unet", "B_swin", "C_vit"), primary=Non
 class ResultsKnowledge:
     """Knowledge distilled from the experiment results (outputs/results/*.csv)."""
 
-    def __init__(self, results_dir=None, labels=None):
+    def __init__(self, results_dir=None, labels=None, final_results_dir=None):
         self.labels = labels or {}
-        self.by_bin = self.main = None
+        self.by_bin = self.main = self.final_bin = None
         if results_dir and os.path.isdir(results_dir):
             p = os.path.join(results_dir, "metrics_by_cloud_bin.csv")
             self.by_bin = pd.read_csv(p) if os.path.exists(p) else None
             p = os.path.join(results_dir, "metrics_main.csv")
             self.main = pd.read_csv(p) if os.path.exists(p) else None
+        if final_results_dir:                     # the final model's one test (notebooks/train_clearsar.py)
+            p = os.path.join(final_results_dir, "test_by_cloud.csv")
+            self.final_bin = pd.read_csv(p) if os.path.exists(p) else None
+
+    def best_final_model(self, cloud_frac, available):
+        """Most accurate (PSNR) of the final model before / after the GAN at this cloud level, measured on the
+        final model's 18 held-out test scenes. Returns (run, psnr, bin_name)."""
+        cands = [r for r in FINAL_CANDIDATES if r in available]
+        name = final_cloud_bin(cloud_frac)
+        if self.final_bin is not None and cands:
+            d = self.final_bin[(self.final_bin.cloud_bin.astype(str) == name) & self.final_bin.run.isin(cands)]
+            if len(d):
+                row = d.sort_values("psnr", ascending=False).iloc[0]
+                return row.run, float(row.psnr), name
+        return (cands[-1] if cands else None), float("nan"), name
 
     def label(self, run):
         return self.labels.get(run, run)

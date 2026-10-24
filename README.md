@@ -183,15 +183,19 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+The app reads `outputs/final/` (extract `clearsar_final_output.zip` from `notebooks/train_clearsar.py` there) and
+`outputs/` (Phase 1). Every page works with whatever is present.
+
 | Section | Page | What it shows |
 |---|---|---|
-| Deep learning | **Home** | drag-to-compare cloudy input vs reconstruction, headline numbers, the three architectures, data map |
-| | **Model comparison** | one chart (PSNR / SSIM / SAM / FID, with seed error bars), leaderboard, cloud-cover and country breakdowns |
-| | **Experiments** | one card per experiment: question, prediction, measured change, automatic verdict (Supported / Contradicted / Within noise), and a write-up scaffold |
-| | **Explore patches** | every model on held-out patches, against the cloudy input or the truth, with error and uncertainty maps |
-| Expert system | **Advisor** | decision (trust · model · fit for purpose · action) with certainty factors, visual explanation, how / why-not reasoning, facts, downloadable report |
+| ClearSAR-Net | **Home** | drag-to-compare cloudy input / truth vs the final model, headline numbers, the two-part model |
+| | **Results** | one honest test: all metrics for cloudy input, Phase-1 U-Net, before-GAN and final; by cloud cover, continent, country; what the GAN changed; uncertainty and the learned cloud gate |
+| | **How it learned** | loss and validation curves, sharpness, the GAN game (D(real) / D(fake), adaptive weight), disk / GPU throughput, NaN-guard events, all hyper-parameters |
+| | **Explore patches** | representative test patches (median per cloud level, not the best), every model, error / gate / uncertainty maps |
+| Expert system | **Advisor** | decision (trust · model · fit for purpose · action) with certainty factors; with the final model it reconstructs with ClearSAR-Net (before-GAN for quantitative uses), uses the Phase-1 models as second opinions |
 | | **Knowledge base** | architecture diagram, what-if simulator, all rules and thresholds |
-| About | **How it works** | the pipeline and its limitations |
+| Earlier experiments | **Phase 1 · model comparison / experiments** | the 26-run architecture study on 3 000 Asian patches |
+| About | **How it works** | data, model, training, evaluation, expert system, limitations |
 
 ## Expert system (ClearSAR Advisor)
 

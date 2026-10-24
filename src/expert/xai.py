@@ -16,7 +16,10 @@ CHANNEL_NAMES = ["VV", "VH"] + [f"cloudy {b}" for b in S2_BANDS]
 
 
 def _forward_tiled(model, x, tile=128):
-    """Differentiable tiled forward pass. x: [1, C, H, W] (H, W multiples of tile)."""
+    """Differentiable tiled forward pass. x: [1, C, H, W] (H, W multiples of tile). tile=None: whole patch
+    (the final ClearSAR-Net is trained on full 256 x 256 patches)."""
+    if not tile:
+        return model(x)
     B, C, H, W = x.shape
     nh, nw = H // tile, W // tile
     t = x.reshape(B, C, nh, tile, nw, tile).permute(0, 2, 4, 1, 3, 5).reshape(B * nh * nw, C, tile, tile)
@@ -26,18 +29,18 @@ def _forward_tiled(model, x, tile=128):
 
 
 @torch.no_grad()
-def occlusion(model, x):
+def occlusion(model, x, tile=128):
     """x: [15, H, W] numpy in [0, 1]. Returns dict of [H, W] maps: delta_sar, delta_opt, reliance."""
     model.eval()
     oc = model.out_channels
     xt = torch.from_numpy(np.ascontiguousarray(x, dtype=np.float32))[None]
-    base = _forward_tiled(model, xt)[:, :oc]
+    base = _forward_tiled(model, xt, tile)[:, :oc]
     no_sar = xt.clone()
     no_sar[:, :N_S1] = xt[:, :N_S1].mean(dim=(2, 3), keepdim=True)
     no_opt = xt.clone()
     no_opt[:, N_S1:] = xt[:, N_S1:].mean(dim=(2, 3), keepdim=True)
-    d_sar = (_forward_tiled(model, no_sar)[:, :oc] - base).abs().mean(1)[0].numpy()
-    d_opt = (_forward_tiled(model, no_opt)[:, :oc] - base).abs().mean(1)[0].numpy()
+    d_sar = (_forward_tiled(model, no_sar, tile)[:, :oc] - base).abs().mean(1)[0].numpy()
+    d_opt = (_forward_tiled(model, no_opt, tile)[:, :oc] - base).abs().mean(1)[0].numpy()
     return dict(delta_sar=d_sar, delta_opt=d_opt, reliance=d_sar / np.maximum(d_sar + d_opt, 1e-6))
 
 
@@ -49,11 +52,11 @@ def sar_reliance(occ, region):
     return float(s / max(s + o, 1e-9))
 
 
-def channel_saliency(model, x, region=None):
+def channel_saliency(model, x, region=None, tile=128):
     """Normalised importance of each of the 15 input channels for the predicted RGB in `region`."""
     model.eval()
     xt = torch.from_numpy(np.ascontiguousarray(x, dtype=np.float32))[None].requires_grad_(True)
-    out = _forward_tiled(model, xt)[:, list(RGB_IDX)]
+    out = _forward_tiled(model, xt, tile)[:, list(RGB_IDX)]
     if region is not None and region.mean() > 0.02:
         m = torch.from_numpy(region.astype(np.float32))[None, None]
         target = (out * m).sum() / m.sum()

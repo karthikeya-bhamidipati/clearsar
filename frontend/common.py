@@ -267,36 +267,41 @@ def best_main_model(main, split="test_id"):
     return m.sort_values("psnr", ascending=False).iloc[0] if len(m) else None
 
 
-# ------------------------------------------------------------------ plan v4 outputs (outputs/v4/)
-def v4_root():
-    base = os.path.join(ROOT, "outputs", "v4")
+# ------------------------------------------------------------------ final model outputs (outputs/final/)
+FINAL_RUNS = ["identity", "p1_unet", "before_gan", "final"]
+FINAL_LABELS = {"identity": "Cloudy input", "p1_unet": "Phase 1 U-Net", "before_gan": "ClearSAR-Net · before GAN",
+                "final": "ClearSAR-Net · final (GAN)"}
+FINAL_COLORS = {"identity": MUTED, "p1_unet": VIOLET, "before_gan": AMBER, "final": ACCENT}
+CLOUD_ORDER = ["0-10%", "10-30%", "30-60%", "60-90%", "90-100%"]
+
+
+def final_root():
+    """outputs/final (or a sub-folder of it) holding results/test_summary.csv from notebooks/train_clearsar.py."""
+    base = os.path.join(ROOT, "outputs", "final")
     if not os.path.isdir(base):
         return None
     for cand in [base] + [os.path.join(base, d) for d in sorted(os.listdir(base))]:
-        if os.path.exists(os.path.join(cand, "results", "v4_runs.csv")):
+        if os.path.exists(os.path.join(cand, "results", "test_summary.csv")):
             return cand
     return None
 
 
 @st.cache_data(show_spinner=False)
-def _load_v4(root, stamp):
-    def csv(name):
-        p = os.path.join(root, "results", name)
+def _load_final(root, stamp):
+    def csv(*parts):
+        p = os.path.join(root, *parts)
         return pd.read_csv(p) if os.path.exists(p) else None
 
-    d = {k: csv(f"{k}.csv") for k in ["v4_runs", "v4_by_region", "v4_by_cloud_bin", "v4_by_continent", "v4_decisions",
-                                      "v4_uncertainty", "v4_scene_splits", "stage0_ceiling", "stage0_patch_stats",
-                                      "stage1_overfit", "stage1_lr_range"]}
-    cfg_p = os.path.join(root, "config.json")
-    d["config"] = json.load(open(cfg_p)) if os.path.exists(cfg_p) else {}
-    hist = {}
-    logs = os.path.join(root, "logs")
-    if os.path.isdir(logs):
-        for f in os.listdir(logs):
-            if f.startswith("history_") and f.endswith(".csv"):
-                hist[f[8:-4]] = pd.read_csv(os.path.join(logs, f))
-    d["history"] = hist
-    sp = os.path.join(root, "results", "v4_samples.npz")
+    def js(*parts):
+        p = os.path.join(root, *parts)
+        return json.load(open(p)) if os.path.exists(p) else {}
+
+    d = {k: csv("results", f"{k}.csv") for k in ["test_summary", "test_by_cloud", "test_by_continent",
+                                                  "test_by_country", "test_per_patch", "scene_splits"]}
+    d["train"], d["val"] = csv("logs", "train_history.csv"), csv("logs", "val_history.csv")
+    d["summary"], d["uncertainty"], d["config"] = js("logs", "train_summary.json"), js("results", "uncertainty.json"), \
+        js("config.json")
+    sp = os.path.join(root, "results", "samples.npz")
     if os.path.exists(sp):
         z = np.load(sp, allow_pickle=False)
         d["samples"] = {k: z[k] for k in z.files if k != "meta"}
@@ -307,35 +312,23 @@ def _load_v4(root, stamp):
     return d
 
 
-def load_v4():
-    root = v4_root()
+def load_final():
+    root = final_root()
     if root is None:
         return None
-    p = os.path.join(root, "results", "v4_runs.csv")
-    return _load_v4(root, os.path.getmtime(p))
+    return _load_final(root, os.path.getmtime(os.path.join(root, "results", "test_summary.csv")))
 
 
-def v4_labels(v4):
-    lab = dict(v4["config"].get("labels", {}))
-    if v4["v4_runs"] is not None:
-        lab.update(dict(zip(v4["v4_runs"].run, v4["v4_runs"].label)))
-    return lab
+def final_sample_names(meta):
+    return [f"{m['country']} · {m['continent']} · {int(round(m['cloud_frac'] * 100))}% cloud" for m in meta["samples"]]
 
 
-def lab_note(stage):
-    """The user's own prediction / explanation for a stage, read from docs/lab_notes.md."""
-    p = os.path.join(ROOT, "docs", "lab_notes.md")
-    if not os.path.exists(p):
-        return {}
-    text = open(p, encoding="utf-8").read()
-    import re
-    m = re.search(rf"## Stage {stage} .*?\n(.*?)(?=\n## Stage |\Z)", text, re.S)
-    if not m:
-        return {}
-    out = {}
-    for part in ("Prediction", "Result", "Explanation"):
-        mm = re.search(rf"\*\*{part}\*\*\s*\n(.*?)(?=\n\*\*[A-Z][a-z]+\*\*|\Z)", m.group(1), re.S)
-        val = mm.group(1).strip() if mm else ""
-        if val and not val.startswith("*(write"):
-            out[part.lower()] = val
-    return out
+def no_final():
+    st.markdown("""
+<div class='cs-hero'><div class='cs-eyebrow'>No final-model results yet</div>
+<h1>Run the final training first</h1>
+<p>Run <code>notebooks/train_clearsar.py</code> on Kaggle (2 × T4, ~12 h), download
+<code>clearsar_final_output.zip</code> from the notebook's Output tab and extract it into <code>outputs/final/</code>
+next to <code>app.py</code>. Then refresh this page. The Phase 1 pages work without it.</p></div>""",
+                unsafe_allow_html=True)
+    st.stop()
