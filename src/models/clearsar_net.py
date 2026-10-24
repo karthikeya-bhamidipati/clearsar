@@ -10,6 +10,14 @@ A U-Net (same encoder/decoder as Model A) with three switchable ideas, each test
       "gated"     out = m * cloudy + (1 - m) * sigmoid(head(features)),  m = sigmoid(gate(features))
                   - a learned soft mask m decides, per pixel, whether to keep what the satellite saw
                   or to fill in; m is returned for visualisation (where does the model trust the input?)
+      "hybrid"    out = m * sigmoid(logit(cloudy) + corr(features)) + (1 - m) * sigmoid(head(features))
+                  - the gate of "gated", but the kept pixels also get a learned correction. The clear target
+                    was photographed on a different date, so even cloud-free pixels need a small brightness /
+                    colour shift; "gated" can only copy them. corr starts at zero (keep = copy at init).
+                  The final model (notebooks/train_clearsar.py) uses this mode.
+  upsample      "transpose" (2x2 transposed conv, Model A) or "bilinear" (bilinear resize + 3x3 conv). The
+                  bilinear variant cannot produce the 2x2 block / checkerboard artefacts that a GAN
+                  discriminator tends to amplify (Odena et al. 2016), so the final model uses it.
   attn_layers   number of global self-attention blocks on the bottleneck            (stage 5)
                   every bottleneck position can look at every other one - context from far away,
                   which Phase 1 showed matters under thick cloud
@@ -77,33 +85,53 @@ class GlobalAttentionBlock(nn.Module):
         out = weights @ v                                                                 # [B, h, N, d]
         return self.proj(out.transpose(1, 2).reshape(B, N, C))
 
+    def fast_attention(self, x):
+        """The same computation through PyTorch's fused kernel (never builds the N x N matrix in memory).
+        Used for training; tests check that it matches attention() above."""
+        B, N, C = x.shape
+        q, k, v = self.qkv(x).reshape(B, N, 3, self.heads, self.d).permute(2, 0, 3, 1, 4)
+        out = F.scaled_dot_product_attention(q, k, v)
+        return self.proj(out.transpose(1, 2).reshape(B, N, C))
+
     def forward(self, x):
-        x = x + self.attention(self.norm1(x))
+        attn = self.attention if self.keep_weights else self.fast_attention
+        x = x + attn(self.norm1(x))
         return x + self.mlp(self.norm2(x))
 
 
 class ClearSARNet(nn.Module):
     def __init__(self, in_channels=15, out_channels=13, uncertainty=False, width=64, output_mode="direct",
-                 attn_layers=0, attn_heads=8, attn_mlp_ratio=2.0, dropout=0.0):
+                 attn_layers=0, attn_heads=8, attn_mlp_ratio=2.0, dropout=0.0, upsample="transpose"):
         super().__init__()
         _check_channels(in_channels, out_channels)
-        if output_mode not in ("direct", "residual", "gated"):
-            raise ValueError(f"output_mode must be direct, residual or gated, got {output_mode!r}")
+        if output_mode not in ("direct", "residual", "gated", "hybrid"):
+            raise ValueError(f"output_mode must be direct, residual, gated or hybrid, got {output_mode!r}")
+        if upsample not in ("transpose", "bilinear"):
+            raise ValueError(f"upsample must be transpose or bilinear, got {upsample!r}")
         self.out_channels, self.uncertainty, self.output_mode = out_channels, uncertainty, output_mode
         w = width
         self.enc1, self.enc2, self.enc3 = UNetBlock(in_channels, w), UNetBlock(w, 2 * w), UNetBlock(2 * w, 4 * w)
         self.pool = nn.MaxPool2d(2, 2)
         self.bottleneck = UNetBlock(4 * w, 8 * w)
         self.attn = nn.ModuleList([GlobalAttentionBlock(8 * w, attn_heads, attn_mlp_ratio) for _ in range(attn_layers)])
-        self.up3, self.dec3 = nn.ConvTranspose2d(8 * w, 4 * w, 2, stride=2), UNetBlock(8 * w, 4 * w)
-        self.up2, self.dec2 = nn.ConvTranspose2d(4 * w, 2 * w, 2, stride=2), UNetBlock(4 * w, 2 * w)
-        self.up1, self.dec1 = nn.ConvTranspose2d(2 * w, w, 2, stride=2), UNetBlock(2 * w, w)
+        def up(cin, cout):
+            if upsample == "transpose":
+                return nn.ConvTranspose2d(cin, cout, 2, stride=2)
+            return nn.Sequential(nn.Upsample(scale_factor=2, mode="bilinear", align_corners=False),
+                                 nn.Conv2d(cin, cout, 3, padding=1))
+        self.up3, self.dec3 = up(8 * w, 4 * w), UNetBlock(8 * w, 4 * w)
+        self.up2, self.dec2 = up(4 * w, 2 * w), UNetBlock(4 * w, 2 * w)
+        self.up1, self.dec1 = up(2 * w, w), UNetBlock(2 * w, w)
         self.drop = nn.Dropout2d(dropout) if dropout > 0 else nn.Identity()
         self.head = nn.Conv2d(w, out_channels, 1)
         if output_mode == "residual":          # start as the identity: correction = 0
             nn.init.zeros_(self.head.weight)
             nn.init.zeros_(self.head.bias)
-        if output_mode == "gated":             # start by mostly trusting the input (m ~ 0.88)
+        if output_mode == "hybrid":            # correction of the kept pixels starts at zero
+            self.corr = nn.Conv2d(w, out_channels, 1)
+            nn.init.zeros_(self.corr.weight)
+            nn.init.zeros_(self.corr.bias)
+        if output_mode in ("gated", "hybrid"):  # start by mostly trusting the input (m ~ 0.88)
             self.gate = nn.Conv2d(w, 1, 1)
             nn.init.zeros_(self.gate.weight)
             nn.init.constant_(self.gate.bias, 2.0)
@@ -145,9 +173,15 @@ class ClearSARNet(nn.Module):
         elif self.output_mode == "residual":
             c = cloudy.float().clamp(1e-3, 1 - 1e-3)
             mean = torch.sigmoid(torch.log(c / (1 - c)) + self.head(f).float()).to(f.dtype)
-        else:
+        elif self.output_mode == "gated":
             m = torch.sigmoid(self.gate(f))
             mean = m * cloudy + (1 - m) * torch.sigmoid(self.head(f))
+            aux["gate"] = m
+        else:
+            m = torch.sigmoid(self.gate(f).float())
+            c = cloudy.float().clamp(1e-3, 1 - 1e-3)
+            keep = torch.sigmoid(torch.log(c / (1 - c)) + self.corr(f).float())
+            mean = (m * keep + (1 - m) * torch.sigmoid(self.head(f).float())).to(f.dtype)
             aux["gate"] = m
         out = torch.cat([mean, self.logscale(f)], 1) if self.uncertainty else mean
         return (out, aux) if return_aux else out

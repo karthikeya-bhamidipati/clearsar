@@ -35,3 +35,6 @@ kaggle.json
 # --- local scratch ---
 install_log.txt
 scan_log.txt
+
+# --- local runs of notebooks/train_clearsar.py ---
+outputs/final_run/

@@ -7,11 +7,34 @@ uncertainty-quantification extension.
 
 **Goal:** complete, hands-on understanding of deep learning — not a publication.
 
-> **Current phase: [plan v4](docs/project_plan_v4.md)** — build *one* model step by step (residual
-> pass-through, many more training scenes, better losses, global attention) until its reconstructions are as
-> close to the truth as the data allows, with a prediction → result → explanation for every stage in
-> [`docs/lab_notes.md`](docs/lab_notes.md). The 26-run architecture comparison below is Phase 1 ("Stage 0:
-> exploration").
+> **Current phase: the final model.** ONE model - **ClearSAR-Net + PatchGAN** - trained on the **whole**
+> SEN12MS-CR dataset (all 122 218 patches, 175 scenes, every continent), on Kaggle's 2 x T4 in one session.
+> Script: [`notebooks/train_clearsar.py`](notebooks/train_clearsar.py), engine:
+> [`src/training/final_trainer.py`](src/training/final_trainer.py). See *Final model* below. The 26-run architecture
+> comparison further down is Phase 1 (exploration); plan v4's staged ablations were superseded.
+
+## Final model (what to run)
+
+| | |
+|---|---|
+| **Data** | every complete triplet, split by scene: ~147 train / 10 val / 18 test scenes (all 11 Phase-1 test scenes stay in test). Read straight from the GeoTIFFs; recent patches are re-used with new flips / rotations when reading is slower than the GPUs (data echoing) |
+| **Generator** | ClearSAR-Net: U-Net (3 levels, width 64) + 2 global self-attention blocks in the bottleneck, bilinear upsampling, *hybrid* output - a learned cloud gate keeps (and colour-corrects) what the satellite saw and generates the rest. 12.8 M parameters |
+| **Part A (55 % of the time)** | reconstruction: L1 + 0.05 (1 - SSIM), AdamW 3e-4, warm-up + cosine, EMA 0.999 -> `clearsar_net_before_gan.pt` |
+| **Part B (45 %)** | + spectrally normalised conditional PatchGAN (LSGAN loss), adaptive adversarial weight (GAN gradient = 0.2 x pixel-loss gradient), G 5e-5 / D 2e-4 -> `clearsar_net_final.pt`, chosen by L1 x (1 + abs(1 - sharpness)) |
+| **Test** | once, on the held-out scenes: cloudy input vs Phase-1 U-Net vs before-GAN vs final; by cloud cover, continent, country; uncertainty from test-time augmentation |
+
+On Kaggle (GPU T4 x2, Internet on, SEN12MS-CR attached):
+
+```
+!rm -rf /kaggle/working/*
+!git clone -q https://github.com/karthikeya-bhamidipati/clearsar.git /kaggle/working/clearsar
+!CLEARSAR_QUICK=1 python /kaggle/working/clearsar/notebooks/train_clearsar.py     # 15-min smoke test
+```
+
+then *Save Version -> Save & Run All* with the same first two lines and
+`!python /kaggle/working/clearsar/notebooks/train_clearsar.py` (~11.6 h). Extract `clearsar_final_output.zip` into
+`outputs/final/`. Local smoke test on synthetic data: `python tests/make_synthetic_data.py --out synth --extra-scenes 24`,
+then `CLEARSAR_QUICK=1 CLEARSAR_INPUT_ROOTS=synth CLEARSAR_TRAIN_MIN=3 CLEARSAR_N_VAL=3 CLEARSAR_N_TEST=5 python notebooks/train_clearsar.py`.
 
 Full plan, reasoning, experiment list, week-by-week schedule and glossary:
 **[`docs/project_plan.md`](docs/project_plan.md)** — read this first.
