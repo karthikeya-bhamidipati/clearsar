@@ -1,0 +1,13 @@
+{
+  "steps": 86380,
+  "batch_per_gpu": 8,
+  "world": 2,
+  "generator_params": 12775515,
+  "discriminator_params": 2790337,
+  "train_hours": 10.838844226731194,
+  "best_val_l1_before_gan": 0.026366008445620537,
+  "best_val_score_final": 0.03518357894421231,
+  "epochs_started": 6,
+  "fresh_fraction": 0.5177471636952998,
+  "nan_guard_events": []
+}

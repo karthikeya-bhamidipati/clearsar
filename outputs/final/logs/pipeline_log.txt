@@ -1,0 +1,32 @@
+12:54:57 ====================================================================================================
+12:54:57 ClearSAR final model | quick=False | repo=/kaggle/working/clearsar | GPUs: Tesla T4, Tesla T4 | torch 2.11.0+cu128
+12:58:43 [index] 366654 .tif files under 1 root(s) -> 122218 patch keys, 122218 complete triplets (0 incomplete skipped), 175 scenes
+12:58:45 [split] train: 147 scenes, 102871 patches  continents={'Europe': 39, 'North America': 37, 'Africa': 27, 'Asia': 23, 'South America': 13, 'Oceania': 8}
+12:58:45 [split] val  :  10 scenes,    600 patches  continents={'Asia': 7, 'Africa': 1, 'Europe': 1, 'North America': 1}
+12:58:45 [split] test :  18 scenes,  12539 patches  continents={'Asia': 7, 'Africa': 3, 'Europe': 3, 'North America': 2, 'South America': 2, 'Oceania': 1}
+12:58:45 [data] train 102871 patches (147 scenes) | val 600 | test 5400 (18 scenes)
+12:58:57 [bench] reading GeoTIFFs: 4.2 patches/s (one process, 5 workers)
+12:58:57 [bench] mean clear reflectance per band: [0.139, 0.113, 0.102, 0.095, 0.117, 0.177, 0.206, 0.2, 0.228, 0.064, 0.002, 0.185, 0.118]
+12:58:57 [plan] training 10.84 h, reserve 40 min for test + export
+12:58:57 [train] starting 2 process(es)
+23:52:10 [test] evaluating ['identity', 'p1_unet', 'before_gan', 'final'] on 5400 test patches
+23:52:50 [test] 400/5400 patches (10.1 patch/s)
+23:53:25 [test] 800/5400 patches (10.7 patch/s)
+23:53:59 [test] 1200/5400 patches (11.0 patch/s)
+23:54:34 [test] 1600/5400 patches (11.2 patch/s)
+23:55:08 [test] 2000/5400 patches (11.3 patch/s)
+23:55:42 [test] 2400/5400 patches (11.3 patch/s)
+23:56:17 [test] 2800/5400 patches (11.4 patch/s)
+23:56:51 [test] 3200/5400 patches (11.4 patch/s)
+23:57:40 [test] 3600/5400 patches (10.9 patch/s)
+23:58:19 [test] 4000/5400 patches (10.9 patch/s)
+23:58:54 [test] 4400/5400 patches (10.9 patch/s)
+23:59:45 [test] 4800/5400 patches (10.6 patch/s)
+00:00:36 [test] 5200/5400 patches (10.3 patch/s)
+00:01:00 [result] Cloudy input (no model)                  PSNR  20.29  SSIM 0.703  SAM 13.37  aligned  33.71  sharpness 1.88
+00:01:00 [result] Phase 1 U-Net (3 000 Asian patches)      PSNR  26.70  SSIM 0.853  SAM  9.78  aligned  33.86  sharpness 0.90
+00:01:00 [result] ClearSAR-Net, before GAN (part A)        PSNR  28.68  SSIM 0.881  SAM  8.38  aligned  34.58  sharpness 0.78
+00:01:00 [result] ClearSAR-Net final (with GAN)            PSNR  28.59  SSIM 0.879  SAM  8.33  aligned  34.53  sharpness 0.87
+00:01:00 [result] uncertainty: Spearman(TTA spread, error) = 0.55
+00:01:05 [gallery] 10 representative test patches -> results/samples.npz
+00:01:06 DONE in 11.10 h - download clearsar_final_output.zip

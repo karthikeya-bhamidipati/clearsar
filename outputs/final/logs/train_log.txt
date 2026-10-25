@@ -1,0 +1,468 @@
+12:59:34 [train] generator 12.78 M params, discriminator 2.79 M | world 2 | batch 8 per GPU (global 16)
+13:01:45 [val] 600 validation patches in RAM
+13:01:45 [train] budget 10.84 h | part A (reconstruction) until 55%, then part B (+ PatchGAN, adaptive weight factor 0.2)
+13:03:32 [A] step    200  0.3% | L1 0.0818 1-SSIM 0.2667 | lr 6.00e-05 | 1.87 it/s, fresh 49%, read 15 patch/s, epoch 0 | 10.4 GB | scale 65536
+13:05:09 [A] step    400  0.5% | L1 0.0459 1-SSIM 0.1903 | lr 1.20e-04 | 2.06 it/s, fresh 41%, read 14 patch/s, epoch 0 | 10.4 GB | scale 65536
+13:06:25 [A] step    600  0.7% | L1 0.0380 1-SSIM 0.1720 | lr 1.80e-04 | 2.65 it/s, fresh 38%, read 16 patch/s, epoch 0 | 10.4 GB | scale 65536
+13:07:42 [A] step    800  0.9% | L1 0.0363 1-SSIM 0.1561 | lr 2.40e-04 | 2.59 it/s, fresh 44%, read 18 patch/s, epoch 0 | 10.4 GB | scale 65536
+13:09:18 [A] step   1000  1.2% | L1 0.0417 1-SSIM 0.1651 | lr 3.00e-04 | 2.08 it/s, fresh 46%, read 15 patch/s, epoch 0 | 10.4 GB | scale 65536
+13:11:06 [A] step   1200  1.4% | L1 0.0334 1-SSIM 0.1458 | lr 3.00e-04 | 1.86 it/s, fresh 50%, read 15 patch/s, epoch 0 | 10.4 GB | scale 65536
+13:12:54 [A] step   1400  1.7% | L1 0.0348 1-SSIM 0.1443 | lr 2.99e-04 | 1.85 it/s, fresh 52%, read 15 patch/s, epoch 0 | 10.4 GB | scale 65536
+13:14:44 [A] step   1600  2.0% | L1 0.0318 1-SSIM 0.1350 | lr 2.99e-04 | 1.83 it/s, fresh 52%, read 15 patch/s, epoch 0 | 10.4 GB | scale 65536
+13:16:12 [A] step   1800  2.2% | L1 0.0313 1-SSIM 0.1383 | lr 2.99e-04 | 2.26 it/s, fresh 52%, read 19 patch/s, epoch 0 | 10.4 GB | scale 65536
+13:17:40 [A] step   2000  2.4% | L1 0.0306 1-SSIM 0.1326 | lr 2.99e-04 | 2.28 it/s, fresh 50%, read 18 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:19:07 [A] step   2200  2.7% | L1 0.0321 1-SSIM 0.1340 | lr 2.98e-04 | 2.31 it/s, fresh 50%, read 19 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:20:39 [A] step   2400  2.9% | L1 0.0317 1-SSIM 0.1351 | lr 2.98e-04 | 2.17 it/s, fresh 51%, read 18 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:21:56 [val] step 2551: L1 0.0424 PSNR 25.58 SSIM 0.852 aligned 32.54 sharp 0.41 score 0.0676 * best before-GAN
+13:22:15 [A] step   2600  3.2% | L1 0.0326 1-SSIM 0.1333 | lr 2.98e-04 | 2.07 it/s, fresh 56%, read 19 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:23:42 [A] step   2800  3.4% | L1 0.0301 1-SSIM 0.1279 | lr 2.97e-04 | 2.30 it/s, fresh 48%, read 18 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:25:14 [A] step   3000  3.6% | L1 0.0306 1-SSIM 0.1268 | lr 2.97e-04 | 2.18 it/s, fresh 50%, read 17 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:26:45 [A] step   3200  3.8% | L1 0.0320 1-SSIM 0.1285 | lr 2.97e-04 | 2.20 it/s, fresh 50%, read 18 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:28:12 [A] step   3400  4.1% | L1 0.0305 1-SSIM 0.1249 | lr 2.96e-04 | 2.31 it/s, fresh 52%, read 19 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:29:42 [A] step   3600  4.3% | L1 0.0311 1-SSIM 0.1299 | lr 2.96e-04 | 2.23 it/s, fresh 52%, read 19 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:31:08 [A] step   3800  4.5% | L1 0.0316 1-SSIM 0.1306 | lr 2.95e-04 | 2.31 it/s, fresh 50%, read 18 patch/s, epoch 0 | 10.4 GB | scale 131072
+13:32:38 [A] step   4000  4.7% | L1 0.0322 1-SSIM 0.1346 | lr 2.95e-04 | 2.23 it/s, fresh 50%, read 18 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:34:10 [A] step   4200  5.0% | L1 0.0308 1-SSIM 0.1276 | lr 2.94e-04 | 2.17 it/s, fresh 53%, read 18 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:35:42 [A] step   4400  5.2% | L1 0.0303 1-SSIM 0.1277 | lr 2.94e-04 | 2.19 it/s, fresh 51%, read 18 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:37:37 [A] step   4600  5.5% | L1 0.0295 1-SSIM 0.1257 | lr 2.93e-04 | 1.74 it/s, fresh 50%, read 14 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:39:22 [A] step   4800  5.8% | L1 0.0312 1-SSIM 0.1292 | lr 2.92e-04 | 1.90 it/s, fresh 51%, read 16 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:41:11 [A] step   5000  6.1% | L1 0.0306 1-SSIM 0.1259 | lr 2.92e-04 | 1.84 it/s, fresh 50%, read 15 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:42:12 [val] step 5091: L1 0.0294 PSNR 28.44 SSIM 0.884 aligned 32.80 sharp 0.47 score 0.0451 * best before-GAN
+13:43:03 [A] step   5200  6.3% | L1 0.0293 1-SSIM 0.1235 | lr 2.91e-04 | 1.78 it/s, fresh 54%, read 15 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:44:37 [A] step   5400  6.6% | L1 0.0324 1-SSIM 0.1295 | lr 2.90e-04 | 2.12 it/s, fresh 52%, read 18 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:46:20 [A] step   5600  6.9% | L1 0.0290 1-SSIM 0.1192 | lr 2.89e-04 | 1.94 it/s, fresh 50%, read 16 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:48:19 [A] step   5800  7.2% | L1 0.0320 1-SSIM 0.1283 | lr 2.88e-04 | 1.69 it/s, fresh 50%, read 14 patch/s, epoch 0 | 10.4 GB | scale 262144
+13:49:57 [A] step   6000  7.4% | L1 0.0290 1-SSIM 0.1231 | lr 2.87e-04 | 2.04 it/s, fresh 51%, read 17 patch/s, epoch 0 | 10.4 GB | scale 524288
+13:51:45 [A] step   6200  7.7% | L1 0.0302 1-SSIM 0.1227 | lr 2.86e-04 | 1.85 it/s, fresh 50%, read 15 patch/s, epoch 0 | 10.4 GB | scale 524288
+13:53:14 [A] step   6400  7.9% | L1 0.0311 1-SSIM 0.1252 | lr 2.86e-04 | 2.24 it/s, fresh 50%, read 18 patch/s, epoch 0 | 10.4 GB | scale 524288
+13:54:54 [A] step   6600  8.2% | L1 0.0299 1-SSIM 0.1239 | lr 2.85e-04 | 2.01 it/s, fresh 51%, read 16 patch/s, epoch 0 | 10.4 GB | scale 524288
+13:56:38 [A] step   6800  8.4% | L1 0.0330 1-SSIM 0.1272 | lr 2.84e-04 | 1.93 it/s, fresh 50%, read 16 patch/s, epoch 0 | 10.4 GB | scale 524288
+13:58:11 [A] step   7000  8.7% | L1 0.0280 1-SSIM 0.1201 | lr 2.83e-04 | 2.14 it/s, fresh 52%, read 18 patch/s, epoch 0 | 10.4 GB | scale 524288
+13:59:39 [A] step   7200  8.9% | L1 0.0278 1-SSIM 0.1174 | lr 2.82e-04 | 2.27 it/s, fresh 48%, read 18 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:01:25 [A] step   7400  9.2% | L1 0.0298 1-SSIM 0.1239 | lr 2.81e-04 | 1.90 it/s, fresh 50%, read 15 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:02:23 [val] step 7481: L1 0.0275 PSNR 29.06 SSIM 0.889 aligned 32.87 sharp 0.54 score 0.0401 * best before-GAN
+14:03:41 [A] step   7600  9.5% | L1 0.0288 1-SSIM 0.1179 | lr 2.79e-04 | 1.47 it/s, fresh 52%, read 12 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:05:31 [A] step   7800  9.8% | L1 0.0291 1-SSIM 0.1206 | lr 2.78e-04 | 1.82 it/s, fresh 52%, read 15 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:07:14 [A] step   8000 10.1% | L1 0.0305 1-SSIM 0.1244 | lr 2.77e-04 | 1.94 it/s, fresh 50%, read 15 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:09:08 [A] step   8200 10.4% | L1 0.0315 1-SSIM 0.1247 | lr 2.76e-04 | 1.75 it/s, fresh 50%, read 14 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:10:53 [A] step   8400 10.6% | L1 0.0300 1-SSIM 0.1222 | lr 2.75e-04 | 1.91 it/s, fresh 52%, read 16 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:12:31 [A] step   8600 10.9% | L1 0.0278 1-SSIM 0.1175 | lr 2.73e-04 | 2.04 it/s, fresh 50%, read 16 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:14:02 [A] step   8800 11.1% | L1 0.0281 1-SSIM 0.1186 | lr 2.72e-04 | 2.20 it/s, fresh 50%, read 18 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:15:43 [A] step   9000 11.4% | L1 0.0323 1-SSIM 0.1249 | lr 2.71e-04 | 1.98 it/s, fresh 52%, read 16 patch/s, epoch 0 | 10.4 GB | scale 262144
+14:17:23 [A] step   9200 11.6% | L1 0.0278 1-SSIM 0.1154 | lr 2.70e-04 | 2.00 it/s, fresh 52%, read 17 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:18:54 [A] step   9400 11.9% | L1 0.0272 1-SSIM 0.1198 | lr 2.69e-04 | 2.19 it/s, fresh 51%, read 18 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:20:24 [A] step   9600 12.1% | L1 0.0296 1-SSIM 0.1206 | lr 2.67e-04 | 2.22 it/s, fresh 51%, read 18 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:22:02 [A] step   9800 12.3% | L1 0.0292 1-SSIM 0.1175 | lr 2.66e-04 | 2.03 it/s, fresh 51%, read 17 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:22:34 [val] step 9841: L1 0.0277 PSNR 29.11 SSIM 0.889 aligned 32.88 sharp 0.56 score 0.0400
+14:23:52 [A] step  10000 12.6% | L1 0.0293 1-SSIM 0.1179 | lr 2.65e-04 | 1.83 it/s, fresh 55%, read 16 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:25:38 [A] step  10200 12.9% | L1 0.0279 1-SSIM 0.1179 | lr 2.63e-04 | 1.88 it/s, fresh 55%, read 16 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:27:11 [A] step  10400 13.1% | L1 0.0305 1-SSIM 0.1257 | lr 2.62e-04 | 2.17 it/s, fresh 50%, read 17 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:28:40 [A] step  10600 13.4% | L1 0.0275 1-SSIM 0.1172 | lr 2.60e-04 | 2.25 it/s, fresh 50%, read 18 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:30:10 [A] step  10800 13.6% | L1 0.0293 1-SSIM 0.1195 | lr 2.59e-04 | 2.22 it/s, fresh 50%, read 18 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:31:36 [A] step  11000 13.8% | L1 0.0278 1-SSIM 0.1152 | lr 2.58e-04 | 2.33 it/s, fresh 49%, read 18 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:33:05 [A] step  11200 14.0% | L1 0.0309 1-SSIM 0.1215 | lr 2.57e-04 | 2.24 it/s, fresh 52%, read 18 patch/s, epoch 0 | 10.4 GB | scale 1048576
+14:34:31 [A] step  11400 14.3% | L1 0.0285 1-SSIM 0.1163 | lr 2.55e-04 | 2.32 it/s, fresh 50%, read 19 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:35:59 [A] step  11600 14.5% | L1 0.0276 1-SSIM 0.1129 | lr 2.54e-04 | 2.28 it/s, fresh 52%, read 19 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:37:27 [A] step  11800 14.7% | L1 0.0287 1-SSIM 0.1145 | lr 2.53e-04 | 2.28 it/s, fresh 50%, read 18 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:39:28 [A] step  12000 15.0% | L1 0.0284 1-SSIM 0.1155 | lr 2.51e-04 | 1.64 it/s, fresh 50%, read 13 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:41:06 [A] step  12200 15.3% | L1 0.0274 1-SSIM 0.1168 | lr 2.49e-04 | 2.05 it/s, fresh 50%, read 17 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:42:31 [A] step  12400 15.5% | L1 0.0279 1-SSIM 0.1158 | lr 2.48e-04 | 2.34 it/s, fresh 50%, read 19 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:42:46 [val] step 12411: L1 0.0276 PSNR 29.17 SSIM 0.890 aligned 32.87 sharp 0.57 score 0.0395
+14:44:21 [A] step  12600 15.8% | L1 0.0304 1-SSIM 0.1227 | lr 2.46e-04 | 1.83 it/s, fresh 56%, read 16 patch/s, epoch 0 | 10.4 GB | scale 524288
+14:45:50 [A] step  12800 16.0% | L1 0.0305 1-SSIM 0.1213 | lr 2.44e-04 | 2.24 it/s, fresh 49%, read 18 patch/s, epoch 1 | 10.4 GB | scale 524288
+14:47:09 [A] step  13000 16.2% | L1 0.0292 1-SSIM 0.1174 | lr 2.43e-04 | 2.53 it/s, fresh 48%, read 20 patch/s, epoch 1 | 10.4 GB | scale 524288
+14:48:26 [A] step  13200 16.4% | L1 0.0269 1-SSIM 0.1159 | lr 2.42e-04 | 2.60 it/s, fresh 49%, read 20 patch/s, epoch 1 | 10.4 GB | scale 524288
+14:49:47 [A] step  13400 16.6% | L1 0.0297 1-SSIM 0.1205 | lr 2.40e-04 | 2.47 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+14:51:09 [A] step  13600 16.8% | L1 0.0263 1-SSIM 0.1120 | lr 2.39e-04 | 2.44 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+14:52:25 [A] step  13800 17.0% | L1 0.0277 1-SSIM 0.1133 | lr 2.38e-04 | 2.64 it/s, fresh 48%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+14:53:44 [A] step  14000 17.2% | L1 0.0294 1-SSIM 0.1183 | lr 2.36e-04 | 2.53 it/s, fresh 49%, read 20 patch/s, epoch 1 | 10.4 GB | scale 131072
+14:55:30 [A] step  14200 17.5% | L1 0.0276 1-SSIM 0.1170 | lr 2.35e-04 | 1.88 it/s, fresh 50%, read 15 patch/s, epoch 1 | 10.4 GB | scale 131072
+14:57:14 [A] step  14400 17.8% | L1 0.0283 1-SSIM 0.1166 | lr 2.33e-04 | 1.93 it/s, fresh 52%, read 16 patch/s, epoch 1 | 10.4 GB | scale 131072
+14:58:43 [A] step  14600 18.0% | L1 0.0285 1-SSIM 0.1154 | lr 2.31e-04 | 2.25 it/s, fresh 50%, read 18 patch/s, epoch 1 | 10.4 GB | scale 131072
+15:00:11 [A] step  14800 18.2% | L1 0.0283 1-SSIM 0.1166 | lr 2.30e-04 | 2.27 it/s, fresh 50%, read 18 patch/s, epoch 1 | 10.4 GB | scale 131072
+15:01:29 [A] step  15000 18.4% | L1 0.0279 1-SSIM 0.1165 | lr 2.28e-04 | 2.56 it/s, fresh 52%, read 21 patch/s, epoch 1 | 10.4 GB | scale 131072
+15:02:58 [val] step 15191: L1 0.0283 PSNR 29.01 SSIM 0.889 aligned 32.81 sharp 0.58 score 0.0402
+15:03:01 [A] step  15200 18.7% | L1 0.0282 1-SSIM 0.1151 | lr 2.26e-04 | 2.18 it/s, fresh 53%, read 18 patch/s, epoch 1 | 10.4 GB | scale 131072
+15:04:20 [A] step  15400 18.9% | L1 0.0288 1-SSIM 0.1158 | lr 2.25e-04 | 2.55 it/s, fresh 52%, read 21 patch/s, epoch 1 | 10.4 GB | scale 131072
+15:05:38 [A] step  15600 19.1% | L1 0.0262 1-SSIM 0.1127 | lr 2.24e-04 | 2.55 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 131072
+15:06:55 [A] step  15800 19.3% | L1 0.0268 1-SSIM 0.1148 | lr 2.22e-04 | 2.59 it/s, fresh 50%, read 21 patch/s, epoch 1 | 10.4 GB | scale 131072
+15:08:20 [A] step  16000 19.5% | L1 0.0288 1-SSIM 0.1188 | lr 2.21e-04 | 2.37 it/s, fresh 51%, read 19 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:10:08 [A] step  16200 19.7% | L1 0.0279 1-SSIM 0.1187 | lr 2.19e-04 | 1.84 it/s, fresh 50%, read 15 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:11:38 [A] step  16400 20.0% | L1 0.0265 1-SSIM 0.1112 | lr 2.17e-04 | 2.25 it/s, fresh 50%, read 18 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:12:58 [A] step  16600 20.2% | L1 0.0281 1-SSIM 0.1168 | lr 2.15e-04 | 2.47 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:14:24 [A] step  16800 20.4% | L1 0.0280 1-SSIM 0.1149 | lr 2.14e-04 | 2.35 it/s, fresh 50%, read 19 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:15:45 [A] step  17000 20.6% | L1 0.0276 1-SSIM 0.1163 | lr 2.12e-04 | 2.47 it/s, fresh 51%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:17:02 [A] step  17200 20.8% | L1 0.0292 1-SSIM 0.1214 | lr 2.11e-04 | 2.60 it/s, fresh 51%, read 21 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:18:25 [A] step  17400 21.0% | L1 0.0282 1-SSIM 0.1166 | lr 2.09e-04 | 2.42 it/s, fresh 52%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:19:44 [A] step  17600 21.2% | L1 0.0260 1-SSIM 0.1079 | lr 2.08e-04 | 2.53 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:21:04 [A] step  17800 21.4% | L1 0.0279 1-SSIM 0.1136 | lr 2.06e-04 | 2.48 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:22:35 [A] step  18000 21.7% | L1 0.0279 1-SSIM 0.1133 | lr 2.04e-04 | 2.20 it/s, fresh 52%, read 18 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:23:11 [val] step 18041: L1 0.0270 PSNR 29.29 SSIM 0.892 aligned 32.87 sharp 0.59 score 0.0382 * best before-GAN
+15:24:50 [A] step  18200 22.0% | L1 0.0265 1-SSIM 0.1080 | lr 2.01e-04 | 1.48 it/s, fresh 53%, read 13 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:26:31 [A] step  18400 22.3% | L1 0.0261 1-SSIM 0.1115 | lr 1.99e-04 | 1.98 it/s, fresh 50%, read 16 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:28:03 [A] step  18600 22.5% | L1 0.0290 1-SSIM 0.1190 | lr 1.98e-04 | 2.17 it/s, fresh 51%, read 18 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:29:28 [A] step  18800 22.7% | L1 0.0262 1-SSIM 0.1118 | lr 1.96e-04 | 2.37 it/s, fresh 52%, read 20 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:30:55 [A] step  19000 22.9% | L1 0.0257 1-SSIM 0.1107 | lr 1.94e-04 | 2.29 it/s, fresh 51%, read 19 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:32:26 [A] step  19200 23.2% | L1 0.0264 1-SSIM 0.1117 | lr 1.92e-04 | 2.21 it/s, fresh 51%, read 18 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:33:54 [A] step  19400 23.4% | L1 0.0273 1-SSIM 0.1143 | lr 1.91e-04 | 2.27 it/s, fresh 54%, read 19 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:35:18 [A] step  19600 23.6% | L1 0.0272 1-SSIM 0.1183 | lr 1.89e-04 | 2.39 it/s, fresh 52%, read 20 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:36:49 [A] step  19800 23.9% | L1 0.0284 1-SSIM 0.1161 | lr 1.87e-04 | 2.19 it/s, fresh 50%, read 17 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:38:32 [A] step  20000 24.1% | L1 0.0292 1-SSIM 0.1177 | lr 1.85e-04 | 1.95 it/s, fresh 50%, read 16 patch/s, epoch 1 | 10.4 GB | scale 1048576
+15:40:18 [A] step  20200 24.4% | L1 0.0271 1-SSIM 0.1132 | lr 1.83e-04 | 1.88 it/s, fresh 52%, read 16 patch/s, epoch 1 | 10.4 GB | scale 1048576
+15:41:48 [A] step  20400 24.6% | L1 0.0284 1-SSIM 0.1149 | lr 1.81e-04 | 2.24 it/s, fresh 50%, read 18 patch/s, epoch 1 | 10.4 GB | scale 1048576
+15:43:13 [A] step  20600 24.8% | L1 0.0269 1-SSIM 0.1142 | lr 1.79e-04 | 2.36 it/s, fresh 50%, read 19 patch/s, epoch 1 | 10.4 GB | scale 1048576
+15:43:23 [val] step 20601: L1 0.0270 PSNR 29.30 SSIM 0.892 aligned 32.90 sharp 0.60 score 0.0378 * best before-GAN
+15:44:41 [A] step  20800 25.1% | L1 0.0254 1-SSIM 0.1073 | lr 1.77e-04 | 2.25 it/s, fresh 56%, read 20 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:45:59 [A] step  21000 25.3% | L1 0.0259 1-SSIM 0.1113 | lr 1.76e-04 | 2.58 it/s, fresh 50%, read 21 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:47:18 [A] step  21200 25.5% | L1 0.0280 1-SSIM 0.1132 | lr 1.74e-04 | 2.51 it/s, fresh 51%, read 21 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:48:36 [A] step  21400 25.7% | L1 0.0255 1-SSIM 0.1116 | lr 1.72e-04 | 2.57 it/s, fresh 48%, read 20 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:50:00 [A] step  21600 25.9% | L1 0.0264 1-SSIM 0.1154 | lr 1.71e-04 | 2.40 it/s, fresh 50%, read 19 patch/s, epoch 1 | 10.4 GB | scale 524288
+15:51:56 [A] step  21800 26.2% | L1 0.0289 1-SSIM 0.1138 | lr 1.68e-04 | 1.72 it/s, fresh 50%, read 14 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:53:30 [A] step  22000 26.4% | L1 0.0265 1-SSIM 0.1118 | lr 1.66e-04 | 2.12 it/s, fresh 50%, read 17 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:55:01 [A] step  22200 26.6% | L1 0.0286 1-SSIM 0.1119 | lr 1.64e-04 | 2.20 it/s, fresh 50%, read 18 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:56:37 [A] step  22400 26.9% | L1 0.0281 1-SSIM 0.1106 | lr 1.62e-04 | 2.09 it/s, fresh 49%, read 16 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:58:00 [A] step  22600 27.1% | L1 0.0280 1-SSIM 0.1126 | lr 1.61e-04 | 2.40 it/s, fresh 50%, read 19 patch/s, epoch 1 | 10.4 GB | scale 262144
+15:59:21 [A] step  22800 27.3% | L1 0.0267 1-SSIM 0.1087 | lr 1.59e-04 | 2.49 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+16:00:45 [A] step  23000 27.5% | L1 0.0268 1-SSIM 0.1117 | lr 1.57e-04 | 2.37 it/s, fresh 52%, read 20 patch/s, epoch 1 | 10.4 GB | scale 262144
+16:02:10 [A] step  23200 27.7% | L1 0.0248 1-SSIM 0.1076 | lr 1.55e-04 | 2.37 it/s, fresh 50%, read 19 patch/s, epoch 1 | 10.4 GB | scale 262144
+16:03:38 [val] step 23391: L1 0.0275 PSNR 29.19 SSIM 0.892 aligned 32.87 sharp 0.61 score 0.0383
+16:03:41 [A] step  23400 28.0% | L1 0.0266 1-SSIM 0.1114 | lr 1.54e-04 | 2.19 it/s, fresh 54%, read 19 patch/s, epoch 1 | 10.4 GB | scale 262144
+16:05:11 [A] step  23600 28.2% | L1 0.0275 1-SSIM 0.1111 | lr 1.52e-04 | 2.23 it/s, fresh 54%, read 19 patch/s, epoch 1 | 10.4 GB | scale 262144
+16:06:46 [A] step  23800 28.5% | L1 0.0266 1-SSIM 0.1122 | lr 1.50e-04 | 2.10 it/s, fresh 50%, read 17 patch/s, epoch 1 | 10.4 GB | scale 131072
+16:08:10 [A] step  24000 28.7% | L1 0.0280 1-SSIM 0.1136 | lr 1.48e-04 | 2.40 it/s, fresh 53%, read 20 patch/s, epoch 1 | 10.4 GB | scale 131072
+16:09:29 [A] step  24200 28.9% | L1 0.0288 1-SSIM 0.1149 | lr 1.46e-04 | 2.52 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 131072
+16:10:50 [A] step  24400 29.1% | L1 0.0271 1-SSIM 0.1133 | lr 1.45e-04 | 2.46 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 131072
+16:12:11 [A] step  24600 29.3% | L1 0.0307 1-SSIM 0.1192 | lr 1.43e-04 | 2.48 it/s, fresh 52%, read 21 patch/s, epoch 1 | 10.4 GB | scale 131072
+16:13:49 [A] step  24800 29.5% | L1 0.0285 1-SSIM 0.1116 | lr 1.41e-04 | 2.05 it/s, fresh 50%, read 16 patch/s, epoch 1 | 10.4 GB | scale 131072
+16:15:23 [A] step  25000 29.8% | L1 0.0273 1-SSIM 0.1147 | lr 1.39e-04 | 2.13 it/s, fresh 50%, read 17 patch/s, epoch 1 | 10.4 GB | scale 131072
+16:16:47 [A] step  25200 30.0% | L1 0.0288 1-SSIM 0.1131 | lr 1.37e-04 | 2.36 it/s, fresh 50%, read 19 patch/s, epoch 1 | 10.4 GB | scale 131072
+16:18:06 [A] step  25400 30.2% | L1 0.0248 1-SSIM 0.1083 | lr 1.36e-04 | 2.54 it/s, fresh 50%, read 20 patch/s, epoch 1 | 10.4 GB | scale 131072
+16:19:44 [A] step  25600 30.5% | L1 0.0278 1-SSIM 0.1125 | lr 1.34e-04 | 2.06 it/s, fresh 49%, read 16 patch/s, epoch 2 | 10.4 GB | scale 131072
+16:21:02 [A] step  25800 30.7% | L1 0.0256 1-SSIM 0.1071 | lr 1.32e-04 | 2.56 it/s, fresh 49%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:22:20 [A] step  26000 30.9% | L1 0.0283 1-SSIM 0.1132 | lr 1.30e-04 | 2.57 it/s, fresh 50%, read 21 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:23:37 [A] step  26200 31.0% | L1 0.0264 1-SSIM 0.1091 | lr 1.29e-04 | 2.58 it/s, fresh 50%, read 21 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:23:52 [val] step 26211: L1 0.0273 PSNR 29.24 SSIM 0.892 aligned 32.91 sharp 0.61 score 0.0381
+16:25:08 [A] step  26400 31.3% | L1 0.0254 1-SSIM 0.1086 | lr 1.27e-04 | 2.21 it/s, fresh 56%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:26:28 [A] step  26600 31.5% | L1 0.0259 1-SSIM 0.1094 | lr 1.25e-04 | 2.49 it/s, fresh 51%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:28:03 [A] step  26800 31.7% | L1 0.0260 1-SSIM 0.1090 | lr 1.23e-04 | 2.11 it/s, fresh 48%, read 16 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:29:20 [A] step  27000 31.9% | L1 0.0266 1-SSIM 0.1111 | lr 1.22e-04 | 2.59 it/s, fresh 50%, read 21 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:30:40 [A] step  27200 32.1% | L1 0.0264 1-SSIM 0.1116 | lr 1.20e-04 | 2.53 it/s, fresh 50%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:31:58 [A] step  27400 32.3% | L1 0.0255 1-SSIM 0.1083 | lr 1.19e-04 | 2.57 it/s, fresh 50%, read 21 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:33:18 [A] step  27600 32.5% | L1 0.0259 1-SSIM 0.1092 | lr 1.17e-04 | 2.49 it/s, fresh 48%, read 19 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:34:55 [A] step  27800 32.8% | L1 0.0253 1-SSIM 0.1081 | lr 1.15e-04 | 2.07 it/s, fresh 42%, read 14 patch/s, epoch 2 | 10.4 GB | scale 524288
+16:36:22 [A] step  28000 33.0% | L1 0.0262 1-SSIM 0.1107 | lr 1.13e-04 | 2.29 it/s, fresh 51%, read 19 patch/s, epoch 2 | 10.4 GB | scale 524288
+16:37:41 [A] step  28200 33.2% | L1 0.0278 1-SSIM 0.1139 | lr 1.12e-04 | 2.54 it/s, fresh 49%, read 20 patch/s, epoch 2 | 10.4 GB | scale 524288
+16:39:23 [A] step  28400 33.5% | L1 0.0261 1-SSIM 0.1103 | lr 1.10e-04 | 1.97 it/s, fresh 50%, read 16 patch/s, epoch 2 | 10.4 GB | scale 524288
+16:41:02 [A] step  28600 33.7% | L1 0.0280 1-SSIM 0.1080 | lr 1.08e-04 | 2.02 it/s, fresh 50%, read 16 patch/s, epoch 2 | 10.4 GB | scale 524288
+16:42:26 [A] step  28800 33.9% | L1 0.0285 1-SSIM 0.1111 | lr 1.06e-04 | 2.38 it/s, fresh 52%, read 20 patch/s, epoch 2 | 10.4 GB | scale 524288
+16:43:46 [A] step  29000 34.1% | L1 0.0254 1-SSIM 0.1078 | lr 1.05e-04 | 2.49 it/s, fresh 52%, read 21 patch/s, epoch 2 | 10.4 GB | scale 524288
+16:44:05 [val] step 29021: L1 0.0268 PSNR 29.37 SSIM 0.893 aligned 32.92 sharp 0.62 score 0.0370 * best before-GAN
+16:45:15 [A] step  29200 34.4% | L1 0.0252 1-SSIM 0.1094 | lr 1.03e-04 | 2.26 it/s, fresh 58%, read 21 patch/s, epoch 2 | 10.4 GB | scale 524288
+16:46:31 [A] step  29400 34.6% | L1 0.0281 1-SSIM 0.1135 | lr 1.01e-04 | 2.63 it/s, fresh 50%, read 21 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:48:08 [A] step  29600 34.8% | L1 0.0266 1-SSIM 0.1129 | lr 9.96e-05 | 2.06 it/s, fresh 52%, read 17 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:49:31 [A] step  29800 35.0% | L1 0.0289 1-SSIM 0.1124 | lr 9.81e-05 | 2.42 it/s, fresh 52%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:50:49 [A] step  30000 35.2% | L1 0.0272 1-SSIM 0.1101 | lr 9.66e-05 | 2.54 it/s, fresh 50%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:52:21 [A] step  30200 35.5% | L1 0.0247 1-SSIM 0.1081 | lr 9.48e-05 | 2.17 it/s, fresh 52%, read 18 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:53:58 [A] step  30400 35.7% | L1 0.0267 1-SSIM 0.1112 | lr 9.30e-05 | 2.08 it/s, fresh 50%, read 17 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:55:30 [A] step  30600 36.0% | L1 0.0240 1-SSIM 0.1116 | lr 9.13e-05 | 2.17 it/s, fresh 50%, read 17 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:56:52 [A] step  30800 36.2% | L1 0.0277 1-SSIM 0.1120 | lr 8.98e-05 | 2.43 it/s, fresh 50%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:58:08 [A] step  31000 36.4% | L1 0.0314 1-SSIM 0.1176 | lr 8.84e-05 | 2.64 it/s, fresh 50%, read 21 patch/s, epoch 2 | 10.4 GB | scale 262144
+16:59:29 [A] step  31200 36.6% | L1 0.0279 1-SSIM 0.1097 | lr 8.70e-05 | 2.47 it/s, fresh 54%, read 21 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:01:05 [A] step  31400 36.8% | L1 0.0262 1-SSIM 0.1090 | lr 8.52e-05 | 2.09 it/s, fresh 51%, read 17 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:02:44 [A] step  31600 37.1% | L1 0.0276 1-SSIM 0.1116 | lr 8.34e-05 | 2.01 it/s, fresh 49%, read 16 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:04:19 [val] step 31791: L1 0.0264 PSNR 29.48 SSIM 0.894 aligned 32.93 sharp 0.63 score 0.0362 * best before-GAN
+17:04:22 [A] step  31800 37.3% | L1 0.0277 1-SSIM 0.1141 | lr 8.17e-05 | 2.05 it/s, fresh 50%, read 17 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:05:58 [A] step  32000 37.6% | L1 0.0267 1-SSIM 0.1128 | lr 8.00e-05 | 2.08 it/s, fresh 55%, read 18 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:07:33 [A] step  32200 37.8% | L1 0.0245 1-SSIM 0.1077 | lr 7.84e-05 | 2.10 it/s, fresh 51%, read 17 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:09:02 [A] step  32400 38.0% | L1 0.0271 1-SSIM 0.1113 | lr 7.68e-05 | 2.26 it/s, fresh 52%, read 19 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:10:20 [A] step  32600 38.2% | L1 0.0259 1-SSIM 0.1097 | lr 7.55e-05 | 2.56 it/s, fresh 50%, read 21 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:11:37 [A] step  32800 38.4% | L1 0.0256 1-SSIM 0.1075 | lr 7.42e-05 | 2.60 it/s, fresh 50%, read 21 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:12:53 [A] step  33000 38.6% | L1 0.0251 1-SSIM 0.1087 | lr 7.29e-05 | 2.65 it/s, fresh 50%, read 21 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:14:12 [A] step  33200 38.8% | L1 0.0273 1-SSIM 0.1115 | lr 7.16e-05 | 2.52 it/s, fresh 51%, read 21 patch/s, epoch 2 | 10.4 GB | scale 131072
+17:15:38 [A] step  33400 39.1% | L1 0.0256 1-SSIM 0.1061 | lr 7.02e-05 | 2.32 it/s, fresh 49%, read 18 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:17:01 [A] step  33600 39.3% | L1 0.0245 1-SSIM 0.1056 | lr 6.88e-05 | 2.40 it/s, fresh 52%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:18:26 [A] step  33800 39.5% | L1 0.0267 1-SSIM 0.1098 | lr 6.74e-05 | 2.36 it/s, fresh 50%, read 19 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:20:00 [A] step  34000 39.7% | L1 0.0248 1-SSIM 0.1060 | lr 6.59e-05 | 2.13 it/s, fresh 50%, read 17 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:21:23 [A] step  34200 39.9% | L1 0.0280 1-SSIM 0.1104 | lr 6.46e-05 | 2.42 it/s, fresh 50%, read 19 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:22:36 [A] step  34400 40.1% | L1 0.0259 1-SSIM 0.1084 | lr 6.34e-05 | 2.72 it/s, fresh 48%, read 21 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:24:01 [A] step  34600 40.3% | L1 0.0255 1-SSIM 0.1090 | lr 6.21e-05 | 2.35 it/s, fresh 48%, read 18 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:24:31 [val] step 34651: L1 0.0270 PSNR 29.32 SSIM 0.892 aligned 32.92 sharp 0.63 score 0.0370
+17:25:33 [A] step  34800 40.6% | L1 0.0247 1-SSIM 0.1079 | lr 6.07e-05 | 2.18 it/s, fresh 54%, read 19 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:26:55 [A] step  35000 40.8% | L1 0.0246 1-SSIM 0.1049 | lr 5.94e-05 | 2.44 it/s, fresh 50%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:28:19 [A] step  35200 41.0% | L1 0.0250 1-SSIM 0.1059 | lr 5.82e-05 | 2.37 it/s, fresh 50%, read 19 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:29:47 [A] step  35400 41.2% | L1 0.0279 1-SSIM 0.1096 | lr 5.69e-05 | 2.29 it/s, fresh 52%, read 19 patch/s, epoch 2 | 10.4 GB | scale 524288
+17:31:05 [A] step  35600 41.4% | L1 0.0272 1-SSIM 0.1144 | lr 5.57e-05 | 2.54 it/s, fresh 50%, read 20 patch/s, epoch 2 | 10.4 GB | scale 524288
+17:32:39 [A] step  35800 41.7% | L1 0.0273 1-SSIM 0.1114 | lr 5.44e-05 | 2.14 it/s, fresh 52%, read 18 patch/s, epoch 2 | 10.4 GB | scale 524288
+17:34:15 [A] step  36000 41.9% | L1 0.0243 1-SSIM 0.1066 | lr 5.30e-05 | 2.08 it/s, fresh 50%, read 17 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:35:41 [A] step  36200 42.1% | L1 0.0267 1-SSIM 0.1117 | lr 5.18e-05 | 2.33 it/s, fresh 51%, read 19 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:37:10 [A] step  36400 42.4% | L1 0.0264 1-SSIM 0.1093 | lr 5.05e-05 | 2.24 it/s, fresh 52%, read 18 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:38:49 [A] step  36600 42.6% | L1 0.0247 1-SSIM 0.1068 | lr 4.92e-05 | 2.03 it/s, fresh 50%, read 16 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:40:14 [A] step  36800 42.8% | L1 0.0260 1-SSIM 0.1055 | lr 4.80e-05 | 2.36 it/s, fresh 52%, read 19 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:41:33 [A] step  37000 43.0% | L1 0.0262 1-SSIM 0.1056 | lr 4.70e-05 | 2.54 it/s, fresh 50%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:42:51 [A] step  37200 43.2% | L1 0.0251 1-SSIM 0.1053 | lr 4.60e-05 | 2.56 it/s, fresh 50%, read 20 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:44:25 [A] step  37400 43.5% | L1 0.0253 1-SSIM 0.1096 | lr 4.48e-05 | 2.11 it/s, fresh 50%, read 17 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:44:45 [val] step 37421: L1 0.0269 PSNR 29.30 SSIM 0.892 aligned 32.88 sharp 0.63 score 0.0369
+17:46:01 [A] step  37600 43.7% | L1 0.0243 1-SSIM 0.1061 | lr 4.35e-05 | 2.09 it/s, fresh 56%, read 19 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:47:26 [A] step  37800 43.9% | L1 0.0263 1-SSIM 0.1082 | lr 4.25e-05 | 2.34 it/s, fresh 50%, read 19 patch/s, epoch 2 | 10.4 GB | scale 262144
+17:48:54 [A] step  38000 44.2% | L1 0.0274 1-SSIM 0.1096 | lr 4.14e-05 | 2.27 it/s, fresh 50%, read 18 patch/s, epoch 2 | 10.4 GB | scale 524288
+17:50:15 [A] step  38200 44.4% | L1 0.0260 1-SSIM 0.1103 | lr 4.04e-05 | 2.47 it/s, fresh 51%, read 20 patch/s, epoch 3 | 10.4 GB | scale 524288
+17:51:33 [A] step  38400 44.6% | L1 0.0269 1-SSIM 0.1125 | lr 3.95e-05 | 2.58 it/s, fresh 51%, read 21 patch/s, epoch 3 | 10.4 GB | scale 262144
+17:53:09 [A] step  38600 44.8% | L1 0.0261 1-SSIM 0.1095 | lr 3.84e-05 | 2.09 it/s, fresh 50%, read 17 patch/s, epoch 3 | 10.4 GB | scale 262144
+17:54:34 [A] step  38800 45.0% | L1 0.0264 1-SSIM 0.1111 | lr 3.74e-05 | 2.34 it/s, fresh 44%, read 17 patch/s, epoch 3 | 10.4 GB | scale 262144
+17:55:56 [A] step  39000 45.2% | L1 0.0284 1-SSIM 0.1157 | lr 3.65e-05 | 2.45 it/s, fresh 50%, read 19 patch/s, epoch 3 | 10.4 GB | scale 262144
+17:57:15 [A] step  39200 45.5% | L1 0.0263 1-SSIM 0.1058 | lr 3.57e-05 | 2.51 it/s, fresh 52%, read 21 patch/s, epoch 3 | 10.4 GB | scale 262144
+17:58:46 [A] step  39400 45.7% | L1 0.0267 1-SSIM 0.1097 | lr 3.47e-05 | 2.20 it/s, fresh 52%, read 18 patch/s, epoch 3 | 10.4 GB | scale 262144
+18:00:10 [A] step  39600 45.9% | L1 0.0259 1-SSIM 0.1107 | lr 3.38e-05 | 2.41 it/s, fresh 50%, read 19 patch/s, epoch 3 | 10.4 GB | scale 262144
+18:01:28 [A] step  39800 46.1% | L1 0.0254 1-SSIM 0.1057 | lr 3.30e-05 | 2.55 it/s, fresh 50%, read 21 patch/s, epoch 3 | 10.4 GB | scale 262144
+18:02:49 [A] step  40000 46.3% | L1 0.0240 1-SSIM 0.1048 | lr 3.22e-05 | 2.46 it/s, fresh 50%, read 20 patch/s, epoch 3 | 10.4 GB | scale 262144
+18:04:19 [A] step  40200 46.5% | L1 0.0249 1-SSIM 0.1070 | lr 3.13e-05 | 2.23 it/s, fresh 52%, read 19 patch/s, epoch 3 | 10.4 GB | scale 262144
+18:04:56 [val] step 40271: L1 0.0267 PSNR 29.38 SSIM 0.893 aligned 32.91 sharp 0.64 score 0.0365
+18:05:48 [A] step  40400 46.8% | L1 0.0251 1-SSIM 0.1044 | lr 3.05e-05 | 2.25 it/s, fresh 55%, read 20 patch/s, epoch 3 | 10.4 GB | scale 524288
+18:07:11 [A] step  40600 47.0% | L1 0.0249 1-SSIM 0.1059 | lr 2.97e-05 | 2.42 it/s, fresh 50%, read 19 patch/s, epoch 3 | 10.4 GB | scale 524288
+18:08:31 [A] step  40800 47.2% | L1 0.0261 1-SSIM 0.1071 | lr 2.90e-05 | 2.48 it/s, fresh 52%, read 20 patch/s, epoch 3 | 10.4 GB | scale 524288
+18:09:51 [A] step  41000 47.4% | L1 0.0239 1-SSIM 0.1067 | lr 2.83e-05 | 2.50 it/s, fresh 50%, read 20 patch/s, epoch 3 | 10.4 GB | scale 524288
+18:11:12 [A] step  41200 47.6% | L1 0.0244 1-SSIM 0.1036 | lr 2.75e-05 | 2.48 it/s, fresh 52%, read 20 patch/s, epoch 3 | 10.4 GB | scale 524288
+18:12:30 [A] step  41400 47.8% | L1 0.0266 1-SSIM 0.1076 | lr 2.69e-05 | 2.56 it/s, fresh 52%, read 21 patch/s, epoch 3 | 10.4 GB | scale 524288
+18:13:51 [A] step  41600 48.0% | L1 0.0237 1-SSIM 0.1044 | lr 2.62e-05 | 2.48 it/s, fresh 50%, read 20 patch/s, epoch 3 | 10.4 GB | scale 262144
+18:15:52 [A] step  41800 48.3% | L1 0.0251 1-SSIM 0.1091 | lr 2.53e-05 | 1.66 it/s, fresh 50%, read 13 patch/s, epoch 3 | 10.4 GB | scale 262144
+18:17:41 [A] step  42000 48.6% | L1 0.0258 1-SSIM 0.1078 | lr 2.44e-05 | 1.83 it/s, fresh 52%, read 15 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:19:10 [A] step  42200 48.8% | L1 0.0271 1-SSIM 0.1112 | lr 2.38e-05 | 2.24 it/s, fresh 52%, read 19 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:20:34 [A] step  42400 49.0% | L1 0.0251 1-SSIM 0.1080 | lr 2.32e-05 | 2.40 it/s, fresh 52%, read 20 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:21:53 [A] step  42600 49.2% | L1 0.0235 1-SSIM 0.1046 | lr 2.26e-05 | 2.52 it/s, fresh 50%, read 20 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:23:10 [A] step  42800 49.4% | L1 0.0237 1-SSIM 0.1076 | lr 2.21e-05 | 2.62 it/s, fresh 51%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:24:26 [A] step  43000 49.6% | L1 0.0264 1-SSIM 0.1118 | lr 2.16e-05 | 2.60 it/s, fresh 50%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:25:09 [val] step 43081: L1 0.0272 PSNR 29.27 SSIM 0.892 aligned 32.88 sharp 0.64 score 0.0370
+18:25:53 [A] step  43200 49.9% | L1 0.0256 1-SSIM 0.1097 | lr 2.11e-05 | 2.31 it/s, fresh 56%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:27:09 [A] step  43400 50.1% | L1 0.0249 1-SSIM 0.1087 | lr 2.07e-05 | 2.64 it/s, fresh 49%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:28:36 [A] step  43600 50.3% | L1 0.0234 1-SSIM 0.1036 | lr 2.02e-05 | 2.30 it/s, fresh 47%, read 17 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:30:04 [A] step  43800 50.5% | L1 0.0260 1-SSIM 0.1076 | lr 1.97e-05 | 2.26 it/s, fresh 50%, read 18 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:31:31 [A] step  44000 50.7% | L1 0.0241 1-SSIM 0.1054 | lr 1.92e-05 | 2.31 it/s, fresh 46%, read 17 patch/s, epoch 3 | 10.4 GB | scale 262144
+18:32:50 [A] step  44200 50.9% | L1 0.0250 1-SSIM 0.1066 | lr 1.88e-05 | 2.54 it/s, fresh 52%, read 21 patch/s, epoch 3 | 10.4 GB | scale 262144
+18:34:07 [A] step  44400 51.1% | L1 0.0244 1-SSIM 0.1038 | lr 1.85e-05 | 2.60 it/s, fresh 50%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:35:24 [A] step  44600 51.3% | L1 0.0242 1-SSIM 0.1076 | lr 1.81e-05 | 2.59 it/s, fresh 51%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:36:41 [A] step  44800 51.5% | L1 0.0251 1-SSIM 0.1068 | lr 1.78e-05 | 2.60 it/s, fresh 51%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:37:58 [A] step  45000 51.7% | L1 0.0239 1-SSIM 0.1039 | lr 1.75e-05 | 2.60 it/s, fresh 50%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:39:14 [A] step  45200 51.9% | L1 0.0235 1-SSIM 0.1031 | lr 1.72e-05 | 2.64 it/s, fresh 52%, read 22 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:40:32 [A] step  45400 52.1% | L1 0.0241 1-SSIM 0.1031 | lr 1.69e-05 | 2.56 it/s, fresh 50%, read 20 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:42:38 [A] step  45600 52.4% | L1 0.0252 1-SSIM 0.1066 | lr 1.65e-05 | 1.59 it/s, fresh 50%, read 13 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:44:13 [A] step  45800 52.7% | L1 0.0280 1-SSIM 0.1113 | lr 1.63e-05 | 2.11 it/s, fresh 50%, read 17 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:45:21 [val] step 45941: L1 0.0268 PSNR 29.36 SSIM 0.892 aligned 32.86 sharp 0.63 score 0.0366
+18:45:46 [A] step  46000 52.9% | L1 0.0256 1-SSIM 0.1076 | lr 1.60e-05 | 2.16 it/s, fresh 57%, read 20 patch/s, epoch 3 | 10.4 GB | scale 131072
+18:47:12 [A] step  46200 53.1% | L1 0.0240 1-SSIM 0.1036 | lr 1.58e-05 | 2.33 it/s, fresh 44%, read 16 patch/s, epoch 3 | 10.4 GB | scale 65536
+18:48:34 [A] step  46400 53.3% | L1 0.0241 1-SSIM 0.1061 | lr 1.56e-05 | 2.44 it/s, fresh 50%, read 20 patch/s, epoch 3 | 10.4 GB | scale 65536
+18:49:58 [A] step  46600 53.6% | L1 0.0244 1-SSIM 0.1062 | lr 1.55e-05 | 2.37 it/s, fresh 48%, read 18 patch/s, epoch 3 | 10.4 GB | scale 65536
+18:51:19 [A] step  46800 53.8% | L1 0.0245 1-SSIM 0.1061 | lr 1.54e-05 | 2.47 it/s, fresh 52%, read 20 patch/s, epoch 3 | 10.4 GB | scale 65536
+18:52:34 [A] step  47000 54.0% | L1 0.0242 1-SSIM 0.1056 | lr 1.53e-05 | 2.66 it/s, fresh 50%, read 21 patch/s, epoch 3 | 10.4 GB | scale 65536
+18:53:53 [A] step  47200 54.2% | L1 0.0226 1-SSIM 0.1007 | lr 1.52e-05 | 2.53 it/s, fresh 50%, read 20 patch/s, epoch 3 | 10.4 GB | scale 65536
+18:55:37 [A] step  47400 54.4% | L1 0.0274 1-SSIM 0.1090 | lr 1.51e-05 | 1.92 it/s, fresh 49%, read 15 patch/s, epoch 3 | 10.4 GB | scale 65536
+18:57:07 [A] step  47600 54.7% | L1 0.0260 1-SSIM 0.1048 | lr 1.50e-05 | 2.22 it/s, fresh 51%, read 18 patch/s, epoch 3 | 10.4 GB | scale 65536
+18:58:27 [A] step  47800 54.9% | L1 0.0267 1-SSIM 0.1068 | lr 1.50e-05 | 2.51 it/s, fresh 50%, read 20 patch/s, epoch 3 | 10.4 GB | scale 65536
+18:59:21 [train] ===== part B: the discriminator joins at step 47940 =====
+18:59:31 [val] end of part A: L1 0.0267 PSNR 29.37 sharp 0.64
+18:59:56 [B] step  48000 55.1% | L1 0.0270 1-SSIM 0.1096 | D 0.281 (real 0.45 fake 0.44) adv nan lambda 0 | lr 5.00e-05 | 2.24 it/s, fresh 56%, read 20 patch/s, epoch 3 | 10.4 GB | scale 65536
+19:01:17 [B] step  48200 55.3% | L1 0.0266 1-SSIM 0.1109 | D 0.250 (real 0.50 fake 0.49) adv nan lambda 0 | lr 5.00e-05 | 2.48 it/s, fresh 54%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+19:02:52 [B] step  48400 55.5% | L1 0.0248 1-SSIM 0.1054 | D 0.247 (real 0.50 fake 0.48) adv 0.139 lambda 0.0105 | lr 5.00e-05 | 2.10 it/s, fresh 52%, read 17 patch/s, epoch 3 | 10.4 GB | scale 131072
+19:04:17 [B] step  48600 55.8% | L1 0.0245 1-SSIM 0.1089 | D 0.237 (real 0.53 fake 0.47) adv 0.145 lambda 0.0216 | lr 5.00e-05 | 2.35 it/s, fresh 56%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+19:05:43 [B] step  48800 56.0% | L1 0.0245 1-SSIM 0.1046 | D 0.235 (real 0.53 fake 0.46) adv 0.151 lambda 0.027 | lr 4.99e-05 | 2.33 it/s, fresh 57%, read 21 patch/s, epoch 3 | 10.4 GB | scale 131072
+19:07:30 [B] step  49000 56.3% | L1 0.0266 1-SSIM 0.1115 | D 0.241 (real 0.52 fake 0.48) adv 0.138 lambda 0.0616 | lr 4.99e-05 | 1.88 it/s, fresh 51%, read 15 patch/s, epoch 3 | 10.4 GB | scale 131072
+19:09:08 [B] step  49200 56.5% | L1 0.0264 1-SSIM 0.1114 | D 0.234 (real 0.53 fake 0.47) adv 0.146 lambda 0.0486 | lr 4.99e-05 | 2.03 it/s, fresh 54%, read 18 patch/s, epoch 3 | 10.4 GB | scale 131072
+19:10:35 [B] step  49400 56.7% | L1 0.0251 1-SSIM 0.1082 | D 0.235 (real 0.53 fake 0.46) adv 0.150 lambda 0.0464 | lr 4.98e-05 | 2.30 it/s, fresh 52%, read 19 patch/s, epoch 3 | 10.4 GB | scale 65536
+19:12:03 [B] step  49600 57.0% | L1 0.0263 1-SSIM 0.1071 | D 0.233 (real 0.54 fake 0.45) adv 0.157 lambda 0.0388 | lr 4.98e-05 | 2.27 it/s, fresh 56%, read 20 patch/s, epoch 3 | 10.4 GB | scale 65536
+19:13:36 [B] step  49800 57.2% | L1 0.0260 1-SSIM 0.1098 | D 0.227 (real 0.54 fake 0.46) adv 0.154 lambda 0.0405 | lr 4.97e-05 | 2.17 it/s, fresh 51%, read 18 patch/s, epoch 3 | 10.4 GB | scale 65536
+19:15:24 [B] step  50000 57.5% | L1 0.0264 1-SSIM 0.1145 | D 0.217 (real 0.57 fake 0.44) adv 0.164 lambda 0.0287 | lr 4.96e-05 | 1.85 it/s, fresh 51%, read 15 patch/s, epoch 3 | 10.4 GB | scale 65536
+19:17:20 [B] step  50200 57.8% | L1 0.0289 1-SSIM 0.1159 | D 0.212 (real 0.57 fake 0.42) adv 0.175 lambda 0.0221 | lr 4.95e-05 | 1.73 it/s, fresh 50%, read 14 patch/s, epoch 3 | 10.4 GB | scale 65536
+19:18:45 [B] step  50400 58.0% | L1 0.0279 1-SSIM 0.1136 | D 0.203 (real 0.59 fake 0.40) adv 0.188 lambda 0.0192 | lr 4.95e-05 | 2.34 it/s, fresh 54%, read 20 patch/s, epoch 3 | 10.4 GB | scale 65536
+19:19:44 [val] step 50501: L1 0.0272 PSNR 29.23 SSIM 0.892 aligned 32.81 sharp 0.66 score 0.0364 * best final
+19:20:26 [B] step  50600 58.2% | L1 0.0242 1-SSIM 0.1072 | D 0.197 (real 0.60 fake 0.40) adv 0.194 lambda 0.017 | lr 4.94e-05 | 1.98 it/s, fresh 60%, read 19 patch/s, epoch 3 | 10.4 GB | scale 65536
+19:21:58 [B] step  50800 58.5% | L1 0.0254 1-SSIM 0.1089 | D 0.198 (real 0.60 fake 0.39) adv 0.197 lambda 0.018 | lr 4.93e-05 | 2.18 it/s, fresh 56%, read 19 patch/s, epoch 4 | 10.4 GB | scale 65536
+19:23:56 [B] step  51000 58.8% | L1 0.0262 1-SSIM 0.1110 | D 0.191 (real 0.61 fake 0.38) adv 0.204 lambda 0.0153 | lr 4.91e-05 | 1.70 it/s, fresh 52%, read 14 patch/s, epoch 4 | 10.4 GB | scale 65536
+19:25:39 [B] step  51200 59.0% | L1 0.0246 1-SSIM 0.1087 | D 0.196 (real 0.60 fake 0.39) adv 0.199 lambda 0.0153 | lr 4.90e-05 | 1.95 it/s, fresh 52%, read 16 patch/s, epoch 4 | 10.4 GB | scale 65536
+19:27:06 [B] step  51400 59.3% | L1 0.0246 1-SSIM 0.1064 | D 0.189 (real 0.61 fake 0.38) adv 0.209 lambda 0.0144 | lr 4.89e-05 | 2.28 it/s, fresh 55%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:28:32 [B] step  51600 59.5% | L1 0.0250 1-SSIM 0.1092 | D 0.184 (real 0.62 fake 0.37) adv 0.216 lambda 0.0124 | lr 4.88e-05 | 2.33 it/s, fresh 55%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:29:58 [B] step  51800 59.7% | L1 0.0256 1-SSIM 0.1095 | D 0.177 (real 0.64 fake 0.36) adv 0.222 lambda 0.0121 | lr 4.87e-05 | 2.34 it/s, fresh 57%, read 22 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:31:24 [B] step  52000 59.9% | L1 0.0250 1-SSIM 0.1119 | D 0.179 (real 0.64 fake 0.37) adv 0.218 lambda 0.0123 | lr 4.85e-05 | 2.33 it/s, fresh 57%, read 21 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:33:04 [B] step  52200 60.2% | L1 0.0238 1-SSIM 0.1058 | D 0.181 (real 0.63 fake 0.36) adv 0.221 lambda 0.0124 | lr 4.84e-05 | 1.99 it/s, fresh 52%, read 17 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:34:43 [B] step  52400 60.4% | L1 0.0264 1-SSIM 0.1108 | D 0.176 (real 0.64 fake 0.36) adv 0.226 lambda 0.0127 | lr 4.82e-05 | 2.02 it/s, fresh 50%, read 16 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:36:15 [B] step  52600 60.7% | L1 0.0252 1-SSIM 0.1116 | D 0.169 (real 0.65 fake 0.34) adv 0.234 lambda 0.0115 | lr 4.81e-05 | 2.19 it/s, fresh 53%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:37:40 [B] step  52800 60.9% | L1 0.0267 1-SSIM 0.1117 | D 0.165 (real 0.66 fake 0.34) adv 0.241 lambda 0.012 | lr 4.79e-05 | 2.34 it/s, fresh 54%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:39:05 [B] step  53000 61.1% | L1 0.0276 1-SSIM 0.1109 | D 0.164 (real 0.66 fake 0.33) adv 0.244 lambda 0.0117 | lr 4.78e-05 | 2.36 it/s, fresh 56%, read 21 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:39:58 [val] step 53101: L1 0.0272 PSNR 29.18 SSIM 0.890 aligned 32.78 sharp 0.70 score 0.0354 * best final
+19:40:41 [B] step  53200 61.4% | L1 0.0262 1-SSIM 0.1089 | D 0.149 (real 0.68 fake 0.31) adv 0.257 lambda 0.011 | lr 4.76e-05 | 2.09 it/s, fresh 64%, read 21 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:42:20 [B] step  53400 61.6% | L1 0.0279 1-SSIM 0.1139 | D 0.143 (real 0.70 fake 0.31) adv 0.268 lambda 0.0107 | lr 4.74e-05 | 2.03 it/s, fresh 55%, read 18 patch/s, epoch 4 | 10.4 GB | scale 262144
+19:43:49 [B] step  53600 61.8% | L1 0.0242 1-SSIM 0.1057 | D 0.141 (real 0.70 fake 0.30) adv 0.271 lambda 0.00921 | lr 4.72e-05 | 2.24 it/s, fresh 56%, read 20 patch/s, epoch 4 | 10.4 GB | scale 262144
+19:45:24 [B] step  53800 62.1% | L1 0.0240 1-SSIM 0.1067 | D 0.133 (real 0.71 fake 0.28) adv 0.286 lambda 0.00884 | lr 4.70e-05 | 2.11 it/s, fresh 54%, read 18 patch/s, epoch 4 | 10.4 GB | scale 262144
+19:47:16 [B] step  54000 62.4% | L1 0.0253 1-SSIM 0.1052 | D 0.130 (real 0.72 fake 0.27) adv 0.290 lambda 0.00903 | lr 4.68e-05 | 1.79 it/s, fresh 50%, read 14 patch/s, epoch 4 | 10.4 GB | scale 262144
+19:48:42 [B] step  54200 62.6% | L1 0.0233 1-SSIM 0.1047 | D 0.124 (real 0.73 fake 0.26) adv 0.297 lambda 0.00828 | lr 4.66e-05 | 2.33 it/s, fresh 55%, read 20 patch/s, epoch 4 | 10.4 GB | scale 262144
+19:50:16 [B] step  54400 62.8% | L1 0.0250 1-SSIM 0.1113 | D 0.119 (real 0.75 fake 0.26) adv 0.302 lambda 0.00747 | lr 4.64e-05 | 2.11 it/s, fresh 52%, read 18 patch/s, epoch 4 | 10.4 GB | scale 262144
+19:51:43 [B] step  54600 63.1% | L1 0.0264 1-SSIM 0.1089 | D 0.119 (real 0.74 fake 0.26) adv 0.303 lambda 0.00769 | lr 4.62e-05 | 2.32 it/s, fresh 55%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:53:08 [B] step  54800 63.3% | L1 0.0258 1-SSIM 0.1110 | D 0.112 (real 0.75 fake 0.24) adv 0.315 lambda 0.00705 | lr 4.60e-05 | 2.34 it/s, fresh 56%, read 21 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:54:34 [B] step  55000 63.5% | L1 0.0242 1-SSIM 0.1084 | D 0.116 (real 0.75 fake 0.25) adv 0.312 lambda 0.00718 | lr 4.58e-05 | 2.34 it/s, fresh 56%, read 21 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:56:23 [B] step  55200 63.8% | L1 0.0260 1-SSIM 0.1081 | D 0.111 (real 0.76 fake 0.24) adv 0.318 lambda 0.00658 | lr 4.55e-05 | 1.83 it/s, fresh 52%, read 15 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:58:16 [B] step  55400 64.1% | L1 0.0259 1-SSIM 0.1103 | D 0.109 (real 0.76 fake 0.23) adv 0.321 lambda 0.00649 | lr 4.52e-05 | 1.78 it/s, fresh 52%, read 15 patch/s, epoch 4 | 10.4 GB | scale 131072
+19:59:50 [B] step  55600 64.3% | L1 0.0246 1-SSIM 0.1071 | D 0.104 (real 0.77 fake 0.22) adv 0.327 lambda 0.00633 | lr 4.50e-05 | 2.12 it/s, fresh 50%, read 17 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:00:09 [val] step 55621: L1 0.0277 PSNR 29.11 SSIM 0.890 aligned 32.78 sharp 0.69 score 0.0362
+20:01:27 [B] step  55800 64.6% | L1 0.0284 1-SSIM 0.1131 | D 0.110 (real 0.76 fake 0.23) adv 0.322 lambda 0.00672 | lr 4.47e-05 | 2.06 it/s, fresh 58%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:02:55 [B] step  56000 64.8% | L1 0.0296 1-SSIM 0.1176 | D 0.108 (real 0.77 fake 0.23) adv 0.322 lambda 0.00682 | lr 4.45e-05 | 2.29 it/s, fresh 50%, read 18 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:04:23 [B] step  56200 65.0% | L1 0.0265 1-SSIM 0.1096 | D 0.104 (real 0.77 fake 0.23) adv 0.325 lambda 0.00599 | lr 4.42e-05 | 2.26 it/s, fresh 50%, read 18 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:06:33 [B] step  56400 65.3% | L1 0.0262 1-SSIM 0.1127 | D 0.108 (real 0.77 fake 0.23) adv 0.322 lambda 0.00618 | lr 4.38e-05 | 1.54 it/s, fresh 52%, read 13 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:08:01 [B] step  56600 65.6% | L1 0.0254 1-SSIM 0.1096 | D 0.105 (real 0.77 fake 0.23) adv 0.329 lambda 0.0064 | lr 4.36e-05 | 2.27 it/s, fresh 52%, read 19 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:09:31 [B] step  56800 65.8% | L1 0.0258 1-SSIM 0.1098 | D 0.100 (real 0.78 fake 0.22) adv 0.333 lambda 0.00639 | lr 4.33e-05 | 2.22 it/s, fresh 51%, read 18 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:11:08 [B] step  57000 66.0% | L1 0.0243 1-SSIM 0.1065 | D 0.099 (real 0.78 fake 0.22) adv 0.334 lambda 0.00645 | lr 4.30e-05 | 2.05 it/s, fresh 50%, read 16 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:12:39 [B] step  57200 66.3% | L1 0.0262 1-SSIM 0.1110 | D 0.097 (real 0.79 fake 0.21) adv 0.336 lambda 0.00568 | lr 4.27e-05 | 2.22 it/s, fresh 50%, read 18 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:14:07 [B] step  57400 66.5% | L1 0.0253 1-SSIM 0.1092 | D 0.100 (real 0.78 fake 0.22) adv 0.332 lambda 0.00615 | lr 4.24e-05 | 2.27 it/s, fresh 53%, read 19 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:15:53 [B] step  57600 66.8% | L1 0.0238 1-SSIM 0.1052 | D 0.103 (real 0.78 fake 0.23) adv 0.328 lambda 0.00576 | lr 4.21e-05 | 1.89 it/s, fresh 52%, read 16 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:17:24 [B] step  57800 67.0% | L1 0.0273 1-SSIM 0.1104 | D 0.097 (real 0.78 fake 0.21) adv 0.339 lambda 0.0061 | lr 4.18e-05 | 2.18 it/s, fresh 50%, read 17 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:18:52 [B] step  58000 67.2% | L1 0.0267 1-SSIM 0.1116 | D 0.090 (real 0.80 fake 0.20) adv 0.348 lambda 0.00581 | lr 4.15e-05 | 2.29 it/s, fresh 51%, read 19 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:20:21 [val] step 58181: L1 0.0273 PSNR 29.19 SSIM 0.891 aligned 32.78 sharp 0.69 score 0.0357
+20:20:29 [B] step  58200 67.5% | L1 0.0262 1-SSIM 0.1144 | D 0.086 (real 0.81 fake 0.19) adv 0.350 lambda 0.00577 | lr 4.12e-05 | 2.05 it/s, fresh 58%, read 19 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:22:03 [B] step  58400 67.7% | L1 0.0260 1-SSIM 0.1157 | D 0.097 (real 0.79 fake 0.21) adv 0.336 lambda 0.00647 | lr 4.09e-05 | 2.14 it/s, fresh 55%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:23:37 [B] step  58600 68.0% | L1 0.0249 1-SSIM 0.1066 | D 0.096 (real 0.79 fake 0.21) adv 0.337 lambda 0.00595 | lr 4.05e-05 | 2.13 it/s, fresh 51%, read 17 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:25:09 [B] step  58800 68.2% | L1 0.0261 1-SSIM 0.1137 | D 0.085 (real 0.81 fake 0.19) adv 0.352 lambda 0.00585 | lr 4.02e-05 | 2.16 it/s, fresh 55%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:26:37 [B] step  59000 68.4% | L1 0.0238 1-SSIM 0.1081 | D 0.093 (real 0.80 fake 0.21) adv 0.343 lambda 0.00568 | lr 3.99e-05 | 2.28 it/s, fresh 55%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:28:03 [B] step  59200 68.6% | L1 0.0252 1-SSIM 0.1060 | D 0.093 (real 0.79 fake 0.20) adv 0.345 lambda 0.00565 | lr 3.96e-05 | 2.32 it/s, fresh 52%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:29:41 [B] step  59400 68.9% | L1 0.0243 1-SSIM 0.1092 | D 0.090 (real 0.80 fake 0.20) adv 0.345 lambda 0.00589 | lr 3.92e-05 | 2.06 it/s, fresh 53%, read 17 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:31:09 [B] step  59600 69.1% | L1 0.0255 1-SSIM 0.1092 | D 0.092 (real 0.80 fake 0.20) adv 0.347 lambda 0.00636 | lr 3.89e-05 | 2.27 it/s, fresh 52%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:32:40 [B] step  59800 69.4% | L1 0.0239 1-SSIM 0.1068 | D 0.092 (real 0.79 fake 0.20) adv 0.348 lambda 0.00595 | lr 3.86e-05 | 2.20 it/s, fresh 54%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:34:06 [B] step  60000 69.6% | L1 0.0269 1-SSIM 0.1142 | D 0.090 (real 0.80 fake 0.20) adv 0.349 lambda 0.00562 | lr 3.83e-05 | 2.32 it/s, fresh 52%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:35:33 [B] step  60200 69.8% | L1 0.0247 1-SSIM 0.1089 | D 0.089 (real 0.80 fake 0.20) adv 0.346 lambda 0.00617 | lr 3.79e-05 | 2.30 it/s, fresh 54%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:37:00 [B] step  60400 70.0% | L1 0.0249 1-SSIM 0.1092 | D 0.090 (real 0.80 fake 0.20) adv 0.347 lambda 0.00554 | lr 3.76e-05 | 2.31 it/s, fresh 52%, read 19 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:38:26 [B] step  60600 70.2% | L1 0.0256 1-SSIM 0.1083 | D 0.091 (real 0.79 fake 0.20) adv 0.349 lambda 0.00527 | lr 3.73e-05 | 2.32 it/s, fresh 54%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:39:52 [B] step  60800 70.5% | L1 0.0281 1-SSIM 0.1117 | D 0.089 (real 0.80 fake 0.20) adv 0.348 lambda 0.00556 | lr 3.69e-05 | 2.33 it/s, fresh 52%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:40:33 [val] step 60871: L1 0.0275 PSNR 29.13 SSIM 0.890 aligned 32.76 sharp 0.70 score 0.0357
+20:41:28 [B] step  61000 70.7% | L1 0.0245 1-SSIM 0.1077 | D 0.087 (real 0.81 fake 0.20) adv 0.347 lambda 0.00533 | lr 3.65e-05 | 2.09 it/s, fresh 62%, read 21 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:42:54 [B] step  61200 70.9% | L1 0.0255 1-SSIM 0.1105 | D 0.088 (real 0.80 fake 0.19) adv 0.353 lambda 0.00525 | lr 3.62e-05 | 2.31 it/s, fresh 54%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:44:31 [B] step  61400 71.2% | L1 0.0239 1-SSIM 0.1099 | D 0.082 (real 0.81 fake 0.18) adv 0.359 lambda 0.00518 | lr 3.58e-05 | 2.07 it/s, fresh 51%, read 17 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:46:05 [B] step  61600 71.4% | L1 0.0266 1-SSIM 0.1115 | D 0.088 (real 0.80 fake 0.20) adv 0.348 lambda 0.0055 | lr 3.54e-05 | 2.13 it/s, fresh 52%, read 18 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:47:31 [B] step  61800 71.6% | L1 0.0287 1-SSIM 0.1160 | D 0.085 (real 0.81 fake 0.19) adv 0.357 lambda 0.00546 | lr 3.51e-05 | 2.32 it/s, fresh 54%, read 20 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:48:57 [B] step  62000 71.9% | L1 0.0239 1-SSIM 0.1069 | D 0.090 (real 0.80 fake 0.20) adv 0.348 lambda 0.00545 | lr 3.47e-05 | 2.32 it/s, fresh 50%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:50:24 [B] step  62200 72.1% | L1 0.0278 1-SSIM 0.1134 | D 0.085 (real 0.81 fake 0.19) adv 0.350 lambda 0.00519 | lr 3.44e-05 | 2.31 it/s, fresh 52%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:51:52 [B] step  62400 72.3% | L1 0.0255 1-SSIM 0.1093 | D 0.089 (real 0.80 fake 0.19) adv 0.353 lambda 0.00524 | lr 3.40e-05 | 2.29 it/s, fresh 53%, read 19 patch/s, epoch 4 | 10.4 GB | scale 131072
+20:53:25 [B] step  62600 72.5% | L1 0.0248 1-SSIM 0.1083 | D 0.085 (real 0.81 fake 0.19) adv 0.353 lambda 0.00543 | lr 3.36e-05 | 2.14 it/s, fresh 52%, read 18 patch/s, epoch 4 | 10.4 GB | scale 262144
+20:54:52 [B] step  62800 72.8% | L1 0.0229 1-SSIM 0.1033 | D 0.093 (real 0.79 fake 0.20) adv 0.344 lambda 0.00525 | lr 3.33e-05 | 2.31 it/s, fresh 56%, read 21 patch/s, epoch 5 | 10.4 GB | scale 262144
+20:56:18 [B] step  63000 73.0% | L1 0.0248 1-SSIM 0.1061 | D 0.090 (real 0.80 fake 0.20) adv 0.346 lambda 0.00557 | lr 3.29e-05 | 2.31 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 262144
+20:57:53 [B] step  63200 73.2% | L1 0.0256 1-SSIM 0.1079 | D 0.085 (real 0.81 fake 0.19) adv 0.353 lambda 0.00524 | lr 3.25e-05 | 2.12 it/s, fresh 50%, read 17 patch/s, epoch 5 | 10.4 GB | scale 262144
+20:59:25 [B] step  63400 73.5% | L1 0.0256 1-SSIM 0.1100 | D 0.081 (real 0.81 fake 0.18) adv 0.362 lambda 0.00493 | lr 3.21e-05 | 2.17 it/s, fresh 50%, read 18 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:00:45 [val] step 63561: L1 0.0270 PSNR 29.22 SSIM 0.891 aligned 32.74 sharp 0.70 score 0.0353 * best final
+21:01:01 [B] step  63600 73.7% | L1 0.0235 1-SSIM 0.1028 | D 0.086 (real 0.81 fake 0.19) adv 0.353 lambda 0.00522 | lr 3.17e-05 | 2.07 it/s, fresh 59%, read 20 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:02:34 [B] step  63800 74.0% | L1 0.0249 1-SSIM 0.1082 | D 0.080 (real 0.82 fake 0.18) adv 0.358 lambda 0.00511 | lr 3.13e-05 | 2.16 it/s, fresh 50%, read 17 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:04:04 [B] step  64000 74.2% | L1 0.0242 1-SSIM 0.1097 | D 0.081 (real 0.82 fake 0.19) adv 0.356 lambda 0.00526 | lr 3.09e-05 | 2.23 it/s, fresh 50%, read 18 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:05:31 [B] step  64200 74.4% | L1 0.0251 1-SSIM 0.1096 | D 0.083 (real 0.81 fake 0.19) adv 0.358 lambda 0.00534 | lr 3.05e-05 | 2.30 it/s, fresh 51%, read 19 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:06:57 [B] step  64400 74.6% | L1 0.0242 1-SSIM 0.1082 | D 0.083 (real 0.81 fake 0.18) adv 0.358 lambda 0.00538 | lr 3.02e-05 | 2.33 it/s, fresh 50%, read 19 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:08:26 [B] step  64600 74.9% | L1 0.0248 1-SSIM 0.1106 | D 0.079 (real 0.82 fake 0.18) adv 0.361 lambda 0.00531 | lr 2.98e-05 | 2.24 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 524288
+21:09:54 [B] step  64800 75.1% | L1 0.0250 1-SSIM 0.1102 | D 0.075 (real 0.83 fake 0.18) adv 0.366 lambda 0.00525 | lr 2.94e-05 | 2.28 it/s, fresh 53%, read 19 patch/s, epoch 5 | 10.4 GB | scale 524288
+21:11:21 [B] step  65000 75.3% | L1 0.0258 1-SSIM 0.1105 | D 0.078 (real 0.83 fake 0.18) adv 0.361 lambda 0.00484 | lr 2.90e-05 | 2.30 it/s, fresh 56%, read 21 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:12:48 [B] step  65200 75.5% | L1 0.0254 1-SSIM 0.1096 | D 0.083 (real 0.82 fake 0.19) adv 0.357 lambda 0.00518 | lr 2.86e-05 | 2.32 it/s, fresh 55%, read 20 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:14:20 [B] step  65400 75.8% | L1 0.0264 1-SSIM 0.1120 | D 0.077 (real 0.83 fake 0.17) adv 0.367 lambda 0.00487 | lr 2.82e-05 | 2.16 it/s, fresh 53%, read 18 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:15:56 [B] step  65600 76.0% | L1 0.0246 1-SSIM 0.1082 | D 0.076 (real 0.82 fake 0.17) adv 0.369 lambda 0.00513 | lr 2.78e-05 | 2.09 it/s, fresh 54%, read 18 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:17:25 [B] step  65800 76.2% | L1 0.0247 1-SSIM 0.1070 | D 0.075 (real 0.83 fake 0.17) adv 0.368 lambda 0.00505 | lr 2.74e-05 | 2.24 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:18:54 [B] step  66000 76.5% | L1 0.0234 1-SSIM 0.1020 | D 0.083 (real 0.81 fake 0.18) adv 0.362 lambda 0.00533 | lr 2.70e-05 | 2.27 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:20:24 [B] step  66200 76.7% | L1 0.0242 1-SSIM 0.1062 | D 0.080 (real 0.82 fake 0.18) adv 0.364 lambda 0.00516 | lr 2.66e-05 | 2.21 it/s, fresh 53%, read 19 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:20:59 [val] step 66251: L1 0.0270 PSNR 29.26 SSIM 0.891 aligned 32.80 sharp 0.69 score 0.0353 * best final
+21:22:07 [B] step  66400 77.0% | L1 0.0242 1-SSIM 0.1083 | D 0.076 (real 0.83 fake 0.17) adv 0.368 lambda 0.0049 | lr 2.62e-05 | 1.95 it/s, fresh 56%, read 17 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:23:34 [B] step  66600 77.2% | L1 0.0233 1-SSIM 0.1060 | D 0.077 (real 0.83 fake 0.18) adv 0.360 lambda 0.00514 | lr 2.58e-05 | 2.29 it/s, fresh 53%, read 19 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:25:00 [B] step  66800 77.4% | L1 0.0267 1-SSIM 0.1110 | D 0.080 (real 0.82 fake 0.18) adv 0.359 lambda 0.00526 | lr 2.54e-05 | 2.34 it/s, fresh 56%, read 21 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:26:27 [B] step  67000 77.6% | L1 0.0282 1-SSIM 0.1147 | D 0.075 (real 0.83 fake 0.18) adv 0.365 lambda 0.00494 | lr 2.50e-05 | 2.29 it/s, fresh 55%, read 20 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:27:54 [B] step  67200 77.9% | L1 0.0242 1-SSIM 0.1078 | D 0.073 (real 0.83 fake 0.17) adv 0.369 lambda 0.00532 | lr 2.46e-05 | 2.32 it/s, fresh 53%, read 20 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:29:36 [B] step  67400 78.1% | L1 0.0242 1-SSIM 0.1060 | D 0.077 (real 0.82 fake 0.17) adv 0.366 lambda 0.00485 | lr 2.42e-05 | 1.96 it/s, fresh 54%, read 17 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:31:11 [B] step  67600 78.4% | L1 0.0252 1-SSIM 0.1072 | D 0.078 (real 0.82 fake 0.18) adv 0.363 lambda 0.00532 | lr 2.38e-05 | 2.11 it/s, fresh 50%, read 17 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:32:38 [B] step  67800 78.6% | L1 0.0254 1-SSIM 0.1078 | D 0.075 (real 0.83 fake 0.17) adv 0.368 lambda 0.00499 | lr 2.34e-05 | 2.28 it/s, fresh 54%, read 20 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:34:06 [B] step  68000 78.8% | L1 0.0246 1-SSIM 0.1092 | D 0.070 (real 0.84 fake 0.16) adv 0.375 lambda 0.00486 | lr 2.30e-05 | 2.28 it/s, fresh 54%, read 20 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:35:34 [B] step  68200 79.0% | L1 0.0260 1-SSIM 0.1161 | D 0.066 (real 0.84 fake 0.16) adv 0.381 lambda 0.00474 | lr 2.26e-05 | 2.29 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:37:00 [B] step  68400 79.3% | L1 0.0255 1-SSIM 0.1064 | D 0.078 (real 0.82 fake 0.18) adv 0.362 lambda 0.00472 | lr 2.22e-05 | 2.33 it/s, fresh 56%, read 21 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:38:26 [B] step  68600 79.5% | L1 0.0249 1-SSIM 0.1082 | D 0.076 (real 0.83 fake 0.18) adv 0.365 lambda 0.00486 | lr 2.19e-05 | 2.33 it/s, fresh 55%, read 20 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:39:51 [B] step  68800 79.7% | L1 0.0250 1-SSIM 0.1083 | D 0.077 (real 0.82 fake 0.18) adv 0.365 lambda 0.00489 | lr 2.15e-05 | 2.34 it/s, fresh 56%, read 21 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:41:11 [val] step 68961: L1 0.0273 PSNR 29.16 SSIM 0.890 aligned 32.75 sharp 0.71 score 0.0353
+21:41:28 [B] step  69000 79.9% | L1 0.0252 1-SSIM 0.1083 | D 0.076 (real 0.82 fake 0.17) adv 0.367 lambda 0.00523 | lr 2.11e-05 | 2.08 it/s, fresh 60%, read 20 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:42:54 [B] step  69200 80.2% | L1 0.0247 1-SSIM 0.1058 | D 0.074 (real 0.83 fake 0.17) adv 0.365 lambda 0.00497 | lr 2.07e-05 | 2.32 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:44:27 [B] step  69400 80.4% | L1 0.0275 1-SSIM 0.1124 | D 0.074 (real 0.83 fake 0.17) adv 0.367 lambda 0.00483 | lr 2.03e-05 | 2.16 it/s, fresh 42%, read 14 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:45:57 [B] step  69600 80.6% | L1 0.0261 1-SSIM 0.1063 | D 0.076 (real 0.82 fake 0.17) adv 0.367 lambda 0.00504 | lr 1.99e-05 | 2.22 it/s, fresh 46%, read 17 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:47:26 [B] step  69800 80.9% | L1 0.0283 1-SSIM 0.1145 | D 0.072 (real 0.84 fake 0.17) adv 0.372 lambda 0.00517 | lr 1.95e-05 | 2.24 it/s, fresh 52%, read 18 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:48:57 [B] step  70000 81.1% | L1 0.0251 1-SSIM 0.1097 | D 0.074 (real 0.83 fake 0.17) adv 0.369 lambda 0.0051 | lr 1.91e-05 | 2.22 it/s, fresh 50%, read 18 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:50:25 [B] step  70200 81.3% | L1 0.0250 1-SSIM 0.1086 | D 0.074 (real 0.83 fake 0.17) adv 0.368 lambda 0.0051 | lr 1.87e-05 | 2.26 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:51:52 [B] step  70400 81.5% | L1 0.0248 1-SSIM 0.1088 | D 0.070 (real 0.84 fake 0.17) adv 0.373 lambda 0.00509 | lr 1.84e-05 | 2.30 it/s, fresh 54%, read 20 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:53:19 [B] step  70600 81.8% | L1 0.0231 1-SSIM 0.1069 | D 0.074 (real 0.83 fake 0.17) adv 0.368 lambda 0.00511 | lr 1.80e-05 | 2.32 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 262144
+21:54:45 [B] step  70800 82.0% | L1 0.0270 1-SSIM 0.1105 | D 0.078 (real 0.82 fake 0.17) adv 0.364 lambda 0.00532 | lr 1.76e-05 | 2.32 it/s, fresh 50%, read 19 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:56:12 [B] step  71000 82.2% | L1 0.0249 1-SSIM 0.1090 | D 0.074 (real 0.83 fake 0.17) adv 0.368 lambda 0.00534 | lr 1.73e-05 | 2.30 it/s, fresh 50%, read 19 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:57:38 [B] step  71200 82.4% | L1 0.0274 1-SSIM 0.1115 | D 0.067 (real 0.84 fake 0.16) adv 0.377 lambda 0.00463 | lr 1.69e-05 | 2.34 it/s, fresh 55%, read 21 patch/s, epoch 5 | 10.4 GB | scale 131072
+21:59:03 [B] step  71400 82.6% | L1 0.0257 1-SSIM 0.1089 | D 0.069 (real 0.84 fake 0.16) adv 0.374 lambda 0.00499 | lr 1.66e-05 | 2.35 it/s, fresh 56%, read 21 patch/s, epoch 5 | 10.4 GB | scale 131072
+22:00:28 [B] step  71600 82.9% | L1 0.0233 1-SSIM 0.1067 | D 0.068 (real 0.84 fake 0.16) adv 0.375 lambda 0.00495 | lr 1.62e-05 | 2.34 it/s, fresh 56%, read 21 patch/s, epoch 5 | 10.4 GB | scale 131072
+22:01:26 [val] step 71711: L1 0.0275 PSNR 29.09 SSIM 0.890 aligned 32.73 sharp 0.71 score 0.0355
+22:02:04 [B] step  71800 83.1% | L1 0.0241 1-SSIM 0.1072 | D 0.072 (real 0.83 fake 0.17) adv 0.369 lambda 0.00495 | lr 1.58e-05 | 2.09 it/s, fresh 60%, read 20 patch/s, epoch 5 | 10.4 GB | scale 131072
+22:03:30 [B] step  72000 83.3% | L1 0.0251 1-SSIM 0.1083 | D 0.068 (real 0.84 fake 0.15) adv 0.380 lambda 0.00514 | lr 1.55e-05 | 2.34 it/s, fresh 54%, read 20 patch/s, epoch 5 | 10.4 GB | scale 131072
+22:05:05 [B] step  72200 83.6% | L1 0.0246 1-SSIM 0.1111 | D 0.067 (real 0.85 fake 0.16) adv 0.378 lambda 0.00465 | lr 1.51e-05 | 2.10 it/s, fresh 52%, read 17 patch/s, epoch 5 | 10.4 GB | scale 131072
+22:06:37 [B] step  72400 83.8% | L1 0.0265 1-SSIM 0.1091 | D 0.070 (real 0.84 fake 0.16) adv 0.375 lambda 0.00462 | lr 1.47e-05 | 2.18 it/s, fresh 53%, read 19 patch/s, epoch 5 | 10.4 GB | scale 131072
+22:08:04 [B] step  72600 84.0% | L1 0.0248 1-SSIM 0.1108 | D 0.068 (real 0.84 fake 0.16) adv 0.378 lambda 0.00462 | lr 1.44e-05 | 2.29 it/s, fresh 55%, read 20 patch/s, epoch 5 | 10.4 GB | scale 131072
+22:09:32 [B] step  72800 84.3% | L1 0.0247 1-SSIM 0.1078 | D 0.066 (real 0.85 fake 0.16) adv 0.379 lambda 0.00482 | lr 1.40e-05 | 2.29 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:11:00 [B] step  73000 84.5% | L1 0.0245 1-SSIM 0.1082 | D 0.064 (real 0.85 fake 0.15) adv 0.381 lambda 0.00491 | lr 1.37e-05 | 2.28 it/s, fresh 55%, read 20 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:12:31 [B] step  73200 84.7% | L1 0.0237 1-SSIM 0.1085 | D 0.068 (real 0.84 fake 0.16) adv 0.374 lambda 0.00494 | lr 1.33e-05 | 2.19 it/s, fresh 54%, read 19 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:13:57 [B] step  73400 84.9% | L1 0.0234 1-SSIM 0.1039 | D 0.070 (real 0.84 fake 0.16) adv 0.375 lambda 0.00471 | lr 1.30e-05 | 2.34 it/s, fresh 56%, read 21 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:15:23 [B] step  73600 85.2% | L1 0.0252 1-SSIM 0.1111 | D 0.063 (real 0.85 fake 0.15) adv 0.382 lambda 0.00465 | lr 1.26e-05 | 2.33 it/s, fresh 54%, read 20 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:16:48 [B] step  73800 85.4% | L1 0.0235 1-SSIM 0.1068 | D 0.069 (real 0.84 fake 0.17) adv 0.370 lambda 0.00431 | lr 1.23e-05 | 2.34 it/s, fresh 55%, read 21 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:18:14 [B] step  74000 85.6% | L1 0.0278 1-SSIM 0.1107 | D 0.067 (real 0.84 fake 0.16) adv 0.378 lambda 0.00483 | lr 1.20e-05 | 2.33 it/s, fresh 55%, read 21 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:19:40 [B] step  74200 85.8% | L1 0.0261 1-SSIM 0.1112 | D 0.065 (real 0.84 fake 0.15) adv 0.385 lambda 0.00495 | lr 1.17e-05 | 2.32 it/s, fresh 52%, read 19 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:21:16 [B] step  74400 86.1% | L1 0.0277 1-SSIM 0.1129 | D 0.064 (real 0.85 fake 0.15) adv 0.381 lambda 0.00487 | lr 1.13e-05 | 2.09 it/s, fresh 54%, read 18 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:21:40 [val] step 74421: L1 0.0276 PSNR 29.07 SSIM 0.889 aligned 32.69 sharp 0.71 score 0.0355
+22:23:24 [B] step  74600 86.4% | L1 0.0245 1-SSIM 0.1115 | D 0.061 (real 0.86 fake 0.15) adv 0.385 lambda 0.00472 | lr 1.09e-05 | 1.57 it/s, fresh 53%, read 13 patch/s, epoch 5 | 10.4 GB | scale 262144
+22:24:57 [B] step  74800 86.6% | L1 0.0278 1-SSIM 0.1168 | D 0.062 (real 0.86 fake 0.14) adv 0.389 lambda 0.00479 | lr 1.05e-05 | 2.14 it/s, fresh 50%, read 17 patch/s, epoch 6 | 10.4 GB | scale 524288
+22:26:23 [B] step  75000 86.8% | L1 0.0269 1-SSIM 0.1109 | D 0.064 (real 0.85 fake 0.15) adv 0.378 lambda 0.00484 | lr 1.02e-05 | 2.34 it/s, fresh 55%, read 21 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:27:51 [B] step  75200 87.1% | L1 0.0264 1-SSIM 0.1082 | D 0.071 (real 0.83 fake 0.17) adv 0.371 lambda 0.00502 | lr 9.91e-06 | 2.28 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:29:16 [B] step  75400 87.3% | L1 0.0262 1-SSIM 0.1099 | D 0.069 (real 0.84 fake 0.16) adv 0.377 lambda 0.00506 | lr 9.62e-06 | 2.34 it/s, fresh 56%, read 21 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:30:44 [B] step  75600 87.5% | L1 0.0253 1-SSIM 0.1103 | D 0.063 (real 0.86 fake 0.15) adv 0.381 lambda 0.00467 | lr 9.32e-06 | 2.29 it/s, fresh 52%, read 19 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:32:14 [B] step  75800 87.8% | L1 0.0248 1-SSIM 0.1062 | D 0.070 (real 0.83 fake 0.16) adv 0.373 lambda 0.00456 | lr 9.01e-06 | 2.21 it/s, fresh 52%, read 18 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:33:39 [B] step  76000 88.0% | L1 0.0276 1-SSIM 0.1135 | D 0.062 (real 0.85 fake 0.15) adv 0.386 lambda 0.00453 | lr 8.73e-06 | 2.36 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:35:06 [B] step  76200 88.2% | L1 0.0252 1-SSIM 0.1081 | D 0.060 (real 0.85 fake 0.14) adv 0.388 lambda 0.00419 | lr 8.45e-06 | 2.32 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:36:32 [B] step  76400 88.4% | L1 0.0277 1-SSIM 0.1126 | D 0.063 (real 0.85 fake 0.15) adv 0.384 lambda 0.00404 | lr 8.17e-06 | 2.32 it/s, fresh 56%, read 21 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:37:57 [B] step  76600 88.6% | L1 0.0247 1-SSIM 0.1085 | D 0.064 (real 0.84 fake 0.15) adv 0.383 lambda 0.0044 | lr 7.90e-06 | 2.33 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:39:23 [B] step  76800 88.9% | L1 0.0239 1-SSIM 0.1051 | D 0.064 (real 0.85 fake 0.15) adv 0.377 lambda 0.00462 | lr 7.63e-06 | 2.33 it/s, fresh 55%, read 21 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:40:49 [B] step  77000 89.1% | L1 0.0245 1-SSIM 0.1086 | D 0.060 (real 0.86 fake 0.14) adv 0.388 lambda 0.00469 | lr 7.36e-06 | 2.34 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:41:51 [val] step 77121: L1 0.0273 PSNR 29.14 SSIM 0.890 aligned 32.71 sharp 0.71 score 0.0353
+22:42:27 [B] step  77200 89.3% | L1 0.0270 1-SSIM 0.1130 | D 0.062 (real 0.85 fake 0.15) adv 0.386 lambda 0.00425 | lr 7.07e-06 | 2.04 it/s, fresh 58%, read 19 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:44:00 [B] step  77400 89.6% | L1 0.0236 1-SSIM 0.1071 | D 0.065 (real 0.85 fake 0.15) adv 0.382 lambda 0.00441 | lr 6.79e-06 | 2.16 it/s, fresh 54%, read 19 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:45:27 [B] step  77600 89.8% | L1 0.0243 1-SSIM 0.1094 | D 0.061 (real 0.85 fake 0.14) adv 0.387 lambda 0.00496 | lr 6.53e-06 | 2.29 it/s, fresh 50%, read 18 patch/s, epoch 6 | 10.4 GB | scale 131072
+22:46:59 [B] step  77800 90.0% | L1 0.0267 1-SSIM 0.1088 | D 0.061 (real 0.85 fake 0.15) adv 0.384 lambda 0.0045 | lr 6.27e-06 | 2.18 it/s, fresh 52%, read 18 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:48:24 [B] step  78000 90.2% | L1 0.0247 1-SSIM 0.1089 | D 0.059 (real 0.85 fake 0.14) adv 0.390 lambda 0.00505 | lr 6.03e-06 | 2.35 it/s, fresh 52%, read 20 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:49:50 [B] step  78200 90.5% | L1 0.0270 1-SSIM 0.1100 | D 0.062 (real 0.85 fake 0.15) adv 0.377 lambda 0.00469 | lr 5.79e-06 | 2.34 it/s, fresh 52%, read 20 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:51:15 [B] step  78400 90.7% | L1 0.0251 1-SSIM 0.1089 | D 0.061 (real 0.85 fake 0.14) adv 0.385 lambda 0.00461 | lr 5.56e-06 | 2.33 it/s, fresh 56%, read 21 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:52:41 [B] step  78600 90.9% | L1 0.0260 1-SSIM 0.1125 | D 0.062 (real 0.85 fake 0.15) adv 0.385 lambda 0.00464 | lr 5.33e-06 | 2.33 it/s, fresh 56%, read 21 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:54:20 [B] step  78800 91.1% | L1 0.0284 1-SSIM 0.1143 | D 0.059 (real 0.86 fake 0.14) adv 0.386 lambda 0.00503 | lr 5.08e-06 | 2.02 it/s, fresh 49%, read 16 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:55:50 [B] step  79000 91.4% | L1 0.0256 1-SSIM 0.1120 | D 0.055 (real 0.87 fake 0.14) adv 0.386 lambda 0.00445 | lr 4.85e-06 | 2.23 it/s, fresh 48%, read 17 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:57:25 [B] step  79200 91.6% | L1 0.0252 1-SSIM 0.1079 | D 0.061 (real 0.85 fake 0.15) adv 0.383 lambda 0.00483 | lr 4.61e-06 | 2.12 it/s, fresh 50%, read 17 patch/s, epoch 6 | 10.4 GB | scale 262144
+22:58:57 [B] step  79400 91.9% | L1 0.0266 1-SSIM 0.1113 | D 0.061 (real 0.85 fake 0.15) adv 0.383 lambda 0.0046 | lr 4.39e-06 | 2.18 it/s, fresh 50%, read 18 patch/s, epoch 6 | 10.4 GB | scale 262144
+23:00:26 [B] step  79600 92.1% | L1 0.0249 1-SSIM 0.1072 | D 0.060 (real 0.86 fake 0.14) adv 0.385 lambda 0.00437 | lr 4.18e-06 | 2.25 it/s, fresh 52%, read 19 patch/s, epoch 6 | 10.4 GB | scale 262144
+23:02:04 [val] step 79781: L1 0.0273 PSNR 29.15 SSIM 0.890 aligned 32.72 sharp 0.71 score 0.0352 * best final
+23:02:12 [B] step  79800 92.4% | L1 0.0251 1-SSIM 0.1081 | D 0.060 (real 0.86 fake 0.15) adv 0.384 lambda 0.00491 | lr 3.94e-06 | 1.88 it/s, fresh 56%, read 17 patch/s, epoch 6 | 10.4 GB | scale 524288
+23:03:40 [B] step  80000 92.6% | L1 0.0255 1-SSIM 0.1085 | D 0.058 (real 0.86 fake 0.14) adv 0.387 lambda 0.00477 | lr 3.74e-06 | 2.29 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 524288
+23:05:05 [B] step  80200 92.8% | L1 0.0246 1-SSIM 0.1116 | D 0.056 (real 0.87 fake 0.13) adv 0.394 lambda 0.00468 | lr 3.56e-06 | 2.33 it/s, fresh 55%, read 20 patch/s, epoch 6 | 10.4 GB | scale 524288
+23:06:48 [B] step  80400 93.1% | L1 0.0242 1-SSIM 0.1058 | D 0.059 (real 0.85 fake 0.14) adv 0.383 lambda 0.00452 | lr 3.34e-06 | 1.95 it/s, fresh 51%, read 16 patch/s, epoch 6 | 10.4 GB | scale 262144
+23:08:22 [B] step  80600 93.3% | L1 0.0281 1-SSIM 0.1139 | D 0.056 (real 0.86 fake 0.14) adv 0.393 lambda 0.00473 | lr 3.15e-06 | 2.12 it/s, fresh 50%, read 17 patch/s, epoch 6 | 10.4 GB | scale 262144
+23:09:49 [B] step  80800 93.5% | L1 0.0238 1-SSIM 0.1060 | D 0.062 (real 0.85 fake 0.15) adv 0.377 lambda 0.00451 | lr 2.98e-06 | 2.31 it/s, fresh 53%, read 20 patch/s, epoch 6 | 10.4 GB | scale 131072
+23:11:15 [B] step  81000 93.8% | L1 0.0240 1-SSIM 0.1067 | D 0.060 (real 0.85 fake 0.15) adv 0.384 lambda 0.00437 | lr 2.82e-06 | 2.33 it/s, fresh 56%, read 21 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:12:44 [B] step  81200 94.0% | L1 0.0253 1-SSIM 0.1108 | D 0.055 (real 0.86 fake 0.13) adv 0.392 lambda 0.00453 | lr 2.66e-06 | 2.27 it/s, fresh 55%, read 20 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:14:18 [B] step  81400 94.2% | L1 0.0232 1-SSIM 0.1057 | D 0.056 (real 0.87 fake 0.14) adv 0.386 lambda 0.00454 | lr 2.49e-06 | 2.12 it/s, fresh 50%, read 17 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:15:46 [B] step  81600 94.4% | L1 0.0249 1-SSIM 0.1073 | D 0.053 (real 0.87 fake 0.13) adv 0.396 lambda 0.00444 | lr 2.34e-06 | 2.29 it/s, fresh 53%, read 19 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:17:14 [B] step  81800 94.7% | L1 0.0243 1-SSIM 0.1069 | D 0.058 (real 0.86 fake 0.14) adv 0.388 lambda 0.0046 | lr 2.19e-06 | 2.27 it/s, fresh 53%, read 19 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:18:40 [B] step  82000 94.9% | L1 0.0228 1-SSIM 0.1038 | D 0.061 (real 0.85 fake 0.15) adv 0.384 lambda 0.00487 | lr 2.06e-06 | 2.32 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:20:06 [B] step  82200 95.1% | L1 0.0254 1-SSIM 0.1072 | D 0.062 (real 0.85 fake 0.15) adv 0.382 lambda 0.00454 | lr 1.93e-06 | 2.33 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:21:32 [B] step  82400 95.3% | L1 0.0247 1-SSIM 0.1074 | D 0.058 (real 0.86 fake 0.14) adv 0.386 lambda 0.00459 | lr 1.80e-06 | 2.32 it/s, fresh 56%, read 21 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:22:17 [val] step 82481: L1 0.0272 PSNR 29.17 SSIM 0.890 aligned 32.71 sharp 0.71 score 0.0352 * best final
+23:23:08 [B] step  82600 95.6% | L1 0.0245 1-SSIM 0.1086 | D 0.061 (real 0.85 fake 0.14) adv 0.384 lambda 0.00429 | lr 1.67e-06 | 2.09 it/s, fresh 62%, read 21 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:24:34 [B] step  82800 95.8% | L1 0.0268 1-SSIM 0.1123 | D 0.059 (real 0.86 fake 0.14) adv 0.385 lambda 0.00426 | lr 1.56e-06 | 2.34 it/s, fresh 56%, read 21 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:26:00 [B] step  83000 96.0% | L1 0.0245 1-SSIM 0.1080 | D 0.059 (real 0.86 fake 0.14) adv 0.386 lambda 0.00465 | lr 1.45e-06 | 2.33 it/s, fresh 55%, read 20 patch/s, epoch 6 | 10.4 GB | scale 131072
+23:27:41 [B] step  83200 96.3% | L1 0.0242 1-SSIM 0.1076 | D 0.058 (real 0.86 fake 0.14) adv 0.392 lambda 0.00472 | lr 1.33e-06 | 1.97 it/s, fresh 40%, read 13 patch/s, epoch 6 | 10.4 GB | scale 131072
+23:29:22 [B] step  83400 96.5% | L1 0.0240 1-SSIM 0.1054 | D 0.061 (real 0.85 fake 0.14) adv 0.385 lambda 0.00498 | lr 1.22e-06 | 1.99 it/s, fresh 44%, read 14 patch/s, epoch 6 | 10.4 GB | scale 131072
+23:30:47 [B] step  83600 96.8% | L1 0.0235 1-SSIM 0.1065 | D 0.058 (real 0.86 fake 0.14) adv 0.389 lambda 0.00521 | lr 1.13e-06 | 2.34 it/s, fresh 50%, read 19 patch/s, epoch 6 | 10.4 GB | scale 131072
+23:32:14 [B] step  83800 97.0% | L1 0.0252 1-SSIM 0.1121 | D 0.059 (real 0.86 fake 0.14) adv 0.388 lambda 0.00504 | lr 1.05e-06 | 2.31 it/s, fresh 52%, read 19 patch/s, epoch 6 | 10.4 GB | scale 131072
+23:33:41 [B] step  84000 97.2% | L1 0.0255 1-SSIM 0.1115 | D 0.055 (real 0.87 fake 0.14) adv 0.388 lambda 0.00489 | lr 9.70e-07 | 2.29 it/s, fresh 50%, read 19 patch/s, epoch 6 | 10.4 GB | scale 131072
+23:35:09 [B] step  84200 97.4% | L1 0.0249 1-SSIM 0.1092 | D 0.057 (real 0.86 fake 0.13) adv 0.393 lambda 0.00464 | lr 8.98e-07 | 2.29 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:36:35 [B] step  84400 97.6% | L1 0.0260 1-SSIM 0.1102 | D 0.057 (real 0.86 fake 0.14) adv 0.386 lambda 0.00487 | lr 8.33e-07 | 2.34 it/s, fresh 58%, read 22 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:38:00 [B] step  84600 97.9% | L1 0.0258 1-SSIM 0.1114 | D 0.056 (real 0.86 fake 0.14) adv 0.391 lambda 0.00471 | lr 7.74e-07 | 2.34 it/s, fresh 57%, read 21 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:39:26 [B] step  84800 98.1% | L1 0.0243 1-SSIM 0.1070 | D 0.058 (real 0.86 fake 0.14) adv 0.391 lambda 0.00463 | lr 7.21e-07 | 2.35 it/s, fresh 55%, read 20 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:41:09 [B] step  85000 98.4% | L1 0.0250 1-SSIM 0.1093 | D 0.058 (real 0.86 fake 0.14) adv 0.390 lambda 0.00465 | lr 6.64e-07 | 1.93 it/s, fresh 52%, read 16 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:42:34 [val] step 85121: L1 0.0272 PSNR 29.17 SSIM 0.890 aligned 32.72 sharp 0.70 score 0.0352 * best final
+23:43:14 [B] step  85200 98.7% | L1 0.0260 1-SSIM 0.1094 | D 0.063 (real 0.84 fake 0.14) adv 0.385 lambda 0.00455 | lr 6.07e-07 | 1.61 it/s, fresh 54%, read 14 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:44:45 [B] step  85400 98.9% | L1 0.0244 1-SSIM 0.1095 | D 0.056 (real 0.87 fake 0.14) adv 0.389 lambda 0.0046 | lr 5.72e-07 | 2.18 it/s, fresh 51%, read 18 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:46:10 [B] step  85600 99.1% | L1 0.0252 1-SSIM 0.1087 | D 0.059 (real 0.86 fake 0.14) adv 0.389 lambda 0.00462 | lr 5.46e-07 | 2.35 it/s, fresh 51%, read 19 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:47:36 [B] step  85800 99.3% | L1 0.0253 1-SSIM 0.1102 | D 0.058 (real 0.86 fake 0.14) adv 0.386 lambda 0.00475 | lr 5.26e-07 | 2.34 it/s, fresh 54%, read 20 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:49:10 [B] step  86000 99.6% | L1 0.0242 1-SSIM 0.1094 | D 0.056 (real 0.87 fake 0.14) adv 0.383 lambda 0.00468 | lr 5.11e-07 | 2.13 it/s, fresh 50%, read 17 patch/s, epoch 6 | 10.4 GB | scale 65536
+23:50:37 [B] step  86200 99.8% | L1 0.0249 1-SSIM 0.1090 | D 0.055 (real 0.87 fake 0.14) adv 0.390 lambda 0.00473 | lr 5.02e-07 | 2.29 it/s, fresh 56%, read 20 patch/s, epoch 6 | 10.4 GB | scale 131072
+23:52:05 [train] done: 86380 steps in 10.84 h, 6 epoch(s) started

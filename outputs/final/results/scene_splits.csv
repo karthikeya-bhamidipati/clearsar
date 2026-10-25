@@ -1,0 +1,176 @@
+season,scene,n_patches,country,continent,lon,lat,split,n_used
+ROIs1158_spring,1,784,MZ,Africa,37.9246,-17.2157,train,784
+ROIs1158_spring,6,700,GN,Africa,-12.4442,10.9881,val,60
+ROIs1158_spring,8,784,NZ,Oceania,170.8518,-42.8404,test,784
+ROIs1158_spring,9,525,CD,Africa,19.8634,3.7519,train,525
+ROIs1158_spring,15,763,AU,Oceania,151.0428,-24.6887,train,763
+ROIs1158_spring,17,756,BR,South America,-59.7893,-14.3672,train,756
+ROIs1158_spring,21,703,CA,North America,-118.9965,63.7738,train,703
+ROIs1158_spring,26,720,CA,North America,-104.8934,60.7624,train,720
+ROIs1158_spring,31,784,BO,South America,-60.3969,-16.7979,train,784
+ROIs1158_spring,39,818,CD,Africa,21.0816,-4.4519,train,818
+ROIs1158_spring,40,563,BR,South America,-41.2005,-20.129,train,563
+ROIs1158_spring,44,784,AR,South America,-62.5094,-29.1604,train,784
+ROIs1158_spring,45,694,MZ,Africa,39.9498,-11.3583,train,694
+ROIs1158_spring,58,669,CF,Africa,21.0445,8.2651,train,669
+ROIs1158_spring,63,784,US,North America,-94.4718,36.351,test,784
+ROIs1158_spring,66,757,SN,Africa,-15.7377,16.1281,train,757
+ROIs1158_spring,75,766,AO,Africa,18.4666,-10.7086,train,766
+ROIs1158_spring,77,715,ET,Africa,40.8871,7.0609,test,715
+ROIs1158_spring,97,297,ZM,Africa,23.7745,-16.6938,train,297
+ROIs1158_spring,100,764,CN,Asia,117.4198,31.7756,train,764
+ROIs1158_spring,101,765,JP,Asia,130.8095,32.6549,train,765
+ROIs1158_spring,106,784,US,North America,-118.4839,34.5627,train,784
+ROIs1158_spring,109,316,US,North America,-95.0567,29.9955,train,316
+ROIs1158_spring,110,731,US,North America,-88.5562,30.3507,train,731
+ROIs1158_spring,113,738,US,North America,-82.3043,27.8802,train,738
+ROIs1158_spring,115,781,KR,Asia,126.3646,33.4315,train,781
+ROIs1158_spring,117,841,CN,Asia,113.585,38.0246,train,841
+ROIs1158_spring,119,736,CN,Asia,109.1606,34.2222,test,736
+ROIs1158_spring,120,784,DE,Europe,8.4644,48.8879,train,784
+ROIs1158_spring,121,638,RO,Europe,26.224,44.4921,train,638
+ROIs1158_spring,123,781,IT,Europe,10.9366,45.5615,train,781
+ROIs1158_spring,124,695,CN,Asia,109.073,35.0465,test,695
+ROIs1158_spring,126,728,RU,Europe,38.0949,51.2128,test,728
+ROIs1158_spring,128,782,GB,Europe,-1.6647,54.9913,train,782
+ROIs1158_spring,132,784,JP,Asia,139.602,36.3456,train,784
+ROIs1158_spring,134,722,UA,Europe,32.6789,46.6945,train,722
+ROIs1158_spring,140,850,DE,Europe,11.3424,48.361,train,850
+ROIs1158_spring,141,722,JP,Asia,138.6972,35.7431,val,60
+ROIs1158_spring,142,632,US,North America,-74.344,39.857,train,632
+ROIs1158_spring,145,742,FR,Europe,1.7044,48.8185,train,742
+ROIs1158_spring,147,435,IT,Europe,8.9897,45.5533,train,435
+ROIs1868_summer,4,740,RU,Europe,55.6728,68.1106,train,740
+ROIs1868_summer,7,805,US,North America,-150.332,61.5319,train,805
+ROIs1868_summer,11,533,CF,Africa,16.9822,5.9812,test,533
+ROIs1868_summer,15,663,PY,South America,-57.7402,-26.6846,train,663
+ROIs1868_summer,17,784,FR,Europe,3.9275,49.8037,train,784
+ROIs1868_summer,19,599,NG,Africa,5.0297,11.5938,train,599
+ROIs1868_summer,25,804,RU,Europe,76.676,70.4209,train,804
+ROIs1868_summer,27,823,RU,Europe,42.5763,46.0515,train,823
+ROIs1868_summer,31,775,CN,Asia,122.2931,40.1351,train,775
+ROIs1868_summer,36,757,MX,North America,-105.2828,29.2778,train,757
+ROIs1868_summer,40,846,CA,North America,-84.8837,52.9451,train,846
+ROIs1868_summer,42,738,IN,Asia,74.1784,26.6844,train,738
+ROIs1868_summer,43,819,CA,North America,-125.775,66.8642,test,819
+ROIs1868_summer,47,647,TD,Africa,20.5765,12.0582,train,647
+ROIs1868_summer,55,630,AU,Oceania,134.55,-30.8027,train,630
+ROIs1868_summer,56,653,PL,Europe,15.5509,51.1266,train,653
+ROIs1868_summer,72,769,AU,Oceania,135.1859,-29.9879,train,769
+ROIs1868_summer,73,783,AU,Oceania,144.4918,-18.6308,train,783
+ROIs1868_summer,76,784,CA,North America,-100.1595,52.8424,train,784
+ROIs1868_summer,80,713,AU,Oceania,149.2921,-34.2454,train,713
+ROIs1868_summer,86,710,BR,South America,-56.7249,-8.9372,train,710
+ROIs1868_summer,87,784,US,North America,-123.4276,44.9904,train,784
+ROIs1868_summer,89,371,KZ,Asia,59.6908,46.6761,val,60
+ROIs1868_summer,90,631,US,North America,-94.491,46.7922,train,631
+ROIs1868_summer,93,194,IR,Asia,47.8745,38.2335,train,194
+ROIs1868_summer,95,703,RU,Europe,60.5931,61.5749,train,703
+ROIs1868_summer,100,725,TR,Asia,29.1101,40.4266,train,725
+ROIs1868_summer,101,648,US,North America,-87.5104,41.602,train,648
+ROIs1868_summer,102,508,IT,Europe,13.7965,41.3953,train,508
+ROIs1868_summer,113,734,JP,Asia,129.9135,32.9891,train,734
+ROIs1868_summer,114,657,CN,Asia,87.5614,44.0465,train,657
+ROIs1868_summer,115,849,ES,Europe,-6.0037,37.5047,val,60
+ROIs1868_summer,119,782,CN,Asia,117.4849,39.0984,train,782
+ROIs1868_summer,120,530,BR,South America,-48.5723,-1.4472,train,530
+ROIs1868_summer,121,784,BE,Europe,3.7802,50.9078,train,784
+ROIs1868_summer,123,721,US,North America,-122.4841,37.9504,train,721
+ROIs1868_summer,124,611,GR,Europe,23.7666,38.0917,train,611
+ROIs1868_summer,125,741,JP,Asia,134.8839,34.7994,train,741
+ROIs1868_summer,126,723,JP,Asia,141.3759,43.0967,train,723
+ROIs1868_summer,127,772,IR,Asia,49.1883,32.0117,test,772
+ROIs1868_summer,132,784,US,North America,-76.9017,40.1722,train,784
+ROIs1868_summer,133,784,CN,Asia,118.3666,31.2937,train,784
+ROIs1868_summer,135,703,CL,South America,-71.6685,-33.0507,train,703
+ROIs1868_summer,137,651,IT,Europe,8.8345,45.9962,train,651
+ROIs1868_summer,139,533,IT,Europe,18.17,40.0096,train,533
+ROIs1868_summer,140,782,RU,Europe,49.3568,58.7074,train,782
+ROIs1868_summer,143,700,IN,Asia,79.1159,21.1639,test,700
+ROIs1868_summer,146,453,AR,South America,-57.6285,-37.9012,train,453
+ROIs1868_summer,147,594,NL,Europe,4.3896,51.5434,train,594
+ROIs1970_fall,1,849,US,North America,-114.4405,42.1149,train,849
+ROIs1970_fall,3,796,ES,Europe,0.7797,41.3461,train,796
+ROIs1970_fall,4,199,MR,Africa,-14.6473,19.8132,train,199
+ROIs1970_fall,6,764,HU,Europe,17.9661,47.7349,train,764
+ROIs1970_fall,11,545,MG,Africa,47.9516,-14.2742,test,545
+ROIs1970_fall,14,782,CA,North America,-58.4057,47.9336,train,782
+ROIs1970_fall,19,639,AO,Africa,16.4751,-11.1822,train,639
+ROIs1970_fall,22,716,US,North America,-80.2097,32.8909,train,716
+ROIs1970_fall,26,575,YE,Asia,44.6198,14.3132,train,575
+ROIs1970_fall,27,848,CA,North America,-120.9059,52.2649,train,848
+ROIs1970_fall,28,752,ZM,Africa,21.8321,-14.7006,train,752
+ROIs1970_fall,30,359,RU,Europe,135.0266,58.9108,train,359
+ROIs1970_fall,31,666,NG,Africa,11.0247,10.4004,train,666
+ROIs1970_fall,33,690,US,North America,-91.9297,32.8762,train,690
+ROIs1970_fall,35,690,CF,Africa,23.3909,5.9826,train,690
+ROIs1970_fall,37,714,SS,Africa,27.8597,7.6674,train,714
+ROIs1970_fall,39,772,BR,South America,-61.8247,-12.0157,train,772
+ROIs1970_fall,40,784,ZW,Africa,32.3748,-20.3235,train,784
+ROIs1970_fall,41,718,CA,North America,-128.7594,52.4302,train,718
+ROIs1970_fall,42,684,BR,South America,-42.6606,-5.6448,train,684
+ROIs1970_fall,57,784,SA,Asia,38.8505,24.9899,val,60
+ROIs1970_fall,64,784,ZA,Africa,29.1544,-24.6806,train,784
+ROIs1970_fall,65,781,US,North America,-110.2657,33.3594,train,781
+ROIs1970_fall,71,683,ES,Europe,-2.7267,42.9283,train,683
+ROIs1970_fall,77,793,TM,Asia,54.4609,39.0502,test,793
+ROIs1970_fall,81,779,CF,Africa,19.9664,6.3201,train,779
+ROIs1970_fall,82,711,US,North America,-115.6897,42.8527,train,711
+ROIs1970_fall,83,784,IQ,Asia,43.3109,36.3762,train,784
+ROIs1970_fall,85,611,CO,South America,-70.3349,4.7642,train,611
+ROIs1970_fall,88,783,AU,Oceania,138.6936,-34.8315,train,783
+ROIs1970_fall,91,696,HU,Europe,19.2467,47.6832,train,696
+ROIs1970_fall,93,626,RU,Europe,135.5781,44.4263,train,626
+ROIs1970_fall,100,757,MM,Asia,96.0331,17.0064,val,60
+ROIs1970_fall,104,766,BE,Europe,4.6573,50.9953,train,766
+ROIs1970_fall,105,784,US,North America,-79.9457,32.9404,train,784
+ROIs1970_fall,107,784,FR,Europe,2.8036,50.4514,test,784
+ROIs1970_fall,109,682,TW,Asia,120.9908,24.6657,test,682
+ROIs1970_fall,110,713,US,North America,-80.5213,40.8934,train,713
+ROIs1970_fall,112,784,LB,Asia,35.6795,33.6123,test,784
+ROIs1970_fall,114,828,US,North America,-84.137,35.6741,train,828
+ROIs1970_fall,116,733,JP,Asia,139.2768,36.2337,train,733
+ROIs1970_fall,119,776,FR,Europe,6.9992,43.5599,train,776
+ROIs1970_fall,120,747,US,North America,-74.0484,40.7036,train,747
+ROIs1970_fall,122,712,AU,Oceania,151.1305,-33.7952,train,712
+ROIs1970_fall,125,666,US,North America,-80.8902,35.0823,train,666
+ROIs1970_fall,128,783,ES,Europe,-3.7557,40.3217,train,783
+ROIs1970_fall,131,346,US,North America,-84.2986,33.8275,train,346
+ROIs1970_fall,133,767,PL,Europe,18.8917,50.0136,train,767
+ROIs1970_fall,134,684,JP,Asia,140.9098,36.9923,train,684
+ROIs1970_fall,135,751,JP,Asia,138.33,35.8693,train,751
+ROIs1970_fall,136,708,RU,Europe,52.2715,54.9404,train,708
+ROIs1970_fall,139,784,CN,Asia,118.8447,33.5979,train,784
+ROIs1970_fall,141,744,NL,Europe,5.868,52.2157,train,744
+ROIs1970_fall,142,779,US,North America,-93.0037,44.8094,train,779
+ROIs1970_fall,144,559,PT,Europe,-8.1351,41.2683,test,559
+ROIs1970_fall,147,591,PK,Asia,74.5865,32.6127,val,60
+ROIs1970_fall,148,676,US,North America,-73.3386,41.0758,train,676
+ROIs1970_fall,149,680,FR,Europe,2.2878,43.8908,train,680
+ROIs2017_winter,8,784,ML,Africa,0.8822,17.5407,train,784
+ROIs2017_winter,21,557,TZ,Africa,32.2842,-6.8426,train,557
+ROIs2017_winter,22,610,SS,Africa,30.8492,7.0141,train,610
+ROIs2017_winter,25,716,AU,Oceania,130.037,-20.5648,train,716
+ROIs2017_winter,42,784,CN,Asia,110.1037,19.3745,train,784
+ROIs2017_winter,47,672,ZA,Africa,20.2576,-30.232,train,672
+ROIs2017_winter,49,734,BR,South America,-37.6082,-8.0283,train,734
+ROIs2017_winter,55,342,AR,South America,-70.3919,-37.0774,test,342
+ROIs2017_winter,59,710,US,North America,-94.9376,30.8141,train,710
+ROIs2017_winter,61,556,MA,Africa,-3.1706,34.7034,train,556
+ROIs2017_winter,62,623,AO,Africa,17.5125,-9.4759,train,623
+ROIs2017_winter,63,784,FR,Europe,2.4623,43.7034,train,784
+ROIs2017_winter,64,784,AR,South America,-63.7537,-37.3553,test,784
+ROIs2017_winter,68,743,MX,North America,-113.9455,29.3627,train,743
+ROIs2017_winter,75,700,DZ,Africa,1.8105,28.3382,train,700
+ROIs2017_winter,81,609,ZA,Africa,28.9307,-24.9957,train,609
+ROIs2017_winter,84,606,IT,Europe,15.9147,37.9322,train,606
+ROIs2017_winter,94,757,US,North America,-80.0326,35.9174,train,757
+ROIs2017_winter,102,719,GB,Europe,0.3531,52.4136,train,719
+ROIs2017_winter,104,508,US,North America,-90.1321,38.9109,train,508
+ROIs2017_winter,107,775,CN,Asia,110.9889,37.5186,val,60
+ROIs2017_winter,108,783,TR,Asia,29.1631,41.0318,train,783
+ROIs2017_winter,112,829,NL,Europe,5.8307,50.8575,train,829
+ROIs2017_winter,116,777,US,North America,-76.9987,40.2628,train,777
+ROIs2017_winter,130,780,IR,Asia,48.606,31.2557,val,60
+ROIs2017_winter,135,479,US,North America,-104.7505,38.9886,val,60
+ROIs2017_winter,146,612,IT,Europe,13.0182,41.7814,train,612

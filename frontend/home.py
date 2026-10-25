@@ -19,8 +19,10 @@ if fin is not None:
     s, meta = fin["samples"], fin["samples_meta"]
     if s is not None and "pred_final" in s:
         names = final_sample_names(meta)
+        # open on the Indian test patch if there is one, else the partly cloudy patch with the largest gain
         gains = [m["scores"].get("final", {}).get("psnr", 0) - m["scores"].get("identity", {}).get("psnr", 0)
-                 + (100 if 0.3 <= m["cloud_frac"] <= 0.9 else 0) for m in meta["samples"]]
+                 + (100 if 0.2 <= m["cloud_frac"] <= 0.6 else 0) + (1000 if m["country"] == "IN" else 0)
+                 for m in meta["samples"]]
         left, right = st.columns([1.35, 1], gap="large")
         with right:
             st.markdown("<div style='height:.6rem'></div>", unsafe_allow_html=True)

@@ -23,6 +23,22 @@ uncertainty-quantification extension.
 | **Part B (45 %)** | + spectrally normalised conditional PatchGAN (LSGAN loss), adaptive adversarial weight (GAN gradient = 0.2 x pixel-loss gradient), G 5e-5 / D 2e-4 -> `clearsar_net_final.pt`, chosen by L1 x (1 + abs(1 - sharpness)) |
 | **Test** | once, on the held-out scenes: cloudy input vs Phase-1 U-Net vs before-GAN vs final; by cloud cover, continent, country; uncertainty from test-time augmentation |
 
+**Result of the final run** (10.8 h training, 86 380 steps, ~6 passes over the data, no NaN-guard events; test = 5 400
+patches from 18 held-out scenes on every continent, all 13 bands; outputs and both checkpoints in `outputs/final/`):
+
+| | PSNR (dB) | SSIM | SAM (°) | PSNR, date shift removed | Sharpness (1 = real) |
+|---|---|---|---|---|---|
+| Cloudy input (no model) | 20.29 | 0.703 | 13.37 | 33.71 | 1.88 |
+| Phase 1 U-Net (3 000 Asian patches) | 26.70 | 0.853 | 9.78 | 33.86 | 0.90 |
+| ClearSAR-Net before GAN | **28.68** | **0.881** | 8.38 | **34.58** | 0.78 |
+| **ClearSAR-Net final (GAN)** | 28.59 | 0.879 | **8.33** | 34.53 | **0.87** |
+
+- **+1.9 dB over Phase 1** (95 % CI over scenes +1.1 to +2.7; better in 17 of 18 scenes) and +8.3 dB over the cloudy input.
+- **The GAN** raised sharpness 0.78 → 0.87 (better in 16 of 18 scenes) at a PSNR cost of −0.09 dB that is within noise
+  (CI −0.34 to +0.16) - the intended trade-off.
+- The learned cloud gate keeps less of the input as cloud cover grows (Spearman −0.84) without ever being told where the
+  clouds are; the flip-test uncertainty tracks the real error (Spearman 0.55). India: 29.45 dB (Phase 1: 25.50).
+
 On Kaggle (GPU T4 x2, Internet on, SEN12MS-CR attached):
 
 ```

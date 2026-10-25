@@ -1,0 +1,83 @@
+{
+  "cfg": {
+    "input_roots": [
+      "/kaggle/input/*"
+    ],
+    "out_dir": "/kaggle/working/clearsar_final_output",
+    "index_cache": "/kaggle/working/clearsar_index.csv",
+    "hours": 11.6,
+    "train_minutes": 0.0,
+    "caps": {
+      "val": 600
+    },
+    "test_per_scene": 300,
+    "n_val": 10,
+    "n_test": 18,
+    "seed": 42,
+    "model": {
+      "output_mode": "hybrid",
+      "attn_layers": 2,
+      "attn_heads": 8,
+      "attn_mlp_ratio": 2.0,
+      "width": 64,
+      "upsample": "bilinear"
+    },
+    "d_base": 64,
+    "batch_candidates": [
+      8,
+      6,
+      4
+    ],
+    "lr": 0.0003,
+    "lr_floor": 0.05,
+    "warmup_steps": 1000,
+    "weight_decay": 0.0001,
+    "grad_clip": 1.0,
+    "ema_decay": 0.999,
+    "w_ssim": 0.05,
+    "gan_start": 0.55,
+    "lr_gan": 5e-05,
+    "lr_d": 0.0002,
+    "adv_factor": 0.2,
+    "d_warmup_steps": 300,
+    "adv_ramp_steps": 1000,
+    "lambda_every": 10,
+    "workers": 4,
+    "pool_size": 256,
+    "max_echo": 4,
+    "val_every_min": 20.0,
+    "log_every": 200,
+    "sync_every": 10,
+    "nan_patience": 20,
+    "snapshot_every": 1000,
+    "max_restores": 3,
+    "inject_nan_step": 0,
+    "p1_checkpoint": "/kaggle/working/clearsar/outputs/checkpoints/best_A_unet.pt",
+    "train_seconds": 39006.66481012106
+  },
+  "n_train": 102871,
+  "n_val": 600,
+  "n_test": 5400,
+  "read_rate": 4.248456329031451,
+  "band_means": [
+    0.13909977674484253,
+    0.11294197291135788,
+    0.10174363106489182,
+    0.0954350009560585,
+    0.11652147769927979,
+    0.1774047613143921,
+    0.2061747908592224,
+    0.20027869939804077,
+    0.22789831459522247,
+    0.0644555613398552,
+    0.0016417760634794831,
+    0.18505434691905975,
+    0.1177111491560936
+  ],
+  "labels": {
+    "identity": "Cloudy input (no model)",
+    "p1_unet": "Phase 1 U-Net (3 000 Asian patches)",
+    "before_gan": "ClearSAR-Net, before GAN (part A)",
+    "final": "ClearSAR-Net final (with GAN)"
+  }
+}
