@@ -23,7 +23,7 @@ uncertainty-quantification extension.
 | **Part B (45 %)** | + spectrally normalised conditional PatchGAN (LSGAN loss), adaptive adversarial weight (GAN gradient = 0.2 x pixel-loss gradient), G 5e-5 / D 2e-4 -> `clearsar_net_final.pt`, chosen by L1 x (1 + abs(1 - sharpness)) |
 | **Test** | once, on the held-out scenes: cloudy input vs Phase-1 U-Net vs before-GAN vs final; by cloud cover, continent, country; uncertainty from test-time augmentation |
 
-**Result of the final run** (10.8 h training, 86 380 steps, ~6 passes over the data, no NaN-guard events; test = 5 400
+**Result of the final run** (10.8 h training, 86 380 steps, 6 complete passes over the data, no NaN-guard events; test = 5 400
 patches from 18 held-out scenes on every continent, all 13 bands; outputs and both checkpoints in `outputs/final/`):
 
 | | PSNR (dB) | SSIM | SAM (°) | PSNR, date shift removed | Sharpness (1 = real) |
@@ -218,7 +218,7 @@ The app reads `outputs/final/` (extract `clearsar_final_output.zip` from `notebo
 A rule-based, explainable decision-support system on top of the networks — see
 [`docs/expert_system.md`](docs/expert_system.md). Facts come from the input patch, the models' outputs
 (disagreement, uncertainty, radar reliance via occlusion, band saliency) and the experiment results; a
-YAML knowledge base of 35 IF-THEN rules with certainty factors is chained by a forward-chaining MYCIN-style
+YAML knowledge base of 38 IF-THEN rules with certainty factors is chained by a forward-chaining MYCIN-style
 engine (`src/expert/`). Every decision comes with the rules that produced it, the alternatives considered and
 why other rules did not fire.
 

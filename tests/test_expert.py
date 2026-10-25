@@ -104,3 +104,24 @@ def test_advisor_end_to_end_on_outputs():
         assert a.verdict(fact)[0] is not None
     assert a.reconstruction.shape[0] == 13 and 0 <= a.numeric["sar_reliance"] <= 1
     assert a.saliency.shape == (15,) and abs(a.saliency.sum() - 1) < 1e-5
+
+
+def _model_ctx(num, gan_cost):
+    num = dict(num, gan_psnr_cost=gan_cost)
+    ctx = dict(num, best_model_for_cloud_level="before_gan", gan_model="final", nongan_model="before_gan",
+               gan_cost=gan_cost, gan_model_label="final", nongan_model_label="before GAN")
+    return num, ctx
+
+
+@pytest.mark.parametrize("cost, use, expected", [(0.1, "visual_inspection", "final"),          # M5 fires
+                                                 (2.0, "visual_inspection", "before_gan"),     # Phase-1-like GAN cost
+                                                 (0.1, "vegetation_monitoring", "before_gan")])  # M4 wins for measurements
+def test_gan_model_only_for_visual_use_when_its_cost_is_negligible(cost, use, expected):
+    num, ctx = _model_ctx(GOOD, cost)
+    res = InferenceEngine(KB).run(num, dict(use_case=use, region="in_region", gan_available="yes"), ctx)
+    assert res.value("recommended_model")[0] == expected
+
+
+def test_low_cloud_with_moderate_disagreement_still_gets_a_trust_verdict():
+    res = run(dict(GOOD, model_disagreement=0.03, clear_pixel_error=0.04, uncertainty=0.03))
+    assert res.value("trust")[0] == "medium" and res.value("action")[0] is not None

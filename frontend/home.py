@@ -69,7 +69,7 @@ if fin is not None:
     card(c[0], "The generator", "A U-Net (3 levels, 12.8 M parameters) with 2 global self-attention blocks in the "
          "bottleneck, so every region can use context from the whole patch. A learned <b>cloud gate</b> decides "
          "per pixel whether to keep (and colour-correct) what the satellite saw or to rebuild it from the radar.")
-    card(c[1], "Part A · reconstruction", "55 % of the 11-hour run: L1 + SSIM loss, AdamW, cosine schedule, weight "
+    card(c[1], "Part A · reconstruction", "55 % of the 10.8-hour training: L1 + SSIM loss, AdamW, cosine schedule, weight "
          "averaging (EMA). Accurate, but - like every pixel-loss model - a little blurry. Saved as "
          "<i>before GAN</i>.")
     card(c[2], "Part B · PatchGAN", "A discriminator judges 70×70 windows: 'is this a real clear image for this "

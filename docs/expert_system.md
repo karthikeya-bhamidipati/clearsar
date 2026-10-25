@@ -38,7 +38,7 @@ and **Knowledge base** pages; tests: `tests/test_expert.py`.
 
 | Component | File | Role |
 |---|---|---|
-| Knowledge base | `src/expert/knowledge_base.yaml` | thresholds, 35 IF-THEN rules with certainty factors, labels, conflict resolution |
+| Knowledge base | `src/expert/knowledge_base.yaml` | thresholds, 38 IF-THEN rules with certainty factors, labels, conflict resolution |
 | Fact extraction | `src/expert/facts.py` | measures the patch, the model outputs and the experiment results |
 | Explainability | `src/expert/xai.py` | occlusion (radar vs optical reliance), input×gradient band saliency |
 | Inference engine | `src/expert/engine.py` | fuzzification, stratified forward chaining, MYCIN certainty factors, trace |
@@ -83,7 +83,7 @@ treated as confidently "low" as one with 5 %.
   because: "Heavy cloud ({cloud_pct:.0f}%), but the model draws most of its information from the
             radar ({sar_rel_pct:.0f}% reliance) and the architectures largely agree."
 ```
-35 rules in five groups: **observations** (warnings) → **trust** → **model** → **suitability** → **action**.
+38 rules in five groups: **observations** (warnings) → **trust** → **model** → **suitability** → **action**.
 The `because` template is filled with the measured values, which produces patch-specific explanations.
 
 ## 3. Inference
@@ -113,6 +113,23 @@ lowers trust when it does not.
 
 **Saliency.** |input × ∂(predicted RGB under the clouds)/∂input| summed per input channel shows which of the
 15 bands (VV, VH, B1 … B12) drove the reconstruction.
+
+## 4b. The advisor with the final model (ClearSAR-Net)
+When `outputs/final/` holds the ClearSAR-Net checkpoints (`Advisor(..., final_dir="outputs/final")`):
+
+* **Reconstruction** with ClearSAR-Net on the whole 256 × 256 patch - the final (GAN) or the before-GAN version.
+  The three Phase 1 architectures keep running as independent second opinions for the *disagreement* fact.
+* **Experience** comes from the final model's own test (`test_by_cloud.csv`, 18 scenes): M1 recommends whichever of
+  before-GAN / final has the higher PSNR at the patch's cloud level; the new fact `gan_psnr_cost` = how many dB the
+  GAN model trails the best one there.
+* **M5** (CF 0.9): visual inspection + GAN cost *negligible* (< 0.3 dB) → recommend the GAN model. (In Phase 1 the
+  GAN cost 2-3 dB, so M5 never fires there.) **M4** (CF 0.85): vegetation monitoring, land cover, change detection →
+  the most faithful non-adversarial model (before-GAN).
+* **T13** (CF 0.6): little cloud but moderate disagreement → medium trust (closes a gap where no trust rule fired).
+* **Uncertainty** = flip-test spread × k, k = median(MAE) / median(spread) on the test patches (clamped 1-20), so it
+  reads as an expected error. **Region** is always *inside the training data* (trained on every continent).
+* Note: `clear_pixel_error` compares the output with the cloudy input on visible pixels. The final model deliberately
+  corrects their colour towards the target date, so for it this fact mixes real error with intended correction.
 
 ## 5. Knowledge acquisition
 Two sources:

@@ -89,7 +89,7 @@ function oldChapter(title, renumber, extra = []) {
   const [from, to] = renumber;                       // e.g. ["5.", "12."]
   code = code.replace(new RegExp(`H([123])\\("${from.replace(".", "\\.")}`, "g"), `H$1("${to}`);
   const refs = [["§13.", "§15."], ["chapter 13", "chapter 15"], ["(§6.1)", "(§13.1)"], ["chapter 10", "chapter 17"],
-    ["chapter 11", "chapter 18"], ["§7.8", "§9.8"], ...extra];
+    ["chapter 11", "chapter 18"], ["§7.8", "§9.8"], ["Typical values here: ~21 dB for the cloudy input, ~27-29 dB for trained models.", "Typical values here: ~20-21 dB for the cloudy input, ~27-29 dB for trained models."], ...extra];
   for (const [a, b] of refs) code = code.split(a).join(b);
   eval(code);
 }
@@ -114,7 +114,7 @@ P("**The idea.** Radar satellites such as Sentinel-1 send their own microwave si
 P("**The final model.** One network, **ClearSAR-Net**: a U-Net with two global self-attention blocks in its bottleneck and a learned **cloud gate** that decides, per pixel, whether to keep (and colour-correct) what the satellite saw or to rebuild it from the radar. It is trained in two parts on Kaggle's 2 × T4 GPUs in one 11-hour session on the **whole SEN12MS-CR dataset** - 102 871 training patches from 147 scenes on every continent and in all four seasons:");
 UL(["**Part A - reconstruction** (55 % of the time): L1 + SSIM loss. Accurate but, like every pixel-loss model, slightly blurry. Saved as *before GAN*.",
   "**Part B - PatchGAN refinement** (45 %): a discriminator judges 70 × 70 windows - 'is this a real clear image for this input?' - and its gradient, held at 20 % of the pixel loss's, pushes the generator towards real texture."]);
-P("**How we got here.** Phase 1 (Part B of this guide) compared 26 trainings - U-Net, Swin U-Net, Vision Transformer, ablations, a GAN and three uncertainty methods - on 3 000 Asian patches. It found no clearly best architecture, a 2-4 dB advantage for global context under thick cloud, almost flat learning curves (scene diversity, not architecture, was the limit) and a GAN ruined by its checkpoint selection. Each of these findings became a design decision of the final model (chapter 4).");
+P("**How we got here.** Phase 1 (Part B of this guide) compared 26 trainings - U-Net, Swin U-Net, Vision Transformer, ablations, a GAN and three uncertainty methods - on 3 000 Asian patches. It found no clearly best architecture, a 2-4 dB advantage for global context under thick cloud, almost flat learning curves (scene diversity, not architecture, was the limit) and a GAN that gained no realism because its checkpoint was selected by L1 alone. Each of these findings became a design decision of the final model (chapter 4).");
 P("**The main results** (chapter 10). On 5 400 patches from 18 held-out scenes on every continent, the final model reaches **28.59 dB PSNR, SSIM 0.879** - +8.3 dB over the cloudy input (20.29 dB) and **+1.9 dB over the Phase 1 U-Net** (better in 17 of 18 scenes, 95 % CI +1.1 to +2.7 dB). The GAN part raised sharpness from 0.78 to 0.87 at a PSNR cost (−0.09 dB) that lies within noise. The cloud gate learned where the clouds are without ever being told (Spearman −0.84 with cloud cover). India: 29.45 dB (Phase 1: 25.50 dB).");
 P("**The expert system.** A reconstruction is an estimate. The **ClearSAR Advisor** is a rule-based expert system that inspects each patch and the network's output (cloud cover, radar reliance, uncertainty, agreement with independent models) together with what the test showed, and decides how far a reconstruction can be trusted, which model to use (the GAN-refined one for visual use, the before-GAN one for measurements), whether it fits the user's purpose and what to do next - explaining every step.");
 P("**The tools.** PyTorch (DistributedDataParallel, mixed precision) on Kaggle, a Streamlit web frontend, and a YAML knowledge base with a certainty-factor inference engine.");
@@ -132,10 +132,10 @@ PART("Part A", "The final model: ClearSAR-Net + PatchGAN on the whole dataset");
 H1("4. From Phase 1 to one model");
 P("After Phase 1 the reconstructions were measurably better than the cloudy input but did not *look* close to the real image. Instead of comparing more architectures, the project was re-planned around **one model, built as well as possible**, with every design choice justified by a Phase 1 finding or a measurement. (An intermediate staged plan, 'plan v4', is kept in `docs/project_plan_v4.md`; it was simplified to this single run because of time.)");
 T(["Phase 1 finding / measurement", "Decision for the final model"], [
-  ["Learning curves were flat (750 → 3 000 patches changed PSNR by < 0.5 dB); all subsets came from the same 23 scenes. 3 000 patches are 2.5 % of SEN12MS-CR.", "**Train on everything**: all 147 training scenes, all 102 871 patches, every continent and season. Diversity of scenes, not more patches of the same scenes."],
-  ["No architecture clearly best; U-Net stable across seeds and best SSIM; ViT 2-4 dB better under 60-100 % cloud thanks to its 56 px receptive field.", "**U-Net backbone + global self-attention in the bottleneck**: convolutions for local detail, attention so every region can use context from the whole patch."],
-  ["Even a cloud-free input scores only 25.9-27.1 dB against the 'clear' target; after a per-band brightness fit 31-40 dB. Most visible-pixel error is the date difference between the two images.", "**Hybrid output**: a learned gate keeps visible pixels *and corrects their colour*; report **PSNR with the date shift removed** next to plain PSNR."],
-  ["The GAN lost 1.35 dB and did not improve FID because its checkpoint was chosen by L1 after 1-4 k steps.", "**GAN as a second part** on top of a converged reconstruction model; **adaptive** adversarial weight; checkpoint chosen by **accuracy × sharpness**, only once the GAN is fully on."],
+  ["Learning curves were flat (750 → 3 000 patches changed in-domain PSNR by < 0.5 dB); all subsets came from the same 23 scenes. 3 000 patches are 2.5 % of SEN12MS-CR.", "**Train on everything**: all 147 training scenes, all 102 871 patches, every continent and season. Diversity of scenes, not more patches of the same scenes."],
+  ["No architecture clearly best; the U-Net was the most stable across seeds (± 0.06 dB) and the U-Net ensemble had the best SSIM; the ViT was 2-4 dB better under 60-100 % cloud, consistent with its 56 px effective receptive field.", "**U-Net backbone + global self-attention in the bottleneck**: convolutions for local detail, attention so every region can use context from the whole patch."],
+  ["On the nearly cloud-free Phase 1 gallery patches the cloudy input scores only 24.3-27.1 dB against the 'clear' target, but 31-40 dB after a per-band brightness fit: most of the error on visible pixels is the date difference between the two images.", "**Hybrid output**: a learned gate keeps visible pixels *and corrects their colour*; report **PSNR with the date shift removed** next to plain PSNR."],
+  ["The GAN lost 1.35 dB and did not improve FID; its checkpoint was chosen by L1 after 1-4 k steps, before adversarial training had shaped the texture.", "**GAN as a second part** on top of a converged reconstruction model; **adaptive** adversarial weight; checkpoint chosen by **accuracy × sharpness**, only once the GAN is fully on."],
   ["Training on 128 × 128 crops with tiled evaluation limits context (a ViT position grid was fixed).", "**Full 256 × 256 patches** in training and evaluation; attention sees the whole patch."],
   ["Ranking was decided by 2 of 7 test scenes.", "**18 test scenes** (300 patches each) on every continent; differences tested with a **scene bootstrap**."],
   ["The user wants one model, not a comparison.", "Comparisons are only **references**: the cloudy input, the Phase 1 U-Net (same test patches) and the same model before its GAN part."],
@@ -167,7 +167,7 @@ P("A cache like Phase 1's would need ~450 GB (3.7 MB per patch × 122 218) and h
 UL(["**4 worker processes per GPU**, each reading the S1, cloudy-S2 and clear-S2 files of a patch **in three parallel threads**. Kaggle's dataset storage is limited by latency, not CPU: the quick test read only ~15 patches/s cold; overlapping the waits raised it to 42 patches/s on one machine and 15-21 (mean 18.5) on the slower disk of the final run.",
   "Unreadable or mis-shaped files are dropped by the collate function instead of crashing the run."]);
 H2("5.4 Data echoing");
-P("Two T4 GPUs consume ~36 patches/s, more than the final run's disk delivered. Rather than letting the GPUs wait, a background thread fills a queue with fresh batches; when none is ready, the training step re-uses patches from a pool of the **256 most recent patches** (kept on the GPU) with a **new random flip/rotation** - *data echoing* (Choi et al., 2019). At most 4 echoed batches may follow each other, so at least 1 in 5 is always fresh. In the final run **52 % of batches were fresh**; every training patch was read about 6 times in 10.8 hours.");
+P("Two T4 GPUs consume ~36 patches/s, more than the final run's disk delivered. Rather than letting the GPUs wait, a background thread fills a queue with fresh batches; when none is ready, the training step re-uses patches from a pool of the **256 most recent patches** (kept on the GPU) with a **new random flip/rotation** - *data echoing* (Choi et al., 2019). At most 4 echoed batches may follow each other, so at least 1 in 5 is always fresh. In the final run **52 % of batches were fresh**: 6 complete passes over the training set (each patch read about 7 times) in 10.8 hours.");
 H2("5.5 Augmentation and patch size");
 P("Every batch - fresh or echoed - gets one of the **8 dihedral transforms** (identity, flips, 90° rotations and combinations) per patch, applied on the GPU. Satellite images have no canonical orientation, so these are label-preserving. Training uses **full 256 × 256 patches** (no cropping), so the attention bottleneck sees the whole 2.56 km patch.");
 H2("5.6 Cloud cover for reporting");
@@ -208,7 +208,7 @@ UL(["**c** = the 13 cloudy bands of the input; **r** = a learned per-pixel corre
 H2("6.4 Bilinear upsampling");
 P("Phase 1's U-Net upsampled with 2 × 2 transposed convolutions. Transposed convolutions can create periodic 'checkerboard' artefacts (Odena et al., 2016) which a GAN discriminator tends to amplify. ClearSAR-Net upsamples bilinearly and then applies a 3 × 3 convolution - smooth by construction.");
 H2("6.5 Size");
-P("12.78 M parameters (Phase 1 U-Net: 7.71 M): 7.7 M for the U-Net, 4.2 M for the two attention blocks, 0.9 M for the bilinear-upsampling convolutions and heads. With batch 8 per GPU at 256 × 256 and the discriminator, peak memory was 10.4 GB of a T4's 15 GB.");
+P("12.78 M parameters (Phase 1 U-Net: 7.71 M): 7.02 M in the convolution blocks of encoder and decoder, 4.21 M in the two attention blocks (incl. the final LayerNorm), 1.55 M in the convolutions after each bilinear upsampling and 0.002 M in the three 1 × 1 heads. With batch 8 per GPU at 256 × 256 and the discriminator, peak memory was 10.4 GB of a T4's 15 GB.");
 
 // =====================================================================================
 H1("7. The GAN part: a PatchGAN critic");
@@ -235,10 +235,10 @@ F("L_G = L1(G(x), y) + 0.05 · (1 − SSIM) + λ · ½ (D(x, G(x)) − 1)²");
 P("The least-squares form (LSGAN, Mao et al., 2017) pushes real scores to 1 and generated ones to 0; its gradients do not vanish when the discriminator is confident, which makes it more stable than the original cross-entropy GAN. Phase 1 used cross-entropy with λ = 1/100 relative to L1.");
 H2("7.5 The adaptive adversarial weight λ");
 F("λ = 0.2 · ‖∇_w L_rec‖ / ‖∇_w L_adv‖     (w = last shared generator layer)");
-P("A fixed λ is fragile: the right value depends on the raw scales of both losses, which change during training. Following VQGAN (Esser et al., 2021), λ is set so that the adversarial gradient at the generator's last shared convolution is **20 % of the reconstruction gradient** - 'the GAN may push one fifth as hard as the pixel loss', whatever the scales. It is recomputed every 10 steps (gradient norms of both losses with respect to that layer), smoothed with factor 0.9, and phased in: 300 discriminator-only steps, then a linear ramp over 1 000 steps. As the discriminator grew stronger its gradients grew, so λ fell automatically from a peak of 0.06 to ~0.0045 (chapter 10).");
+P("A fixed λ is fragile: the right value depends on the raw scales of both losses, which change during training. Following VQGAN (Esser et al., 2021), λ is set so that the adversarial gradient at the generator's last shared convolution is **20 % of the reconstruction gradient** - 'the GAN may push one fifth as hard as the pixel loss', whatever the scales. It is recomputed every 10 steps (gradient norms of both losses with respect to that layer), smoothed with factor 0.9, and phased in: 300 discriminator-only steps, then a linear ramp over 1 000 steps. As the discriminator grew stronger its gradients grew, so λ fell automatically from a peak of 0.06 to about 0.005 (chapter 10).");
 H2("7.6 Choosing the final checkpoint");
 F("score = L1_val · (1 + |1 − sharpness_val|)     (lower is better)");
-P("Phase 1 chose GAN checkpoints by L1 alone and so always picked the least adversarial one. The final model is chosen by a **balanced score** that rewards both accuracy and sharpness close to 1, and only among validations **after the GAN is fully on** (after the 1 300-step warm-up and ramp). The best score (0.0352) was reached at step 85 121 of 86 380.");
+P("Phase 1 chose GAN checkpoints by L1 alone and so always picked the least adversarial one. The final model is chosen by a **balanced score** that rewards both accuracy and sharpness close to 1, and only among validations **after the GAN is fully on** (after the 1 300-step warm-up and ramp). The best score (0.0352) was reached at step 85 121 of 86 380. (A last validation after training scored 0.0351; it is logged but not part of the selection - a negligible difference.)");
 
 // =====================================================================================
 H1("8. Training the final model");
@@ -254,7 +254,7 @@ T(["", "Part A - reconstruction", "Part B - GAN refinement"], [
 P("The generator's learning rate restarts at 5 × 10⁻⁵ in part B (a *warm restart*): the new adversarial signal needs room to change the weights, but a lower peak than part A keeps the reconstruction from being destroyed.");
 H2("8.2 Reconstruction loss and its weights");
 F("L_rec = L1 + 0.05 · (1 − SSIM)");
-P("**L1** (median-seeking, robust) is the main term; **SSIM** punishes lost local structure that L1 tolerates. The weight 0.05 was not guessed: on real patches the gradient of (1 − SSIM) with respect to the prediction was measured to be **14 × larger** than that of L1 (Phase 1 U-Net outputs: ‖∇L1‖ = 3.8 × 10⁻⁴, ‖∇SSIM‖ = 5.4 × 10⁻³). The initially planned 0.2 would have let SSIM dominate (2.8 × L1); 0.05 makes it pull about 0.7 × as hard as L1. A VGG perceptual loss was considered and dropped: it is built for 3-band photographs, costs ~30 % more time and its weight could not be calibrated on real data in time - the GAN covers texture.");
+P("**L1** (median-seeking, robust) is the main term; **SSIM** punishes lost local structure that L1 tolerates. The weight 0.05 was not guessed: on real patches the gradient of (1 − SSIM) with respect to the prediction was measured to be **14 × larger** than that of L1 (Phase 1 U-Net outputs: ‖∇L1‖ = 3.8 × 10⁻⁴, ‖∇SSIM‖ = 5.4 × 10⁻³). The initially planned 0.2 would have let SSIM dominate (2.8 × L1); 0.05 makes it pull about 0.7 × as hard as L1. A VGG perceptual loss was considered and dropped: it is built for 3-band photographs, would add an estimated 25-35 % compute per step, and its weight could not be calibrated on real data in time - the GAN covers texture.");
 H2("8.3 Optimisation");
 UL(["**AdamW** for the generator, β = (0.9, 0.999), weight decay 10⁻⁴ on weights only (not on biases or normalisation parameters); **Adam** for the discriminator, β = (0.5, 0.999) - the standard GAN setting that keeps the discriminator responsive.",
   "**Gradient clipping** of the generator at norm 1.0.",
@@ -309,7 +309,7 @@ H2("9.10 Coarse colour error and fine-detail error");
 P("The error is split into two scales: the **colour error** is the MAE between 16 × 16-averaged prediction and truth (large-scale brightness and colour); the **detail error** is the MAE between the high-frequency residuals (image minus its 16 × 16 average). A model can get colours right but lose detail, or the opposite - two problems with different fixes.");
 H2("9.11 PSNR with the date shift removed");
 F("for each image and band:  ŷ' = a · (ŷ − mean ŷ) + mean y,   a = cov(ŷ, y) / var(ŷ);   PSNR(ŷ', y)");
-P("The 'clear' target was taken on a different day: brightness, moisture and vegetation have changed. A per-band least-squares brightness/contrast fit removes that global difference before PSNR is computed, so the number measures how well structure and relative values are reconstructed. The cloudy input already scores 33.7 dB on it (its visible parts are perfect structure), the final model 34.5 dB.");
+P("The 'clear' target was taken on a different day: brightness, moisture and vegetation have changed. A per-band least-squares brightness/contrast fit removes that global difference before PSNR is computed, so the number measures how well structure and relative values are reconstructed. The cloudy input already scores 33.7 dB on it (its visible parts show the real ground, only shifted by the date difference), the final model 34.5 dB.");
 H2("9.12 Uncertainty from test-time augmentation");
 P("The model is run on the patch and on three flipped versions (horizontal, vertical, both); the outputs are flipped back and their per-pixel standard deviation is the uncertainty map. Where the four answers disagree the model is unsure. Its usefulness is measured by the Spearman rank correlation between a patch's mean spread and its real MAE (0.55 on the test set).");
 H2("9.13 Is a difference real? Scene bootstrap");
@@ -318,8 +318,8 @@ P("Patches from the same scene are correlated, so a difference between two model
 // =====================================================================================
 H1("10. Results of the final model");
 H2("10.1 The run");
-P("Kaggle, 2 × NVIDIA T4, 24-25 October 2026, one committed session of **11.1 hours**: 6.5 min indexing, 10.84 h training (**86 380 steps** of 16 patches, about 6 passes over the 102 871 training patches, 52 % fresh batches, 2.2-2.3 steps/s), 9 min test, export. **No NaN-guard events**, no skipped steps beyond normal GradScaler adjustments.");
-UL(["**Part A:** validation PSNR rose from 25.6 dB (step 2 551) to 29.1 dB within 2 hours and peaked at **29.48 dB** (step 31 791, validation L1 0.0264); sharpness rose slowly from 0.41 to 0.64.",
+P("Kaggle, 2 × NVIDIA T4, 24-25 October 2026, one committed session of **11.1 hours**: 4 min indexing, 3 min loading the validation patches and starting both GPUs, 10.84 h training (**86 380 steps** of 16 patches = 6 complete passes over the 102 871 training patches, 52 % fresh batches, 2.2-2.3 steps/s), 9 min test, export. **No NaN-guard events**, no skipped steps beyond normal GradScaler adjustments.");
+UL(["**Part A:** validation PSNR rose from 25.6 dB (step 2 551) to 29.1 dB within 1 hour (step 7 481) and peaked at **29.48 dB** (step 31 791, validation L1 0.0264); sharpness rose slowly from 0.41 to 0.64.",
   "**Part B** (from step 47 940): D(real) rose from 0.45 to 0.86 and D(generated) fell from 0.44 to 0.14 - the discriminator became strong but never saturated at 1/0. Validation sharpness jumped from 0.64 to 0.70-0.71 while validation PSNR eased from 29.4 to 29.1-29.2 dB."]);
 IMG("fig_curves.png", 640, 171, "Figure 1 - Training of the final model. Left: L1 loss (train and validation). Middle: validation PSNR and sharpness. Right: discriminator scores in part B. Dotted line: the GAN joins.");
 H2("10.2 Main result");
@@ -338,7 +338,7 @@ T(["Comparison", "Mean Δ", "95 % CI over scenes", "Scenes where the first is be
   ["Final − before GAN (PSNR)", "−0.09 dB", "−0.34 to +0.16 (contains 0)", "7 / 18"],
   ["Final − before GAN (sharpness)", "**+0.086**", "+0.054 to +0.114", "16 / 18"],
 ], [34, 14, 28, 24]);
-P("**Interpretation:** the new model is clearly and consistently better than Phase 1 - the gain is about 4 × the Phase 1 seed spread and holds in 17 of 18 scenes. The GAN part did what it was designed to do: a significant sharpness gain with no measurable PSNR loss.");
+P("**Interpretation:** the new model is clearly and consistently better than Phase 1 - the gain is far larger than the Phase 1 seed spread (≤ 0.4 dB) and holds in 17 of 18 scenes. The GAN part did what it was designed to do: a significant sharpness gain with no measurable PSNR loss.");
 H2("10.4 By cloud cover");
 T(["Cloud cover", "Patches", "Cloudy input", "Phase 1 U-Net", "Before GAN", "Final (GAN)", "Sharpness before → after GAN"], [
   ["0-10 %", "1 878", "27.07", "28.03", "29.92", "29.78", "0.91 → 1.02"],
@@ -350,7 +350,7 @@ T(["Cloud cover", "Patches", "Cloudy input", "Phase 1 U-Net", "Before GAN", "Fin
 IMG("fig_cloud.png", 520, 260, "Figure 2 - PSNR by cloud cover of the test patch.");
 UL(["The **gap to the cloudy input grows with cloud** (+2.7 dB at 0-10 %, +14.8 dB at 90-100 %): the more is hidden, the more the network contributes.",
   "The gain over Phase 1 is **largest under thick cloud** (+3.2 dB at 90-100 %), where global context and the larger training set matter most.",
-  "90-100 % scores higher than 60-90 %: fully clouded patches are often bright, homogeneous landscapes (deserts) whose average appearance is easy to predict from radar, while partly clouded ones mix visible detail with hidden detail.",
+  "90-100 % scores higher than 60-90 % because of *which scenes* fall into each bin: the 90-100 % bin holds many patches from scenes that are easy overall (Canada 34.4 dB, Central African Rep. 33.6 dB, New Zealand 31.2 dB), whereas the Turkmen desert scores the same in both bins (24.6 vs 24.4 dB). Bin averages mix cloud cover with scene difficulty.",
   "The GAN sharpens at every cloud level; under thin cloud it reaches the sharpness of reality (1.02)."]);
 H2("10.5 By continent and for India");
 T(["Continent", "Patches", "Cloudy input", "Phase 1 U-Net", "Before GAN", "Final (GAN)"], [
@@ -362,18 +362,18 @@ T(["Continent", "Patches", "Cloudy input", "Phase 1 U-Net", "Before GAN", "Final
   ["South America", "600", "21.22", "25.47", "26.36", "25.87"],
   ["**India** (1 scene)", "300", "22.06", "25.50", "**29.64**", "29.45"],
 ], [24, 12, 16, 16, 16, 16]);
-P("The model improves on Phase 1 on every continent - including Asia, Phase 1's own training region (+1.6 dB), because it saw far more scenes. South America is hardest (two Argentinian scenes with farmland whose field patterns cannot be inferred under cloud).");
+P("The model improves on Phase 1 on every continent - including Asia, Phase 1's own training region (+1.6 dB), because it saw far more scenes. South America is the hardest continent for all three models (two Argentinian scenes; the gallery patch shows farmland whose field pattern is hidden under the cloud and has changed between the two dates).");
 H2("10.6 What the GAN changed");
-P("Same generator before and after part B: PSNR −0.09 dB (not significant), SSIM −0.003, SAM 8.38° → 8.33° (slightly better spectra), sharpness **0.78 → 0.87**, fine-detail error +0.0002. The adaptive weight kept the adversarial gradient at one fifth of the reconstruction gradient, so the GAN added texture without the large accuracy loss of Phase 1's GAN (−1.35 dB). Sharpness is still below 1 under cloud: a stronger GAN (higher factor than 0.2) would sharpen further, at a growing risk of invented detail - the perception-distortion trade-off in practice.");
+P("Same generator before and after part B: PSNR −0.09 dB (not significant), SSIM −0.003, SAM 8.38° → 8.33° (slightly better spectra), sharpness **0.78 → 0.87**, fine-detail error +0.0002. Starting from a converged model and holding the adversarial gradient at one fifth of the reconstruction gradient let the GAN add texture without the large accuracy loss of Phase 1's GAN (−1.35 dB). Sharpness is still below 1 under cloud: a stronger GAN (higher factor than 0.2) would sharpen further, at a growing risk of invented detail - the perception-distortion trade-off in practice.");
 H2("10.7 The learned gate and the uncertainty");
-UL(["**Gate:** the share of pixels whose input is kept falls from ~70 % on clear patches to ~5 % on fully clouded ones (Spearman −0.84 with cloud cover, mean 36 %). The gate was never given a cloud mask - it learned to detect clouds from the loss alone.",
-  "**Uncertainty (flip test):** Spearman 0.55 between a patch's predicted uncertainty and its real error - the model 'knows' fairly well which patches it gets wrong, comparable to Phase 1's best method (variance head, 0.44-0.56). The expert system uses it (§18.8)."]);
+UL(["**Gate:** the share of pixels whose input is kept falls from 51 % on patches with < 10 % cloud to 15 % on 90-100 % cloud (Spearman −0.84 with cloud cover, mean 36 %). Even on clear patches about half of the pixels are regenerated rather than kept - the date shift makes the generator branch useful there too. The gate was never given a cloud mask - it learned to separate cloudy from clear areas from the loss alone.",
+  "**Uncertainty (flip test):** Spearman 0.55 between a patch's predicted uncertainty and its real error - the model 'knows' fairly well which patches it gets wrong. (Phase 1's variance head reached 0.44-0.56, but measured per pixel rather than per patch, so the two are not directly comparable.) The expert system uses it (§18.8)."]);
 H2("10.8 What the images show");
 IMG("fig_gallery.png", 560, 742, "Figure 3 - Representative test patches (per cloud level the patch closest to the median score, not the best), from 18 scenes never seen in training.");
 UL(["**Clear or lightly clouded** (China): very close to the truth; the colours are even shifted towards the date of the clear image (the hybrid output's correction branch).",
   "**Partly cloudy** (India, France, Argentina): clouds and shadows are removed and colours are plausible; detail under the clouds is soft and fine patterns (field boundaries, villages) are missing.",
   "**Heavily or fully clouded** (Portugal, Turkmenistan): the large-scale layout and colours are recovered from radar, fine detail is not - 10 m radar does not contain it.",
-  "**Date differences:** some 'errors' are changes on the ground between the two dates (Argentina: different crop stage), which no model can know."]);
+  "**Date differences:** some 'errors' are changes on the ground between the two dates, which no model can know - in the Argentinian patch the visible ground in the cloudy image is brown, while the clear image shows green fields."]);
 H2("10.9 Conclusions");
 OLn(["One model trained on the whole dataset beats the best Phase 1 model by **+1.9 dB PSNR** (17 of 18 scenes) and the cloudy input by +8.3 dB; SSIM 0.879, spectral angle 8.3°.",
   "The largest gains are under thick cloud (+3.2 dB over Phase 1 at 90-100 %), where global attention and scene diversity matter most.",
@@ -389,7 +389,7 @@ UL(["One training run (seed 42): no seed spread for the final model; the scene b
 
 // =====================================================================================
 H1("11. Engineering: from quick test to the final run");
-P("Five Kaggle sessions were needed. Each problem was diagnosed from the log, fixed, tested locally and pushed to GitHub before the next session (Kaggle clones the repository at start).");
+P("Four Kaggle sessions were needed. Each problem was diagnosed from the log, fixed, tested locally and pushed to GitHub before the next session (Kaggle clones the repository at start).");
 T(["Session", "What happened", "Diagnosis and fix"], [
   ["Quick test (15 min, 400 patches)", "worked: DDP, batch 8 per GPU, 10.4 GB, 3.0 it/s; GAN healthy; 27.5 dB after 10 minutes", "cold reads only ~15 patches/s; fast later only because 400 patches fit in RAM → **parallel threaded reads**, 4 workers, larger echo pool"],
   ["Full run 1", "healthy until step ~4 800 (val 26.9 dB), then every loss and validation NaN for 3.5 h; speed rose", "fp16 overflow in the unnormalised attention residual stream: inf → NaN in every forward pass, GradScaler skipped every step → **fp32 residual stream + final LayerNorm + NaN guard** (§8.6) + regression test"],
@@ -426,7 +426,7 @@ oldChapter("9. Infrastructure", ["9.", "16."], [["H1(\"16. Infrastructure: how t
 oldChapter("10. What was wrong", ["10.", "17."]);
 
 // =====================================================================================
-oldChapter("11. The ClearSAR Advisor", ["11.", "18."], [["(§15.9)", "(§15.9 and §18.8)"], ["35 IF-THEN", "36 IF-THEN"], ["Rules (35, in five groups)", "Rules (36, in five groups)"], ["\"model (M1-M3)\", \"recommended model; avoid-GAN warning\"", "\"model (M1-M4)\", \"recommended model; avoid-GAN warning (M4: §18.8)\""]]);
+oldChapter("11. The ClearSAR Advisor", ["11.", "18."], [["(§15.9)", "(§15.9 and §18.8)"], ["35 IF-THEN", "38 IF-THEN"], ["Rules (35, in five groups)", "Rules (38, in five groups)"], ["\"model (M1-M3)\", \"recommended model; avoid-GAN warning\"", "\"model (M1-M5)\", \"recommended model; avoid-GAN warning (M4, M5: §18.8)\""], ["[\"trust (T1-T12)\"", "[\"trust (T1-T13)\""]]);
 H2("18.8 The advisor with the final model");
 P("When `outputs/final/` contains the ClearSAR-Net checkpoints, the advisor switches to *final mode* (`Advisor(..., final_dir=\"outputs/final\")`); without them it works exactly as in Phase 1.");
 T(["Part", "Phase 1 mode", "Final mode"], [
@@ -434,12 +434,16 @@ T(["Part", "Phase 1 mode", "Final mode"], [
   ["Experience: best model per cloud level", "Phase 1 test, Asian scenes, 20 %-wide bins", "the final model's own test (18 scenes): the higher-PSNR of before-GAN / final in that bin (0-10, 10-30, 30-60, 60-90, 90-100 %)"],
   ["Model disagreement", "U-Net vs Swin vs ViT", "unchanged: the three Phase 1 models act as independent second opinions"],
   ["Uncertainty fact", "median Laplace scale of the variance-head U-Net", "flip-test spread × k, k = median(MAE) / median(spread) on the test patches (clamped to 1-20), so it reads as an expected error comparable with the knowledge-base thresholds"],
-  ["GAN rule M2 (visual inspection)", "recommends A_gan", "recommends the GAN-trained final model (`value_from: gan_model`)"],
+  ["GAN rule M2 (visual inspection, CF 0.5)", "recommends A_gan", "recommends the GAN-trained final model (`value_from: gan_model`)"],
+  ["New fact gan_psnr_cost", "-", "how many dB the GAN model trails the most accurate model at this cloud level in the test results; negligible < 0.3 dB ≤ noticeable"],
+  ["New rule M5 (CF 0.9)", "never fires: Phase 1's GAN cost 2-3 dB", "visual inspection + GAN cost negligible → recommend the GAN model (the final model costs at most 0.14 dB per cloud level, and is better at 60-90 %); outranks M1 (0.8)"],
   ["New rule M4 (CF 0.85)", "-", "for vegetation monitoring, land cover and change detection recommend the most faithful non-adversarial model - the before-GAN ClearSAR-Net; outranks M1 (0.8)"],
+  ["New rule T13 (CF 0.6)", "-", "little cloud but moderate model disagreement → medium trust (no trust rule covered this case; found during verification)"],
   ["Region", "inside / outside Asia (domain-shift warning)", "always inside the training data - the final model was trained on every continent"],
   ["XAI", "occlusion and saliency on 128 tiles", "on the whole patch (`tile=None`)"],
 ], [20, 34, 46]);
-P("The knowledge base now has **36 rules**. Check on a test patch: visual inspection → *final (GAN)*, CF 0.80; vegetation monitoring → *before GAN*, CF 0.85, together with the *avoid GAN* warning - consistent advice.");
+P("The knowledge base now has **38 rules**. Check on all 10 gallery patches of the final test: visual inspection → *final (GAN)* (CF 0.90-0.98); vegetation monitoring → *before GAN* (CF 0.85-0.97) with the *avoid GAN* warning; flood mapping → radar-only products; every patch and use receives a complete decision.");
+P("**Caveat:** the fact `clear_pixel_error` compares the output with the cloudy input on visible pixels. The final model deliberately shifts their colours towards the date of the clear target, so for it this fact mixes real error with intended correction; it can lower trust slightly on clear patches.");
 
 // =====================================================================================
 H1("19. The frontend");
@@ -460,9 +464,9 @@ H1("20. Likely questions and answers");
 H2("20.1 The final model");
 T(["Question", "Answer"], [
   ["Why one model instead of comparing architectures?", "Phase 1 already compared them and found no clear winner at that data scale. The remaining limit was data diversity and training design, so the effort went into one model built from Phase 1's lessons and trained on everything."],
-  ["Why a U-Net with attention and not a pure Transformer?", "The U-Net was the most stable and best at structure (SSIM); the ViT's advantage came from global context under thick cloud. Attention in the 32 × 32 bottleneck adds exactly that context at low cost, while convolutions and skip connections keep local detail."],
+  ["Why a U-Net with attention and not a pure Transformer?", "The U-Net was the most stable across seeds and, as an ensemble, best at structure (SSIM); the ViT's advantage came from global context under thick cloud. Attention in the 32 × 32 bottleneck adds exactly that context at low cost, while convolutions and skip connections keep local detail."],
   ["What does the cloud gate do and how was it trained?", "It outputs m ∈ [0, 1] per pixel: keep and colour-correct the input (m → 1) or generate from radar (m → 0). It received no cloud labels; minimising the loss alone taught it to open where the input is reliable (Spearman −0.84 with cloud cover)."],
-  ["Why the extra correction on kept pixels?", "The target was photographed on another day; even cloud-free pixels differ (a cloud-free input scores only ~26-27 dB). The correction branch learns that brightness/colour shift instead of copying the pixels."],
+  ["Why the extra correction on kept pixels?", "The target was photographed on another day; even cloud-free pixels differ (a nearly cloud-free input scores only ~24-27 dB). The correction branch learns that brightness/colour shift instead of copying the pixels."],
   ["Why train in two parts instead of a GAN from the start?", "A discriminator gives noisy, unhelpful gradients while the generator still produces blur; starting from a converged reconstruction model lets the GAN refine texture. It also gives a clean before/after comparison of the same network."],
   ["What is a PatchGAN and why conditional?", "A discriminator that scores overlapping 70 × 70 windows instead of the whole image - a texture critic. Conditional: it sees the radar and cloudy input next to the candidate, so it judges plausibility for this specific input."],
   ["Why spectral normalisation and LSGAN?", "Both stabilise GAN training: SN limits how sharply the discriminator can change (1-Lipschitz layers), LSGAN keeps gradients informative when the discriminator is confident."],
@@ -478,8 +482,9 @@ T(["Question", "Answer"], [
   ["Is +1.9 dB over Phase 1 significant?", "Yes: the 95 % bootstrap interval over the 18 test scenes is +1.1 to +2.7 dB and the new model is better in 17 of 18 scenes."],
   ["Did the GAN make things worse?", "PSNR changed by −0.09 dB with an interval that contains 0 (−0.34 to +0.16): no measurable loss. Sharpness improved significantly (+0.086, 16 of 18 scenes)."],
   ["Why is PSNR only ~28.6 dB if the images look good?", "Part of the 'error' is real change on the ground between the two acquisition dates and detail that radar cannot see. With the date shift removed the model reaches 34.5 dB."],
-  ["Why is the 90-100 % cloud bin better than 60-90 %?", "Fully clouded test patches are often homogeneous landscapes (e.g. desert in Turkmenistan) whose appearance radar predicts well; partly clouded ones hide detailed mixed scenes."],
+  ["Why is the 90-100 % cloud bin better than 60-90 %?", "Because of which scenes fall into each bin, not because thick cloud is easier: the 90-100 % bin contains many patches from scenes that are easy overall (Canada, Central African Rep., New Zealand: 31-34 dB), while the Turkmen desert scores the same in both bins (~24.5 dB). Per-bin averages mix cloud cover with scene difficulty."],
   ["How is the uncertainty of the final model obtained?", "Test-time augmentation: four flipped predictions, their spread per pixel. It correlates with the real error (Spearman 0.55); the advisor scales it to an expected error."],
+  ["Why does the advisor recommend different models for different uses?", "For visual use the GAN-refined model is preferred because, at every cloud level, the test showed it costs < 0.3 dB PSNR while being sharper (rule M5). For measurements (vegetation, land cover, change detection) the before-GAN model is preferred because adversarial training can add plausible but invented detail (rules M3, M4)."],
   ["Would it work on a new region?", "It was trained on all continents and tested on 18 unseen scenes, so it generalises to new places within Sentinel-1/2 conditions; very unusual landscapes or a different sensor would need testing."],
 ], [32, 68]);
 H2("20.2 Data, metrics and Phase 1");

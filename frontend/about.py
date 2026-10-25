@@ -14,7 +14,7 @@ c = st.columns(3, gap="medium")
 card(c[0], "Input (15 channels)", "Radar VV + VH (in dB, clipped to [−25, 0] / [−32.5, 0], scaled to [0, 1]) and "
      "all 13 bands of the cloudy optical image (reflectance = value / 10 000).")
 card(c[1], "Target (13 channels)", "The clear optical image of the same place, taken on a different day. Because "
-     "of that date difference even a cloud-free input only scores ~26-27 dB against it - the ceiling of a plain "
+     "of that date difference even a nearly cloud-free input scores only ~24-27 dB against it - the ceiling of a plain "
      "pixel match. 'PSNR, date shift removed' measures past it.")
 card(c[2], "Split by scene", "147 training scenes (all 102 871 patches), 10 validation scenes (600 patches), 18 "
      "test scenes (up to 300 patches each, 5 400 in total). Neighbouring patches never cross splits, so the test "
@@ -59,8 +59,8 @@ st.markdown("""
 - No architecture was clearly best (26.3-27.0 dB); global context (ViT) helped most under thick cloud - hence the
   attention bottleneck.
 - The biggest limit was data: 3 000 patches are 2.5 % of SEN12MS-CR - hence training on everything.
-- The Phase 1 GAN lost 1.4 dB because its checkpoint was chosen by L1 after 1-4 k steps - hence the two-part training
-  and the sharpness-aware selection.
+- The Phase 1 GAN lost 1.4 dB and gained no realism (FID), because its checkpoint was chosen by L1 after 1-4 k steps,
+  before adversarial training had shaped the texture - hence the two-part training and the sharpness-aware selection.
 """)
 
 section("Limitations")

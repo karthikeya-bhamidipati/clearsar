@@ -159,6 +159,10 @@ class Advisor:
         sal = channel_saliency(primary_model, x, cloud, self.tile(best))
 
         numeric = {**obs, **mfacts, "sar_reliance": rel}
+        gan_cost = self.experience.gan_psnr_cost(
+            self.experience.bin_psnrs(obs["cloud_cover"], self.available, final=self.final_mode), gan_model) if gan_model else None
+        if gan_cost is not None:
+            numeric["gan_psnr_cost"] = gan_cost
         symbolic = {"use_case": use_case, "region": region, "gan_available": "yes" if gan_model else "no"}
         ctx = dict(numeric)
         ctx.update(
@@ -170,6 +174,7 @@ class Advisor:
             best_model_label=self.experience.label(best), best_model_psnr=best_psnr,
             gan_model=gan_model, gan_model_label=self.experience.label(gan_model) if gan_model else "",
             nongan_model=nongan, nongan_model_label=self.experience.label(nongan),
+            gan_cost=gan_cost if gan_cost is not None else float("nan"),
             ood_drop=self.experience.ood_drop(best),
         )
         result = self.engine.run(numeric, symbolic, ctx)

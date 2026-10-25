@@ -20,7 +20,7 @@ c = st.columns(4)
 kpi(c[0], "Training steps", f"{sm.get('steps', int(tr.step.max())):,}",
     f"batch {sm.get('batch_per_gpu', '?')} per GPU × {sm.get('world', '?')} GPUs")
 kpi(c[1], "Training time", f"{sm.get('train_hours', tr.time_h.max()):.1f} h", "time-based schedule: always fits the session")
-kpi(c[2], "Passes over the data", f"{sm.get('epochs_started', int(tr.epoch.max()) + 1)}",
+kpi(c[2], "Complete passes over the data", f"{sm.get('epochs_started', int(tr.epoch.max()))}",
     f"{sm.get('fresh_fraction', tr.fresh.mean()):.0%} of the batches were fresh from disk")
 kpi(c[3], "Parameters", f"{sm.get('generator_params', 0) / 1e6:.1f} M",
     f"discriminator {sm.get('discriminator_params', 0) / 1e6:.1f} M")

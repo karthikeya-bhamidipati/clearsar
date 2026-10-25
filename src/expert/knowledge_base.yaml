@@ -45,6 +45,7 @@ thresholds:
   sar_gaps:               {"no": [0.0, 0.1], "yes": [0.1, 1.01]}
   water_fraction:         {none: [0.0, 0.05], some: [0.05, 0.3], large: [0.3, 1.01]}
   cirrus_fraction:        {"no": [0.0, 0.2], "yes": [0.2, 1.01]}
+  gan_psnr_cost:          {negligible: [-100.0, 0.3], noticeable: [0.3, 100.0]}   # dB below the most accurate model, from the test
 
 # Human-readable meaning of every conclusion value (shown in the frontend)
 labels:
@@ -170,6 +171,12 @@ rules:
     then: {fact: trust, is: low}
     cf: 0.6
     because: "Under thick cloud the model should lean on the radar, but here it relies on it for only {sar_rel_pct:.0f}% of its output - it is extrapolating from the little optical signal left."
+  - id: T13
+    group: trust
+    if: [{fact: cloud_cover, is: low}, {fact: model_disagreement, is: moderate}]
+    then: {fact: trust, is: medium}
+    cf: 0.6
+    because: "Little cloud, so most of the image was observed - but independent models disagree moderately (mean difference {disagreement:.3f}), so some areas may be inaccurate."
 
   # ------------------------------------------------------------------ model choice
   - id: M1
@@ -198,6 +205,12 @@ rules:
     then: {fact: recommended_model, value_from: nongan_model}
     cf: 0.85
     because: "For a quantitative use the most faithful model without adversarial training is preferred: {nongan_model_label}."
+  - id: M5
+    group: model
+    if: [{fact: use_case, is: visual_inspection}, {fact: gan_available, is: "yes"}, {fact: gan_psnr_cost, is: negligible}]
+    then: {fact: recommended_model, value_from: gan_model}
+    cf: 0.9
+    because: "In the test results at {cloud_bin} cloud cover the GAN-trained model ({gan_model_label}) is only {gan_cost:.2f} dB below the most accurate model, so for visual use its more realistic texture comes at a negligible accuracy cost."
 
   # ------------------------------------------------------------------ suitability for the user's purpose
   - id: U1

@@ -122,7 +122,7 @@ if pp is not None and {"before_gan", "final"} <= set(pp.run):
 if pp is not None and "tta_std" in pp:
     fp = pp[pp.run == "final"].dropna(subset=["tta_std"])
     section("Does the model know when it is wrong?",
-            "Uncertainty from test-time augmentation: the model sees the patch four times, flipped; where its four "
+            "Uncertainty from test-time augmentation: the model sees the patch as it is and flipped three ways; where its four "
             "answers disagree, it is unsure. A useful uncertainty grows with the real error.")
     unc = fin["uncertainty"]
     c1, c2 = st.columns(2, gap="large")

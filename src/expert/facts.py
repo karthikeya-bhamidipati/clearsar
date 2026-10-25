@@ -102,6 +102,24 @@ class ResultsKnowledge:
             p = os.path.join(final_results_dir, "test_by_cloud.csv")
             self.final_bin = pd.read_csv(p) if os.path.exists(p) else None
 
+    def gan_psnr_cost(self, run_psnrs, gan_run):
+        """dB by which gan_run trails the best of run_psnrs (a {run: psnr} dict) - None if unknown."""
+        if gan_run not in run_psnrs or not run_psnrs:
+            return None
+        return float(max(run_psnrs.values()) - run_psnrs[gan_run])
+
+    def bin_psnrs(self, cloud_frac, available, final=True):
+        """{run: test PSNR} at this cloud level, from the final model's test or from Phase 1 (Asian test set)."""
+        if final and self.final_bin is not None:
+            d = self.final_bin[(self.final_bin.cloud_bin.astype(str) == final_cloud_bin(cloud_frac))
+                               & self.final_bin.run.isin([r for r in FINAL_CANDIDATES if r in available])]
+        elif not final and self.by_bin is not None:
+            d = self.by_bin[(self.by_bin.split == "test_id") & (self.by_bin.cloud_bin.astype(str) == cloud_bin(cloud_frac))
+                            & self.by_bin.run.isin([r for r in MAIN_CANDIDATES if r in available])]
+        else:
+            return {}
+        return dict(zip(d.run, d.psnr.astype(float)))
+
     def best_final_model(self, cloud_frac, available):
         """Most accurate (PSNR) of the final model before / after the GAN at this cloud level, measured on the
         final model's 18 held-out test scenes. Returns (run, psnr, bin_name)."""
