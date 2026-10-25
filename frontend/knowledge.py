@@ -45,16 +45,23 @@ num.update(
     sar_gaps=c[2].slider("Radar gaps", 0.0, 0.5, 0.0, 0.01),
     cirrus_fraction=c[3].slider("Cirrus", 0.0, 1.0, 0.05, 0.01),
 )
-c = st.columns(3)
+c = st.columns(4)
 sym = dict(use_case=c[0].selectbox("Intended use", list(kb.labels["use_case"]), format_func=kb.labels["use_case"].get),
            region=c[1].selectbox("Region", ["in_region", "out_of_region", "unknown"]),
            gan_available="yes")
-best = c[2].selectbox("Best model at this cloud level (from experiments)", ["A_unet", "B_swin", "C_vit"])
+best = c[2].selectbox("Most accurate model at this cloud level (from the test)", ["before_gan", "A_unet", "B_swin", "C_vit"],
+                      format_func=lambda r: {"before_gan": "ClearSAR-Net · before GAN"}.get(r, r))
+num["gan_psnr_cost"] = c[3].slider("PSNR cost of the GAN model here (dB)", -0.5, 3.0, 0.1, 0.01, format="%.2f",
+                                   help="How far the GAN-trained model trails the most accurate one at this cloud level in "
+                                        "the test results. Final model: at most 0.14 dB; Phase 1 GAN: 2-3 dB.")
+gan = "final" if best == "before_gan" else "A_gan"
+nongan = best
 ctx = dict(num, cloud_pct=100 * num["cloud_cover"], sar_rel_pct=100 * num["sar_reliance"],
            disagreement=num["model_disagreement"], clear_err=num["clear_pixel_error"], unc=num["uncertainty"],
            water_pct=100 * num["water_fraction"], sar_gaps_pct=100 * num["sar_gaps"], cirrus_pct=100 * num["cirrus_fraction"],
            best_model_for_cloud_level=best, best_model_label=best, best_model_psnr=float("nan"), cloud_bin="this",
-           ood_drop=float("nan"))
+           ood_drop=float("nan"), gan_model=gan, gan_model_label=gan, nongan_model=nongan, nongan_model_label=nongan,
+           gan_cost=num["gan_psnr_cost"])
 res = InferenceEngine(kb).run(num, sym, ctx)
 items = []
 for fact in ["trust", "recommended_model", "suitability", "action"]:

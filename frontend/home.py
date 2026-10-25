@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from frontend.common import (CORE, FINAL_LABELS, SPLIT_COLORS, SPLIT_NAMES, best_main_model, card, compare_slider,
+from frontend.common import (CORE, FINAL_LABELS, SPLIT_COLORS, SPLIT_NAMES, best_main_model, card, card_row, compare_slider,
                              final_sample_names, hero, kpi, labels, load, load_final, no_results, rgb_u8,
                              sample_names, section, to_uint8)
 
@@ -13,7 +13,7 @@ if fin is not None:
          "Seeing the ground <span class='cs-grad'>through the clouds</span>",
          "Clouds hide most optical satellite images. Radar sees straight through them but has no colour. "
          "<b>ClearSAR-Net</b> - one U-Net with global attention and a learned cloud gate, refined with a PatchGAN - "
-         "was trained on all 102 871 training patches of SEN12MS-CR (147 scenes, every continent) to fuse the two "
+         "was trained on all 102,871 training patches of SEN12MS-CR (147 scenes, every continent) to fuse the two "
          "and rebuild the cloud-free image.")
     summ = fin["test_summary"].set_index("run")
     s, meta = fin["samples"], fin["samples_meta"]
@@ -51,7 +51,7 @@ if fin is not None:
             base = rgb_u8(x[2:]) if other == "Cloudy input" else rgb_u8(s["y"][i].astype(np.float32))
             compare_slider(base, s["pred_final"][i], other, "ClearSAR-Net", size=560)
 
-    section("At a glance", f"{int(summ.loc['final', 'n'])} test patches from 18 held-out scenes on every continent, "
+    section("At a glance", f"{int(summ.loc['final', 'n']):,} test patches from 18 held-out scenes on every continent, "
                            "all 13 spectral bands.")
     c = st.columns(4)
     fr = summ.loc["final"]
@@ -59,23 +59,24 @@ if fin is not None:
         kpi(c[0], "PSNR", f"{fr.psnr:.2f} dB", f"cloudy input: {summ.loc['identity', 'psnr']:.2f} dB")
     if "p1_unet" in summ.index:
         kpi(c[1], "vs Phase 1", f"{fr.psnr - summ.loc['p1_unet', 'psnr']:+.2f} dB",
-            f"Phase 1 U-Net (3 000 Asian patches): {summ.loc['p1_unet', 'psnr']:.2f} dB")
+            f"Phase 1 U-Net (3,000 Asian patches): {summ.loc['p1_unet', 'psnr']:.2f} dB")
     kpi(c[2], "Date shift removed", f"{fr.psnr_aligned:.2f} dB", "PSNR after a per-band brightness fit")
     if "before_gan" in summ.index:
         kpi(c[3], "Sharpness", f"{fr.sharpness:.2f}", f"before the GAN: {summ.loc['before_gan', 'sharpness']:.2f}")
 
     section("One model, built in two parts")
-    c = st.columns(3, gap="medium")
-    card(c[0], "The generator", "A U-Net (3 levels, 12.8 M parameters) with 2 global self-attention blocks in the "
+    card_row([
+        ("The generator", "A U-Net (3 levels, 12.8 M parameters) with 2 global self-attention blocks in the "
          "bottleneck, so every region can use context from the whole patch. A learned <b>cloud gate</b> decides "
-         "per pixel whether to keep (and colour-correct) what the satellite saw or to rebuild it from the radar.")
-    card(c[1], "Part A · reconstruction", "55 % of the 10.8-hour training: L1 + SSIM loss, AdamW, cosine schedule, weight "
+         "per pixel whether to keep (and colour-correct) what the satellite saw or to rebuild it from the radar."),
+        ("Part A · reconstruction", "55 % of the 10.8-hour training: L1 + SSIM loss, AdamW, cosine schedule, weight "
          "averaging (EMA). Accurate, but - like every pixel-loss model - a little blurry. Saved as "
-         "<i>before GAN</i>.")
-    card(c[2], "Part B · PatchGAN", "A discriminator judges 70×70 windows: 'is this a real clear image for this "
+         "<i>before GAN</i>."),
+        ("Part B · PatchGAN", "A discriminator judges 70×70 windows: 'is this a real clear image for this "
          "radar + cloudy input?'. Its gradient - kept at 20 % of the pixel loss's - pushes the generator towards "
-         "real texture. The final model is chosen for accuracy <i>and</i> sharpness.")
-    st.caption("Phase 1 (the 26-run architecture comparison on 3 000 Asian patches) is under *Earlier experiments*.")
+         "real texture. The final model is chosen for accuracy <i>and</i> sharpness."),
+    ])
+    st.caption("Phase 1 (the 26-run architecture comparison on 3,000 Asian patches) is under *Earlier experiments*.")
     st.stop()
 
 # ---------------------------------------------------------------- Phase 1 home (until the final results exist)

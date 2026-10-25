@@ -25,45 +25,118 @@ ACCENT, VIOLET, AMBER, ROSE, MUTED = "#2DD4BF", "#A78BFA", "#FBBF24", "#FB7185",
 
 CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
-html, body, [class*="css"], .stMarkdown, .stText, button, input, textarea, select { font-family: 'Inter', sans-serif; }
-.block-container { padding-top: 2.2rem; padding-bottom: 4rem; max-width: 1180px; }
-h1, h2, h3 { letter-spacing: -0.02em; }
-[data-testid="stSidebar"] { background: #0E1528; border-right: 1px solid #1E293B; }
-.cs-eyebrow { color: #2DD4BF; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .35rem; }
-.cs-hero h1 { font-size: 2.7rem; font-weight: 800; line-height: 1.08; margin: 0 0 .6rem 0; }
-.cs-hero p { color: #A9B3C6; font-size: 1.06rem; max-width: 760px; line-height: 1.55; }
-.cs-grad { background: linear-gradient(90deg, #2DD4BF, #A78BFA); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.cs-card { background: #121A2E; border: 1px solid #1F2A44; border-radius: 16px; padding: 18px 20px; height: 100%; }
-.cs-card h4 { margin: 0 0 .35rem 0; font-size: 1.02rem; }
-.cs-card p { color: #A9B3C6; font-size: .92rem; margin: 0; line-height: 1.5; }
-.cs-kpi { background: #121A2E; border: 1px solid #1F2A44; border-radius: 16px; padding: 16px 18px; }
-.cs-kpi .lab { color: #8B95A7; font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
-.cs-kpi .val { font-size: 1.85rem; font-weight: 800; margin-top: .2rem; font-family: 'Inter'; }
-.cs-kpi .sub { color: #A9B3C6; font-size: .85rem; margin-top: .1rem; }
-.cs-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; margin: 2px 4px 2px 0; border: 1px solid; }
-.cs-good { color: #34D399; border-color: #14532D; background: #052E1C; }
-.cs-bad  { color: #FB7185; border-color: #4C0519; background: #2A0A14; }
-.cs-warn { color: #FBBF24; border-color: #713F12; background: #2A1B05; }
-.cs-neutral { color: #A9B3C6; border-color: #334155; background: #111827; }
-.cs-accent { color: #2DD4BF; border-color: #115E59; background: #042F2E; }
-.cs-mono { font-family: 'JetBrains Mono', monospace; }
-.cs-section { margin-top: 2.2rem; margin-bottom: .6rem; }
-.cs-section h2 { font-size: 1.45rem; margin: 0; }
-.cs-section p { color: #8B95A7; margin: .2rem 0 0 0; font-size: .95rem; }
-.cs-rule { border-left: 3px solid #2DD4BF; background: #0F1729; border-radius: 10px; padding: 10px 14px; margin: 6px 0; }
-.cs-rule.neg { border-left-color: #FB7185; }
-.cs-rule .id { font-family: 'JetBrains Mono', monospace; color: #2DD4BF; font-size: .8rem; }
-.cs-rule .txt { color: #D5DBE7; font-size: .92rem; }
-.cs-cfbar { height: 6px; border-radius: 999px; background: #1E293B; overflow: hidden; margin-top: 8px; }
-.cs-cfbar > div { height: 100%; background: linear-gradient(90deg, #2DD4BF, #A78BFA); }
+:root {
+  --bg: #070B18; --panel: rgba(17, 26, 51, .72); --panel-solid: #111A33; --line: rgba(125, 211, 252, .16);
+  --text: #E8EDF7; --muted: #A3AEC2; --dim: #8592A8;
+  --teal: #2DD4BF; --sky: #38BDF8; --violet: #A78BFA; --amber: #FBBF24; --rose: #FB7185; --lime: #A3E635;
+  --grad: linear-gradient(100deg, #2DD4BF 0%, #38BDF8 45%, #A78BFA 100%);
+}
+/* ---------- canvas: deep space with soft aurora glows */
+.stApp {
+  background:
+    radial-gradient(1100px 520px at 8% -8%, rgba(45, 212, 191, .14), transparent 62%),
+    radial-gradient(900px 520px at 96% -4%, rgba(167, 139, 250, .16), transparent 60%),
+    radial-gradient(900px 700px at 55% 115%, rgba(56, 189, 248, .07), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+[data-testid="stHeader"] { background: transparent; }
+.block-container { padding-top: 3.4rem; padding-bottom: 4.5rem; max-width: 1200px; }
+h1, h2, h3, h4 { letter-spacing: -0.015em; }
+p, li { line-height: 1.6; }
+a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+/* ---------- accessibility: visible keyboard focus everywhere */
+*:focus-visible { outline: 2px solid #7DD3FC !important; outline-offset: 2px; border-radius: 6px; }
+
+/* ---------- sidebar */
+[data-testid="stSidebar"] { border-right: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(45,212,191,.06), transparent 30%), #0A1024; }
+[data-testid="stSidebarNav"] a[aria-current="page"] { background: rgba(45, 212, 191, .12); }
+[data-testid="stSidebarNavSeparator"] { border-color: var(--line); }
+.cs-side-foot { color: var(--dim); font-size: .78rem; line-height: 1.5; margin-top: .6rem; }
+.cs-side-foot b { color: var(--muted); font-weight: 600; }
+
+/* ---------- hero */
+.cs-hero { position: relative; overflow: hidden; border-radius: 24px; padding: 30px 34px 28px 34px; margin-bottom: 1.2rem;
+  background: linear-gradient(135deg, rgba(17, 26, 51, .92), rgba(9, 14, 32, .78));
+  border: 1px solid var(--line); box-shadow: 0 20px 60px -30px rgba(45, 212, 191, .35); }
+.cs-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(500px 220px at 0% 0%, rgba(45, 212, 191, .18), transparent 70%),
+              radial-gradient(420px 220px at 100% 100%, rgba(167, 139, 250, .16), transparent 70%); }
+.cs-hero .cs-hero-img { position: absolute; top: 0; right: 0; bottom: 0; width: 46%; background-size: cover; background-position: center;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.55) 35%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.55) 35%, #000 100%); opacity: .55; }
+.cs-hero .cs-hero-body { position: relative; max-width: 700px; }
+.cs-hero h1 { font-size: 2.55rem; font-weight: 700; line-height: 1.1; margin: .55rem 0 .65rem 0; padding: 0; }
+.cs-hero p { color: var(--muted); font-size: 1.04rem; margin: 0; }
+.cs-eyebrow { display: inline-flex; align-items: center; gap: .5rem; color: #99F6E4; font-size: .74rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; padding: 4px 11px; border-radius: 999px;
+  background: rgba(45, 212, 191, .1); border: 1px solid rgba(45, 212, 191, .28); }
+.cs-eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 10px var(--teal); }
+.cs-grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ---------- sections */
+.cs-section { margin: 2.4rem 0 .8rem 0; }
+.cs-section h2 { font-size: 1.5rem; margin: 0; padding: 0; display: flex; align-items: center; gap: .6rem; }
+.cs-section h2::before { content: ""; width: 4px; height: 1.2em; border-radius: 4px; background: var(--grad); }
+.cs-section p { color: var(--dim); margin: .35rem 0 0 0; font-size: .95rem; max-width: 820px; }
+
+/* ---------- glass panels: cards, KPIs, verdicts */
+.cs-card, .cs-kpi, .cs-verdict { position: relative; border-radius: 18px; height: 100%;
+  background: linear-gradient(var(--panel-solid), var(--panel-solid)) padding-box,
+              linear-gradient(140deg, rgba(45,212,191,.45), rgba(56,189,248,.12) 40%, rgba(167,139,250,.4)) border-box;
+  border: 1px solid transparent; box-shadow: 0 12px 30px -18px rgba(0, 0, 0, .8); }
+.cs-card { padding: 20px 22px; transition: transform .25s ease, box-shadow .25s ease; }
+.cs-card:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -20px rgba(45, 212, 191, .35); }
+.cs-card h4 { margin: 0 0 .45rem 0; font-size: 1.05rem; padding: 0; }
+.cs-card p { color: var(--muted); font-size: .92rem; margin: 0; line-height: 1.55; }
+.cs-kpi { padding: 16px 18px 15px 18px; min-height: 132px; display: flex; flex-direction: column; }
+.cs-kpi .lab { color: var(--dim); font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+.cs-kpi .val { font-size: 2rem; font-weight: 700; margin-top: .25rem; line-height: 1.15;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cs-kpi .sub { color: var(--muted); font-size: .84rem; margin-top: auto; padding-top: .35rem; }
+.cs-verdict { padding: 16px 18px; }
+.cs-verdict .k { color: var(--dim); font-size: .74rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
+.cs-verdict .v { font-size: 1.35rem; font-weight: 700; margin: .25rem 0 .2rem 0; }
+.cs-verdict .d { color: var(--muted); font-size: .86rem; line-height: 1.45; }
+.cs-cgrid { display: grid; gap: 14px; margin: .2rem 0 .6rem 0; }
 .cs-vgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
-.cs-verdict { border-radius: 16px; padding: 16px 18px; border: 1px solid #1F2A44; background: #121A2E; height: 100%; }
-.cs-verdict .k { color: #8B95A7; font-size: .76rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
-.cs-verdict .v { font-size: 1.35rem; font-weight: 800; margin: .25rem 0 .2rem 0; }
-.cs-verdict .d { color: #A9B3C6; font-size: .86rem; line-height: 1.45; }
-div[data-testid="stImage"] img { border-radius: 10px; }
-div[data-testid="stCaptionContainer"] { color: #8B95A7; }
+/* equal heights for cards placed in st.columns */
+[data-testid="stHorizontalBlock"] { align-items: stretch; }
+[data-testid="stColumn"]:has(.cs-card, .cs-kpi) > div,
+[data-testid="stColumn"]:has(.cs-card, .cs-kpi) [data-testid="stVerticalBlock"] { height: 100%; }
+[data-testid="stElementContainer"]:has(> div > [data-testid="stMarkdown"] .cs-card),
+[data-testid="stElementContainer"]:has(> div > [data-testid="stMarkdown"] .cs-kpi) { flex: 1 1 auto; }
+[data-testid="stMarkdown"]:has(.cs-card, .cs-kpi), [data-testid="stMarkdown"]:has(.cs-card, .cs-kpi) > div,
+[data-testid="stMarkdownContainer"]:has(.cs-card, .cs-kpi) { height: 100%; }
+
+/* ---------- pills, rules, bars */
+.cs-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; margin: 2px 4px 2px 0; border: 1px solid; }
+.cs-good { color: #6EE7B7; border-color: rgba(52, 211, 153, .35); background: rgba(52, 211, 153, .1); }
+.cs-bad  { color: #FDA4AF; border-color: rgba(251, 113, 133, .35); background: rgba(251, 113, 133, .1); }
+.cs-warn { color: #FCD34D; border-color: rgba(251, 191, 36, .35); background: rgba(251, 191, 36, .1); }
+.cs-neutral { color: var(--muted); border-color: rgba(148, 163, 184, .3); background: rgba(148, 163, 184, .08); }
+.cs-accent { color: #5EEAD4; border-color: rgba(45, 212, 191, .4); background: rgba(45, 212, 191, .1); }
+.cs-mono { font-family: 'JetBrains Mono', monospace; }
+.cs-rule { border-left: 3px solid var(--teal); background: rgba(17, 26, 51, .8); border-radius: 12px; padding: 10px 14px; margin: 6px 0; }
+.cs-rule.neg { border-left-color: var(--rose); }
+.cs-rule .id { font-family: 'JetBrains Mono', monospace; color: var(--teal); font-size: .8rem; }
+.cs-rule .txt { color: #DCE3EF; font-size: .92rem; }
+.cs-cfbar { height: 6px; border-radius: 999px; background: rgba(148, 163, 184, .18); overflow: hidden; margin-top: 8px; }
+.cs-cfbar > div { height: 100%; background: var(--grad); }
+
+/* ---------- media, tabs, expanders */
+div[data-testid="stImage"] img { border-radius: 12px; border: 1px solid var(--line); }
+div[data-testid="stCaptionContainer"], [data-testid="stImageCaption"] { color: var(--dim); }
+[data-baseweb="tab-list"] { gap: .25rem; }
+[data-baseweb="tab"][aria-selected="true"] p { color: #99F6E4; }
+[data-testid="stExpander"] details { border-color: var(--line) !important; background: rgba(17, 26, 51, .45); border-radius: 14px; }
+[data-testid="stVegaLiteChart"], [data-testid="stArrowVegaLiteChart"] { background: rgba(17, 26, 51, .35); border-radius: 16px; padding: 10px 8px 4px 8px; border: 1px solid var(--line); }
+
+/* ---------- motion only for people who want it */
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+@media (max-width: 900px) { .cs-hero .cs-hero-img { display: none; } .cs-hero h1 { font-size: 2rem; } }
 </style>
 """
 
@@ -143,8 +216,12 @@ def labels(data):
 
 
 def sidebar_source():
+    st.logo(os.path.join(ROOT, "frontend", "assets", "logo.svg"), size="large")
     with st.sidebar:
-        st.markdown("<div class='cs-eyebrow'>ClearSAR</div>", unsafe_allow_html=True)
+        fin = os.path.exists(os.path.join(ROOT, "outputs", "final", "results", "test_summary.csv"))
+        st.markdown("<div class='cs-side-foot'><b>SAR-to-optical cloud removal</b><br>Sentinel-1 radar + cloudy "
+                    "Sentinel-2 &rarr; cloud-free Sentinel-2" + ("<br>Final model results loaded" if fin else "")
+                    + "</div>", unsafe_allow_html=True)
         with st.expander("Data source", expanded=False):
             st.text_input("Results folder", key="results_base",
                           help="Folder where you extracted clearsar_output.zip from Kaggle")
@@ -163,9 +240,30 @@ next to <code>app.py</code>. Then refresh this page.</p></div>""", unsafe_allow_
 
 
 # ------------------------------------------------------------------ widgets
+@st.cache_data(show_spinner=False)
+def _hero_strip(stamp):
+    """Decorative banner for page headers: cloudy input and ClearSAR-Net output of two test patches."""
+    sp = os.path.join(ROOT, "outputs", "final", "results", "samples.npz")
+    if not os.path.exists(sp):
+        return None
+    z = np.load(sp, allow_pickle=False)
+    meta = json.loads(str(z["meta"]))["samples"]
+    pick = next((i for i, m in enumerate(meta) if m["country"] == "IN"),
+                next((i for i, m in enumerate(meta) if 0.2 <= m["cloud_frac"] <= 0.6), 0))
+    tiles = [rgb_u8(z["x"][pick][N_S1:].astype(np.float32)), z["pred_final"][pick]]
+    img = Image.fromarray(np.concatenate(tiles, axis=1)).resize((256 * len(tiles), 256))
+    buf = io.BytesIO()
+    img.save(buf, format="JPEG", quality=78)
+    return base64.b64encode(buf.getvalue()).decode()
+
+
 def hero(eyebrow, title_html, text):
-    st.markdown(f"<div class='cs-hero'><div class='cs-eyebrow'>{eyebrow}</div><h1>{title_html}</h1>"
-                f"<p>{text}</p></div>", unsafe_allow_html=True)
+    sp = os.path.join(ROOT, "outputs", "final", "results", "samples.npz")
+    strip = _hero_strip(os.path.getmtime(sp) if os.path.exists(sp) else 0)
+    img = (f"<div class='cs-hero-img' role='presentation' style=\"background-image:url(data:image/jpeg;base64,{strip})\"></div>"
+           if strip else "")
+    st.markdown(f"<div class='cs-hero'>{img}<div class='cs-hero-body'><span class='cs-eyebrow'>{eyebrow}</span>"
+                f"<h1>{title_html}</h1><p>{text}</p></div></div>", unsafe_allow_html=True)
 
 
 def section(title, text=""):
@@ -180,6 +278,13 @@ def kpi(col, label, value, sub=""):
 
 def card(col, title, text):
     col.markdown(f"<div class='cs-card'><h4>{title}</h4><p>{text}</p></div>", unsafe_allow_html=True)
+
+
+def card_row(items, min_width=260):
+    """A row of equally tall cards: items = [(title, text), ...]."""
+    cells = "".join(f"<div class='cs-card'><h4>{t}</h4><p>{x}</p></div>" for t, x in items)
+    st.markdown(f"<div class='cs-cgrid' style='grid-template-columns:repeat(auto-fit,minmax({min_width}px,1fr))'>"
+                f"{cells}</div>", unsafe_allow_html=True)
 
 
 def pill(text, tone="neutral"):
@@ -210,22 +315,25 @@ def compare_slider(left, right, left_label, right_label, size=520, key=None):
     a, b = png_b64(left), png_b64(right)
     html = f"""
 <div id="w" style="position:relative;width:{size}px;max-width:100%;aspect-ratio:1/1;margin:0 auto;
-     border-radius:14px;overflow:hidden;border:1px solid #1F2A44;font-family:Inter,sans-serif;user-select:none">
-  <img src="data:image/png;base64,{b}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
-  <img id="top" src="data:image/png;base64,{a}" style="position:absolute;inset:0;width:100%;height:100%;
+     border-radius:16px;overflow:hidden;border:1px solid rgba(125,211,252,.25);box-shadow:0 20px 50px -25px rgba(45,212,191,.45);font-family:Inter,sans-serif;user-select:none">
+  <img src="data:image/png;base64,{b}" alt="{right_label}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+  <img id="top" src="data:image/png;base64,{a}" alt="{left_label}" style="position:absolute;inset:0;width:100%;height:100%;
        object-fit:cover;clip-path:inset(0 50% 0 0)">
   <div id="bar" style="position:absolute;top:0;bottom:0;left:50%;width:2px;background:#E6EAF2;box-shadow:0 0 8px #000"></div>
   <div id="knob" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;
        border-radius:50%;background:#E6EAF2;color:#0B1020;display:flex;align-items:center;justify-content:center;
        font-weight:800;font-size:14px;box-shadow:0 2px 10px #0008">&#8596;</div>
   <span style="position:absolute;left:10px;top:10px;background:#0B1020cc;color:#E6EAF2;padding:4px 10px;border-radius:999px;font-size:12px">{left_label}</span>
-  <span style="position:absolute;right:10px;top:10px;background:#0B1020cc;color:#2DD4BF;padding:4px 10px;border-radius:999px;font-size:12px">{right_label}</span>
-  <input id="r" type="range" min="0" max="100" value="50"
+  <span style="position:absolute;right:10px;top:10px;background:#0B1020cc;color:#5EEAD4;padding:4px 10px;border-radius:999px;font-size:12px">{right_label}</span>
+  <input id="r" type="range" min="0" max="100" value="50" step="1"
+         aria-label="Comparison slider: {left_label} on the left, {right_label} on the right. Use the arrow keys to move it."
          style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0">
 </div>
 <script>
 const r=document.getElementById('r'),t=document.getElementById('top'),b=document.getElementById('bar'),k=document.getElementById('knob');
 r.addEventListener('input',e=>{{const v=e.target.value;t.style.clipPath=`inset(0 ${{100-v}}% 0 0)`;b.style.left=v+'%';k.style.left=v+'%';}});
+r.addEventListener('focus',()=>{{k.style.boxShadow='0 0 0 3px #7DD3FC';}});
+r.addEventListener('blur',()=>{{k.style.boxShadow='0 2px 10px #0008';}});
 </script>"""
     if hasattr(st, "iframe"):            # Streamlit >= 1.5x
         st.iframe(html, height=size + 24)

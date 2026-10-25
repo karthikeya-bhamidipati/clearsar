@@ -61,11 +61,15 @@ for k, (img, cap) in enumerate(tiles):
     cols[k % 4].image(img, caption=cap)
 
 section("Every model on this patch")
-rows = [dict(Model=lab.get(r, r), **{k.upper(): v for k, v in sc.items()}) for r, sc in info["scores"].items()]
+NICE = {"psnr": "PSNR", "ssim": "SSIM", "sam": "SAM", "mae": "MAE", "rmse": "RMSE", "fid": "FID",
+        "sharpness": "Sharpness", "psnr_aligned": "PSNR, date shift removed"}
+rows = [dict(Model=lab.get(r, r), **{NICE.get(k, k): v for k, v in sc.items()}) for r, sc in info["scores"].items()]
 if rows:
     df = pd.DataFrame(rows).sort_values("PSNR", ascending=False)
     st.dataframe(df, hide_index=True, width="stretch",
                  column_config={"PSNR": st.column_config.ProgressColumn(
                      "PSNR (dB)", format="%.2f", min_value=float(df.PSNR.min()) - 1, max_value=float(df.PSNR.max())),
-                     "SSIM": st.column_config.NumberColumn(format="%.4f"), "SAM": st.column_config.NumberColumn(format="%.2f°"),
-                     "MAE": st.column_config.NumberColumn(format="%.4f"), "RMSE": st.column_config.NumberColumn(format="%.4f")})
+                     "SSIM": st.column_config.NumberColumn(format="%.3f"), "SAM": st.column_config.NumberColumn("SAM (°)", format="%.2f"),
+                     "MAE": st.column_config.NumberColumn(format="%.4f"), "RMSE": st.column_config.NumberColumn(format="%.4f"),
+                     "Sharpness": st.column_config.NumberColumn(format="%.2f"),
+                     "PSNR, date shift removed": st.column_config.NumberColumn("PSNR, date shift removed (dB)", format="%.2f")})

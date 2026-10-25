@@ -13,7 +13,7 @@ and outputs/ (Phase 1: notebooks/kaggle_pipeline.py). Every page works with what
 """
 import streamlit as st
 
-st.set_page_config(page_title="ClearSAR", page_icon="🛰️", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="ClearSAR", page_icon="🛰️", layout="wide", initial_sidebar_state="auto")
 
 from frontend.common import inject_css, sidebar_source  # noqa: E402
 

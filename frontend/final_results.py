@@ -65,10 +65,12 @@ t1, t2, t3 = st.tabs(["By cloud cover", "By continent", "By country"])
 with t1:
     b = fin["test_by_cloud"].copy()
     b["Model"] = b.run.map(lab)
+    dash = alt.Scale(domain=[lab[r] for r in order], range=[[1, 0] if r != "before_gan" else [6, 4] for r in order])
     st.altair_chart(alt.Chart(b[b.run.isin(order)]).mark_line(point=alt.OverlayMarkDef(size=70), strokeWidth=2.5).encode(
         x=alt.X("cloud_bin:N", title="Cloud cover of the patch", sort=CLOUD_ORDER, axis=alt.Axis(labelAngle=0)),
         y=alt.Y(f"{metric}:Q", title=mname, scale=alt.Scale(zero=False)),
-        color=alt.Color("Model:N", scale=color, legend=alt.Legend(orient="bottom", title=None)),
+        color=alt.Color("Model:N", scale=color, legend=alt.Legend(orient="bottom", title=None, labelLimit=320)),
+        strokeDash=alt.StrokeDash("Model:N", scale=dash, legend=None),
         tooltip=["Model", "cloud_bin", "n", alt.Tooltip(f"{metric}:Q", format=".3f")]).properties(height=340),
         width="stretch")
     st.caption("Under thin cloud most of the answer is visible; under thick cloud only the radar is left - the gap "
@@ -79,7 +81,7 @@ with t2:
     st.altair_chart(alt.Chart(b[b.run.isin(order)]).mark_bar(cornerRadiusEnd=3).encode(
         y=alt.Y("continent:N", title=None), yOffset=alt.YOffset("Model:N", sort=[lab[r] for r in order]),
         x=alt.X(f"{metric}:Q", title=mname, scale=alt.Scale(zero=metric not in ("psnr", "psnr_aligned", "ssim"))),
-        color=alt.Color("Model:N", scale=color, legend=alt.Legend(orient="bottom", title=None)),
+        color=alt.Color("Model:N", scale=color, legend=alt.Legend(orient="bottom", title=None, labelLimit=320)),
         tooltip=["Model", "continent", "n", alt.Tooltip(f"{metric}:Q", format=".3f")]).properties(height=360),
         width="stretch")
 with t3:
@@ -135,5 +137,6 @@ if pp is not None and "tta_std" in pp:
         c2.altair_chart(alt.Chart(smp).mark_circle(size=14, opacity=.45, color=FINAL_COLORS["before_gan"]).encode(
             x=alt.X("cloud_frac:Q", title="Cloud cover of the patch", axis=alt.Axis(format="%")),
             y=alt.Y("gate_mean:Q", title="Share of pixels the gate keeps", axis=alt.Axis(format="%"))).properties(
-            height=300, title="The learned gate: more cloud -> less of the input is kept"), width="stretch")
-    st.caption("The gate was never told where the clouds are - it learned it from the loss alone.")
+            height=300, title="The learned gate vs cloud cover"), width="stretch")
+    st.caption("More cloud → the gate keeps less of the input. It was never told where the clouds are - it learned "
+               "it from the loss alone.")

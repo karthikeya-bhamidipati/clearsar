@@ -107,12 +107,42 @@ else:
 if x is None:
     st.stop()
 
+@st.cache_resource(show_spinner=False)
+def advice_store(_advisor_id):
+    """Results already computed in this server session, shared by all visitors (gallery patches only)."""
+    return {}
+
+
+@st.cache_resource(show_spinner=False)
+def warm_up(_advisor, _x_all, n, default_use, region_default):
+    """Analyse every gallery patch for the default use in a background thread, once per server, so that
+    switching patches is instant during a demo (the first analysis takes ~30-60 s on a laptop CPU)."""
+    import threading
+
+    store = advice_store(id(_advisor))
+
+    def run():
+        for i in range(n):
+            k = f"g{i}|{default_use}|{region_default}"
+            if k not in store:
+                try:
+                    store[k] = _advisor.advise(_x_all[i].astype(np.float32), use_case=default_use, region=region_default)
+                except Exception:          # never let the warm-up break the page
+                    pass
+    t = threading.Thread(target=run, daemon=True)
+    t.start()
+    return t
+
+
 run_key = f"{key}|{use_case}|{region}"
-if st.session_state.get("adv_key") != run_key:
-    with st.spinner("Running the models, explaining them and reasoning over the knowledge base..."):
-        st.session_state.adv = advisor.advise(x, use_case=use_case, region=region)
-        st.session_state.adv_key = run_key
-adv = st.session_state.adv
+store = advice_store(id(advisor))
+if source == "Test gallery":
+    warm_up(advisor, s["x"], len(names), list(USE_CASES)[0], region)
+if run_key not in store or not run_key.startswith("g"):
+    with st.spinner("Running the deep-learning models, explaining them and reasoning over the knowledge base "
+                    "(first time for this patch and use only)..."):
+        store[run_key] = advisor.advise(x, use_case=use_case, region=region)
+adv = store[run_key]
 res = adv.result
 
 # ---------------------------------------------------------------- decision
