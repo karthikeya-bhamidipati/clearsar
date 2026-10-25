@@ -31,15 +31,17 @@ base = alt.Chart(main).encode(
     color=alt.Color("test_set:N", title=None, legend=alt.Legend(orient="top"),
                     scale=alt.Scale(domain=[SPLIT_NAMES["test_id"], SPLIT_NAMES["ood"]],
                                     range=[SPLIT_COLORS["test_id"], SPLIT_COLORS["ood"]])))
-bars = base.mark_bar(cornerRadiusEnd=4, height=11).encode(
-    x=alt.X(f"{metric}:Q", title=f"{name} {unit}".strip(), scale=alt.Scale(zero=metric not in ("psnr",))),
+# dot plot, not bars: the models differ by tenths of a dB, which a bar starting at zero would hide
+xscale = alt.Scale(zero=False, nice=True)
+dots = base.mark_circle(size=130, opacity=1).encode(
+    x=alt.X(f"{metric}:Q", title=f"{name} {unit}".strip(), scale=xscale),
     tooltip=["model", "test_set", alt.Tooltip(f"{metric}:Q", format=".3f")])
-layers = [bars]
+layers = [dots]
 if f"{metric}_std" in main and main[f"{metric}_std"].notna().any():
     eb = main.assign(lo=main[metric] - main[f"{metric}_std"].fillna(0), hi=main[metric] + main[f"{metric}_std"].fillna(0))
-    layers.append(alt.Chart(eb).mark_rule(color="#E6EAF2", strokeWidth=1.5).encode(
+    layers.insert(0, alt.Chart(eb).mark_rule(color="#A3AEC2", strokeWidth=2).encode(
         y=alt.Y("model:N", sort=order), yOffset=alt.YOffset("test_set:N", sort=[SPLIT_NAMES["test_id"], SPLIT_NAMES["ood"]]),
-        x="lo:Q", x2="hi:Q"))
+        x=alt.X("lo:Q", scale=xscale), x2="hi:Q"))
 st.altair_chart(alt.layer(*layers).properties(height=40 * main.group.nunique() + 40), width="stretch")
 
 # ---------------------------------------------------------------- leaderboard
@@ -74,9 +76,9 @@ with tab1:
         m2 = metric if metric in b else "psnr"
         st.altair_chart(alt.Chart(b).mark_line(point=alt.OverlayMarkDef(size=60), strokeWidth=2.5).encode(
             x=alt.X("cloud_bin:N", title="Cloud cover of the patch",
-                    sort=["0-20%", "20-40%", "40-60%", "60-80%", "80-100%"]),
+                    sort=["0-20%", "20-40%", "40-60%", "60-80%", "80-100%"], axis=alt.Axis(labelAngle=0)),
             y=alt.Y(f"{m2}:Q", title=METRICS[m2][0], scale=alt.Scale(zero=False)),
-            color=alt.Color("model:N", title=None, legend=alt.Legend(orient="bottom", columns=3)),
+            color=alt.Color("model:N", title=None, legend=alt.Legend(orient="bottom", columns=3, labelLimit=260)),
             tooltip=["model", "cloud_bin", "n_patches", alt.Tooltip(f"{m2}:Q", format=".2f")],
         ).properties(height=330), width="stretch")
         st.caption("Thick cloud leaves only the radar - this is where architectures differ most.")

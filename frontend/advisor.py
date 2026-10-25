@@ -181,25 +181,28 @@ with t_vis:
         dis = np.mean([np.abs(a - b).mean(0) for k, a in enumerate(preds) for b in preds[k + 1:]], axis=0) \
             if len(preds) > 1 else np.zeros(x.shape[1:])
         g = st.columns(2)
-        g[0].image(to_uint8(adv.cloud_mask.astype(np.float32), vmax=1.0), caption=f"Detected cloud · {100 * adv.numeric['cloud_cover']:.0f}%")
+        g[0].image(to_uint8(adv.cloud_mask.astype(np.float32), vmax=1.0), caption=f"Cloud found from the image alone · {100 * adv.numeric['cloud_cover']:.0f}%")
         g[1].image(to_uint8(adv.occlusion["reliance"], cmap="cividis", vmax=1.0),
                    caption=f"Radar reliance · {100 * adv.numeric['sar_reliance']:.0f}% under cloud")
         g[0].image(to_uint8(dis, cmap="inferno", vmax=0.1), caption="Disagreement between the Phase 1 architectures")
         if adv.sigma is not None:
             g[1].image(to_uint8(adv.sigma, cmap="magma"),
                        caption="Uncertainty (flip test, scaled to expected error)" if advisor.final_mode else "Predicted uncertainty")
-    st.caption("Radar reliance: how much the output changes when the radar is removed, relative to removing the "
-               "optical input (bright = the model is using the radar there). Under thick cloud it should be bright.")
+    st.caption("Cloud: the advisor's own detector, which needs no clear image - so it can differ from the gallery's "
+               "cloud %, which is measured against the true clear image. Radar reliance: how much the output changes "
+               "when the radar is removed, relative to removing the optical input (bright = the model is using the "
+               "radar there). Under thick cloud it should be bright.")
     from src.expert.xai import CHANNEL_NAMES
     sal = pd.DataFrame(dict(channel=CHANNEL_NAMES, importance=adv.saliency,
                             source=["Radar"] * 2 + ["Cloudy optical"] * 13))
     st.altair_chart(alt.Chart(sal).mark_bar(cornerRadiusEnd=3).encode(
-        x=alt.X("channel:N", sort=CHANNEL_NAMES, title=None, axis=alt.Axis(labelAngle=-40)),
+        x=alt.X("channel:N", sort=CHANNEL_NAMES, title=None,          # colour already says radar vs cloudy optical
+              axis=alt.Axis(labelAngle=0, labelOverlap=False, labelExpr="replace(datum.label, 'cloudy ', '')")),
         y=alt.Y("importance:Q", title="share of influence", axis=alt.Axis(format="%")),
         color=alt.Color("source:N", title=None, scale=alt.Scale(range=["#A78BFA", "#2DD4BF"]),
                         legend=alt.Legend(orient="top")),
         tooltip=["channel", alt.Tooltip("importance:Q", format=".1%")]).properties(
-        height=230, title="Which input bands drove the reconstruction under the clouds (|input × gradient|)"),
+        height=300, title="Which input bands drove the reconstruction under the clouds (|input × gradient|)"),
         width="stretch")
 
 with t_why:

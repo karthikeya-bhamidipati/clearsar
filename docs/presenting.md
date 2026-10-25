@@ -20,9 +20,9 @@ The deck is `docs/ClearSAR_Final_Presentation.pptx`: 20 main slides plus 3 backu
 
 ## Demo path (3 minutes)
 
-1. **Home**: drag the slider across the Indian test patch.
+1. **Home**: the page opens on the Portugal test patch (81 % cloud, +17.5 dB over the cloudy input). Drag the slider, then switch "Compare with" to the true clear image.
 2. **Results**: switch to "by cloud cover" and point at the 90-100 % bin.
-3. **Explore patches**: pick the Portugal patch (81 % cloud) and show its gate map.
+3. **Explore patches**: pick the same Portugal patch and show its gate map: bright in the gap between the clouds, dark under them.
 4. **Advisor**: same patch. Change the intended use from *visual inspection* to *vegetation monitoring*; the recommended model changes from the GAN model to the before-GAN model, and the rule that fired is shown.
 5. **Knowledge base**: in the what-if simulator, move the cloud slider and watch the trust level change.
 

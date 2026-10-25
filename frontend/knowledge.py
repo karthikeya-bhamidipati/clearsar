@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 
-from frontend.common import hero, pill, section, verdict_grid
+from frontend.common import final_root, hero, pill, section, verdict_grid
 from src.expert.engine import InferenceEngine, KnowledgeBase
 
 hero("Expert system · knowledge base",
@@ -12,22 +12,48 @@ hero("Expert system · knowledge base",
 
 kb = KnowledgeBase.load()
 
-st.graphviz_chart("""
-digraph G {
-  rankdir=LR; bgcolor="transparent"; nodesep=0.35; ranksep=0.45;
-  node [shape=box, style="rounded,filled", fontname="Inter", fontsize=11, color="#1F2A44", fillcolor="#121A2E", fontcolor="#E6EAF2", penwidth=1.2];
-  edge [color="#2DD4BF", arrowsize=0.7, penwidth=1.2];
-  in  [label="Patch\\nradar + cloudy optical"];
-  dl  [label="Deep-learning models\\nU-Net · Swin · ViT\\n+ variance head", fillcolor="#0F2A2A"];
-  xai [label="XAI\\nradar reliance\\nband saliency"];
-  ex  [label="Experiment results\\nbest model per cloud level\\ndomain-shift drop"];
-  f   [label="Fact extraction\\n+ fuzzification"];
-  kb  [label="Knowledge base\\n%d rules · thresholds", fillcolor="#1E1B3A"];
-  ie  [label="Inference engine\\nforward chaining\\ncertainty factors", fillcolor="#1E1B3A"];
-  out [label="Decision\\ntrust · model · fit · action", fillcolor="#0F2A2A"];
-  exp [label="Explanation\\nhow · why not · report"];
-  in -> dl -> f; dl -> xai -> f; ex -> f; in -> f; f -> ie; kb -> ie; ie -> out; ie -> exp;
-}""" % len(kb.rules))
+# the pipeline as it really runs: with the final model's outputs (outputs/final) or with the Phase 1 models only
+FINAL = final_root() is not None
+if FINAL:
+    evidence = [("teal", "ClearSAR-Net", "reconstruction by the final (GAN) and before-GAN models; flip-test uncertainty"),
+                ("", "Phase 1 models", "U-Net · Swin · ViT, run only to measure how much independent models disagree"),
+                ("", "XAI", "radar reliance (occlusion) and band saliency of the most accurate model"),
+                ("", "Test-set experience", "final run, 18 unseen scenes: PSNR per cloud level, cost of the GAN")]
+else:
+    evidence = [("teal", "Phase 1 models", "U-Net · Swin · ViT reconstructions, variance-head uncertainty, disagreement"),
+                ("", "XAI", "radar reliance (occlusion) and band saliency of the best model"),
+                ("", "Phase 1 results", "best model per cloud level, drop outside the training region")]
+stages = [
+    ("1 · Measure", [("", "Observations", "cloud cover, thin cirrus, open water and radar gaps, from the patch itself")]
+     + evidence),
+    ("2 · Fuzzify", [("", "Fact extraction", ("every measurement becomes a level (low / medium / high) using the "
+                                       "thresholds below; values near a threshold enter as borderline (CF 0.7)"))]),
+    ("3 · Reason", [("violet", "Knowledge base", f"{len(kb.rules)} IF-THEN rules in {len(kb.groups)} groups: "
+                     + " → ".join(kb.groups)),
+                    ("violet", "Inference engine", ("forward chaining with MYCIN certainty factors; a full trace of "
+                                                  "every rule that fired or failed"))]),
+    ("4 · Decide & explain", [("teal", "Decision", "trust · recommended model · fit for purpose · action"),
+                              ("", "Explanation", "how (rules that fired), why not (rules that failed), report")]),
+]
+html = "".join(
+    f"<li class='cs-stage'><div class='cs-stage-h'>{title}</div>"
+    + "".join(f"<div class='cs-node {tone}'><b>{name}</b><span>{text}</span></div>" for tone, name, text in nodes)
+    + "</li>" for title, nodes in stages)
+st.markdown("""<style>
+.cs-flow { list-style: none; padding: 0; margin: .2rem 0 .4rem 0; display: grid; gap: 30px;
+  grid-template-columns: 1.25fr 1fr 1fr 1fr; }
+.cs-stage { position: relative; display: flex; flex-direction: column; gap: 10px; margin: 0; }
+.cs-stage:not(:last-child)::after { content: "→"; position: absolute; right: -24px; top: 50%; color: var(--sky);
+  font-size: 1.3rem; transform: translateY(-50%); }
+.cs-stage-h { color: #99F6E4; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.cs-node { border-radius: 14px; padding: 11px 14px; background: var(--panel-solid); border: 1px solid var(--line); }
+.cs-node.teal { border-color: rgba(45, 212, 191, .55); background: linear-gradient(140deg, rgba(45,212,191,.12), var(--panel-solid) 60%); }
+.cs-node.violet { border-color: rgba(167, 139, 250, .55); background: linear-gradient(140deg, rgba(167,139,250,.14), var(--panel-solid) 60%); }
+.cs-node b { display: block; font-size: .93rem; margin-bottom: .15rem; }
+.cs-node span { color: var(--muted); font-size: .82rem; line-height: 1.45; display: block; }
+@media (max-width: 900px) { .cs-flow { grid-template-columns: 1fr; gap: 34px; }
+  .cs-stage:not(:last-child)::after { content: "↓"; right: auto; left: 50%; top: auto; bottom: -30px; transform: none; } }
+</style>""" + f"<ol class='cs-flow' aria-label='How the advisor reaches a decision'>{html}</ol>", unsafe_allow_html=True)
 
 # ---------------------------------------------------------------- what-if simulator
 section("What-if simulator", "Change the facts and watch the decision change - no image needed.")

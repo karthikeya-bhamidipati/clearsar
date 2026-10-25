@@ -432,7 +432,7 @@ const chartText = { catAxisLabelColor: HEX.lt2, valAxisLabelColor: HEX.lt2, catA
   // ================================================================ 18. demo
   s = content("Expert system", "05 · LIVE DEMO", "Everything is in an interactive web app");
   img(s, "app_home_crop.png", M, 1.8, 7.3, 5.0, "Screenshot of the ClearSAR web app home page", "app_shot");
-  const demo = [["Home", "drag the slider: cloudy → reconstruction on the Indian test patch"], ["Results", "metrics by cloud cover, continent, country; the GAN's effect"],
+  const demo = [["Home", "drag the slider: cloudy → reconstruction (Portugal, 81 % cloud)"], ["Results", "metrics by cloud cover, continent, country; the GAN's effect"],
     ["How it learned", "training curves and the GAN game, from the real log"], ["Explore patches", "every model, gate and uncertainty map"],
     ["Advisor", "a decision with its reasoning, live"], ["Knowledge base", "what-if simulator - move a slider, watch a rule fire"]];
   for (let i = 0; i < demo.length; i++) {
@@ -442,7 +442,7 @@ const chartText = { catAxisLabelColor: HEX.lt2, valAxisLabelColor: HEX.lt2, catA
     T(s, [{ text: demo[i][0] + "  ", options: { bold: true } }, { text: demo[i][1], options: { color: C.background2, fontSize: 12.5 } }], { x: 8.9, y, w: 3.85, h: 0.75, fontSize: 14 });
   }
   T(s, "Runs offline: all results and both trained models are in the repository.", { x: 8.3, y: 6.62, w: 4.45, h: 0.4, fontSize: 11, color: C.background2 });
-  s.addNotes("Switch to the browser here - start the app before the talk and open the Advisor page once, so its analyses are cached. Suggested 3-minute path: Home slider on the Indian patch; Results by cloud cover; Explore one heavily clouded patch with its gate map; Advisor on the same patch, switching the intended use from visual inspection to vegetation monitoring to show the recommendation change; finish in the Knowledge base what-if simulator. If the demo fails, the screenshot on this slide is the fallback.");
+  s.addNotes("Switch to the browser here - start the app before the talk and open the Advisor page once, so its analyses are cached. Suggested 3-minute path - follow one patch, Portugal at 81 % cloud: Home slider; Results by cloud cover; Explore the same patch with its gate map; Advisor on the same patch, switching the intended use from visual inspection to vegetation monitoring to show the recommendation change; finish in the Knowledge base what-if simulator. If the demo fails, the screenshot on this slide is the fallback.");
 
   // ================================================================ 19. limitations
   pres.addSection({ title: "Closing" });

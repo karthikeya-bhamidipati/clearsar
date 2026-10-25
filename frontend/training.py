@@ -84,10 +84,11 @@ if len(b) and "d_real" in b:
 section("Under the hood", "How the run used the hardware.")
 c1, c2 = st.columns(2, gap="large")
 c1.altair_chart(alt.Chart(tr).mark_line(strokeWidth=1.5, color=ACCENT).encode(
-    x=alt.X("time_h:Q", title="hours"), y=alt.Y("patches_read_s:Q", title="patches read from disk per second")
-).properties(height=240), width="stretch")
+    x=alt.X("time_h:Q", title="hours"), y=alt.Y("patches_read_s:Q", title="patches / s")
+).properties(height=240, title="Patches read from disk per second"), width="stretch")
 c2.altair_chart(alt.Chart(tr).mark_line(strokeWidth=1.5, color=MUTED).encode(
-    x=alt.X("time_h:Q", title="hours"), y=alt.Y("it_s:Q", title="training steps per second")).properties(height=240),
+    x=alt.X("time_h:Q", title="hours"), y=alt.Y("it_s:Q", title="steps / s")).properties(
+    height=240, title="Training steps per second (16 patches each)"),
     width="stretch")
 events = sm.get("nan_guard_events") or []
 st.markdown(f"**NaN guard:** {'no events - every step was finite.' if not events else f'{len(events)} event(s):'}")

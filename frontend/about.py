@@ -1,6 +1,7 @@
 import streamlit as st
 
 from frontend.common import card, card_row, hero, load_final, section
+from src.expert.engine import KnowledgeBase
 
 fin = load_final()
 hero("How it works", "From radar and clouds <span class='cs-grad'>to a decision</span>",
@@ -49,10 +50,10 @@ card_row([
 section("3 · Expert system", "Decision support on top of the model - see the Advisor and Knowledge base pages.")
 card_row([
     ("Facts", "Cloud cover, cirrus, radar gaps, open water (from the input) · disagreement of independent "
-     "models, error on visible pixels, uncertainty, radar reliance (from the models) · the most accurate model per "
-     "cloud level (from the test results)."),
-    ("Reasoning", "IF-THEN rules with certainty factors, chained group by group: observations → trust → model "
-     "→ suitability → action. The knowledge base is a plain YAML file."),
+     "models, error on visible pixels, uncertainty, radar reliance (from the models) · the most accurate model and "
+     "the GAN's PSNR cost per cloud level (from the test results)."),
+    ("Reasoning", f"{len(KnowledgeBase.load().rules)} IF-THEN rules with certainty factors, chained group by "
+     "group: observations → trust → model → suitability → action. The knowledge base is a plain YAML file."),
     ("Explanation", "Every decision lists the rules that produced it, the alternatives that were considered, "
      "why other rules did not fire, and visual evidence (cloud mask, radar-reliance and uncertainty maps, band saliency)."),
 ])
